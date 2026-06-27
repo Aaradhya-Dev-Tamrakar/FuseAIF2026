@@ -203,6 +203,18 @@ cython_debug/
 # Temporary file for partial code execution
 tempCodeRunnerFile.py
 
+# Windows / editor artifacts
+Thumbs.db
+Desktop.ini
+*.suo
+*.user
+*.userossc
+*.swp
+*.tmp
+.vscode-test/
+.idea/
+.vs/
+
 # Ruff stuff:
 .ruff_cache/
 
@@ -216,3 +228,6 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Local generated project metadata
+graphify-out/

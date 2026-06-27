@@ -1,0 +1,1626 @@
+========================================================================
+CELL 00 | TYPE: markdown
+========================================================================
+<span style="color:red; font-family:Helvetica Neue, Helvetica, Arial, sans-serif; font-size:2em;">An Exception was encountered at '<a href="#papermill-error-cell">In [13]</a>'.</span>
+
+
+
+========================================================================
+CELL 01 | TYPE: markdown
+========================================================================
+# Week 4 — Statistical Machine Learning: Linear Models
+### AIF 2026 · Phase 2 · Facilitator: Raj Kumar Biswokarma
+
+---
+
+## Session Roadmap
+
+| Block | Topic | Time |
+|---|---|---|
+| 1 | Understand the Problem | 20 min |
+| 2 | Preprocessing | 5 min |
+| 3 | Classification Experiment | 30 min |
+| 4 | Regression Experiment | 20 min |
+| 5 | Evaluation Integrity + Leakage Demo | 25 min |
+| 6 | Production Decision | 10 min |
+
+---
+
+## Business Context
+
+You are a Data Scientist at a telecom company. The business is losing customers to churn. You have been given historical customer data and one week to produce a production-ready recommendation.
+
+**There is no prescribed model. You decide — and you must defend that decision with evidence.**
+
+**Dataset:** Telco Customer Churn — https://www.kaggle.com/datasets/blastchar/telco-customer-churn  
+Single CSV · 7043 rows · 21 columns · Target: `Churn` (Yes/No)
+
+---
+
+## Important Note
+This is a guided notebook. You are expected to:
+- Think critically before writing any code
+- Make decisions and justify them in writing
+- Explore different approaches and compare results
+- Fill in all written response sections
+
+
+
+
+========================================================================
+CELL 02 | TYPE: code
+========================================================================
+# your code here
+
+
+
+========================================================================
+CELL 03 | TYPE: markdown
+========================================================================
+---
+
+# Block 1 — Understand the Problem First
+
+---
+
+## What Is an ML Problem?
+
+Before touching any model, you need to formulate the problem formally. Every ML problem has the same components:
+
+| Symbol | Name | In our problem |
+|---|---|---|
+| **X** | Feature space | All input columns: tenure, charges, contract type… |
+| **y** | Target variable | Churn: Yes / No |
+| **H** | Hypothesis class | The family of functions we search over: linear models |
+| **L** | Loss function | How we measure error: cross-entropy for classification |
+| **E** | Evaluation metric | How the business measures success: F1, PR-AUC |
+
+**Empirical Risk Minimisation (ERM):** We cannot minimise the true risk (we do not have all possible data), so we minimise the average loss over the training set as a proxy.
+
+$$\hat{\theta} = \arg\min_{\theta} \frac{1}{n} \sum_{i=1}^{n} L(y_i, f_\theta(x_i))$$
+
+---
+
+## Probability Distributions in ML
+
+The distribution of your target variable determines the right loss function. This is not arbitrary.
+
+| Distribution | Models | Loss function | Example |
+|---|---|---|---|
+| **Bernoulli** | Binary outcomes | Binary cross-entropy | Churn: Yes/No |
+| **Gaussian** | Continuous measurements | MSE | MonthlyCharges |
+| **Poisson** | Count data | Poisson deviance | Support tickets/month |
+| **Gamma / Log-Normal** | Right-skewed continuous | MAE / Tweedie | Tenure, TotalCharges |
+| **Categorical** | Multi-class outcomes | Categorical cross-entropy | Contract type |
+
+**Key insight:** Churn is binary → Bernoulli distribution → binary cross-entropy is the natural loss.
+
+---
+
+## Sources of Uncertainty
+
+Training data is a finite, imperfect sample of the real world. Before modelling, identify where the data might fail you:
+
+- **Sampling noise** — 7,043 customers is a sample. The true population may behave differently.
+- **Label noise** — Was churn recorded correctly? Cancelled but re-subscribed? Edge cases.
+- **Missing data** — `TotalCharges` has whitespace nulls. Why? Random or systematic?
+- **Biased sampling** — Does this dataset represent all customer types or just one region/plan?
+- **Distribution shift** — Customer behaviour today may differ from when data was collected.
+- **Model misspecification** — A linear model assumes a linear decision boundary. Is that true?
+
+---
+
+## 1.1 Basic Inspection
+
+### Task:
+- Load the dataset
+- View the first few rows
+- Check data types and shape
+- Look at summary statistics
+
+### Questions:
+- What does each row represent?
+- Are the data types appropriate for each column?
+- Is `TotalCharges` the dtype you expect?
+
+### Hint:
+- Use `.head()`, `.info()`, `.describe()` to get a full picture
+- `TotalCharges` is stored as object — there are whitespace strings `' '` hiding as nulls
+
+
+
+
+========================================================================
+CELL 04 | TYPE: code
+========================================================================
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
+# Load the dataset
+df = pd.read_csv('WA_Fn-UseC_-Telco-Customer-Churn.csv')
+print('Dataset Shape:', df.shape)
+df.head()
+
+
+
+========================================================================
+CELL 05 | TYPE: code
+========================================================================
+# Check data types and structure
+df.info()
+
+
+
+========================================================================
+CELL 06 | TYPE: code
+========================================================================
+# Look at summary statistics
+df.describe(include='all')
+
+
+
+========================================================================
+CELL 07 | TYPE: markdown
+========================================================================
+---
+
+## 1.2 Problem Formulation
+
+### Task:
+Write out the ML problem formally using the structure below.
+
+### Questions:
+- What is X (your feature space)?
+- What is y (your target variable)?
+- What probability distribution naturally models the target? What does that tell you about the right loss function?
+- What is your hypothesis class (model family)?
+- What are at least three assumptions you are making about the data-generating process?
+- Where could this data be noisy, biased, or incomplete?
+
+### Hint:
+- The target is binary (Yes/No) → think Bernoulli distribution → think cross-entropy loss
+- An assumption is a belief about the world your model requires to be true
+- Sources of uncertainty include: sampling bias, label noise, missing data, distribution shift
+
+
+
+
+========================================================================
+CELL 08 | TYPE: markdown
+========================================================================
+**Your formulation here:**
+
+- **X (feature space)**: A $n \times d$ matrix representing demographics (gender, SeniorCitizen, Partner, Dependents), services (tenure, PhoneService, MultipleLines, InternetService, OnlineSecurity, OnlineBackup, DeviceProtection, TechSupport, StreamingTV, StreamingMovies), and account billing terms (Contract, PaperlessBilling, PaymentMethod, MonthlyCharges, TotalCharges). customerID is dropped to prevent unique identifier overfitting.
+- **y (target variable)**: Binary variable $y \in \{0, 1\}$ where 1 denotes Churn (customer cancelled service) and 0 denotes Retention.
+- **Probability distribution of y**: Bernoulli distribution: $P(y|x) = p^y(1-p)^{1-y}$, where $p = \sigma(w^T x + b)$ is the probability of churn.
+- **Natural loss function**: Binary Cross-Entropy (Log Loss) derived from maximum likelihood estimation of the Bernoulli distribution: $L(y, \hat{y}) = -[y \log \hat{y} + (1-y) \log(1-\hat{y})]$.
+- **Hypothesis class**: Linear Classifiers of the form $h(x) = f(w^T x + b)$, where $f$ is a sigmoid function (for Logistic Regression/SGD) or a step function (for Ridge Classifier).
+- **Assumption 1**: Linearity of log-odds. The relationship between continuous features (e.g. tenure, MonthlyCharges) and the log-odds of Churn is approximately linear.
+- **Assumption 2**: Independence of observations. Each row represents a distinct customer whose decision to churn is independent of other customers in the dataset.
+- **Assumption 3**: Data-generating process stability. The historical data (training set) is representative of future customer behaviors and billing policies (no distribution shift).
+- **Sources of uncertainty**: Missing or unmeasured satisfaction/experience features, label noise (e.g. voluntary vs. involuntary churn), sampling bias (if this customer segment does not represent all regional markets), and temporal dependency/macroeconomic shocks.
+
+
+
+========================================================================
+CELL 09 | TYPE: markdown
+========================================================================
+---
+
+## 1.3 Data Profiling & Fixing
+
+### Task:
+- Fix the `TotalCharges` null issue
+- Plot the distributions of `MonthlyCharges`, `tenure`, and `TotalCharges`
+- Encode the target variable `Churn` as binary (0/1)
+
+### Questions:
+- What distribution does `MonthlyCharges` follow? `tenure`? `TotalCharges`?
+- Why does `TotalCharges` contain nulls even though it looks numeric?
+- Are there impossible or suspicious values in any column?
+
+### Hint:
+- `pd.to_numeric(df['TotalCharges'], errors='coerce')` converts whitespace strings to NaN
+- `sns.histplot(df['MonthlyCharges'], kde=True)` draws a distribution with density curve
+- `df['Churn'] = df['Churn'].map({'Yes': 1, 'No': 0})`
+
+### Consequences:
+- Leaving `TotalCharges` as object → model training will fail or silently drop the column
+- Not encoding the target → sklearn classifiers will throw an error
+
+
+
+
+========================================================================
+CELL 10 | TYPE: code
+========================================================================
+# Fix the TotalCharges null issue
+# Identify whitespace nulls
+whitespace_rows = df[df['TotalCharges'].str.strip() == '']
+print(f'Number of whitespace rows in TotalCharges: {len(whitespace_rows)}')
+
+# Convert TotalCharges to numeric, setting errors to NaN
+df['TotalCharges'] = pd.to_numeric(df['TotalCharges'], errors='coerce')
+
+# Since these whitespace rows all have tenure=0 (new customers), setting TotalCharges to 0.0 is logically sound
+df['TotalCharges'] = df['TotalCharges'].fillna(0.0)
+print('Null values remaining in TotalCharges:', df['TotalCharges'].isnull().sum())
+
+
+
+========================================================================
+CELL 11 | TYPE: code
+========================================================================
+# Plot the distributions of MonthlyCharges, tenure, and TotalCharges
+fig, axes = plt.subplots(1, 3, figsize=(18, 5))
+
+sns.histplot(df['MonthlyCharges'], kde=True, ax=axes[0], color='skyblue')
+axes[0].set_title('Monthly Charges Distribution')
+axes[0].set_xlabel('Charges ($)')
+
+sns.histplot(df['tenure'], kde=True, ax=axes[1], color='salmon')
+axes[1].set_title('Tenure (Months) Distribution')
+axes[1].set_xlabel('Months')
+
+sns.histplot(df['TotalCharges'], kde=True, ax=axes[2], color='lightgreen')
+axes[2].set_title('Total Charges Distribution')
+axes[2].set_xlabel('Total ($)')
+
+plt.tight_layout()
+plt.show()
+
+
+
+========================================================================
+CELL 12 | TYPE: code
+========================================================================
+# Encode the target variable Churn as binary (0/1)
+df['Churn'] = df['Churn'].map({'Yes': 1, 'No': 0})
+print('Churn Value Counts:\n', df['Churn'].value_counts())
+print('Churn Proportions:\n', df['Churn'].value_counts(normalize=True))
+
+
+
+========================================================================
+CELL 13 | TYPE: markdown
+========================================================================
+---
+
+## The Accuracy Trap
+
+The dataset has ~27% churn. This is **imbalanced**. Before building any model, build a naive baseline — a model that always predicts the majority class.
+
+**If this baseline achieves 73% accuracy — any model you build must meaningfully beat it.**
+
+The deeper problem: a model that always predicts "No Churn" has **0% recall** for churners. It catches no one. It is completely useless to the business — yet reports 73% accuracy.
+
+**This is why accuracy is not your primary metric here.**
+
+---
+
+## 1.4 The Naive Baseline
+
+### Task:
+Build a model that always predicts the majority class (No Churn). Evaluate its accuracy, recall, and F1.
+
+### Questions:
+- What accuracy does the naive baseline achieve?
+- What is the class distribution in the dataset?
+- Why is a model that achieves this accuracy potentially worthless?
+
+### Hint:
+- `DummyClassifier(strategy='most_frequent')` does exactly this
+- `df['Churn'].value_counts(normalize=True)` shows the class proportions
+- Any model you build must beat this baseline on recall and F1 — not just accuracy
+
+
+
+
+========================================================================
+CELL 14 | TYPE: code
+========================================================================
+from sklearn.dummy import DummyClassifier
+from sklearn.metrics import accuracy_score, recall_score, f1_score
+
+# Build naive baseline (most frequent class: No Churn)
+X_dummy = df.drop(columns=['Churn', 'customerID'])
+y_dummy = df['Churn']
+
+dummy = DummyClassifier(strategy='most_frequent')
+dummy.fit(X_dummy, y_dummy)
+y_dummy_pred = dummy.predict(X_dummy)
+
+print(f'Naive baseline accuracy: {accuracy_score(y_dummy, y_dummy_pred):.4f}')
+print(f'Naive baseline recall: {recall_score(y_dummy, y_dummy_pred):.4f}')
+print(f'Naive baseline F1-score: {f1_score(y_dummy, y_dummy_pred):.4f}')
+
+
+
+========================================================================
+CELL 15 | TYPE: code
+========================================================================
+# your code here
+
+
+
+========================================================================
+CELL 16 | TYPE: markdown
+========================================================================
+---
+
+## 💬 Discussion
+
+> **Your manager sees 73% accuracy and is thrilled. Should they be? What is the first question you ask?**
+
+---
+
+# Block 2 — Preprocessing
+
+Preprocessing was covered in Week 1. We keep this block minimal — working code only.
+
+---
+
+## 2.1 Encode, Split, Scale
+
+### Task:
+- Drop `customerID`
+- One-hot encode all categorical features
+- Perform a stratified train / validation / test split (70 / 15 / 15)
+- Scale numeric features using `StandardScaler` — fit on training data only
+
+### Questions:
+- Why do we use stratified splitting for a churn dataset?
+- Why do we fit the scaler on training data only?
+- What would happen if we scaled before splitting?
+
+### Hint:
+- `pd.get_dummies(df, drop_first=True)` one-hot encodes all object columns
+- `train_test_split(X, y, stratify=y, test_size=0.30, random_state=42)`
+- Then split the 30% remainder 50/50 for val and test
+- `scaler.fit(X_train)` → `scaler.transform(X_train)`, `scaler.transform(X_val)`, `scaler.transform(X_test)`
+
+### Consequences:
+- Fitting scaler on full data → data leakage
+- Not stratifying → random split may give a fold with very few churners
+
+
+
+
+========================================================================
+CELL 17 | TYPE: code
+========================================================================
+# your code here
+
+
+
+========================================================================
+CELL 18 | TYPE: code
+========================================================================
+# your code here
+
+
+
+========================================================================
+CELL 19 | TYPE: code
+========================================================================
+# your code here
+
+
+
+========================================================================
+CELL 20 | TYPE: markdown
+========================================================================
+---
+
+# Block 3 — Classification Experiment: Who Will Churn?
+
+---
+
+## Linear Classifiers — Three Candidates
+
+| Model | Loss Function | Optimiser | Key Characteristic |
+|---|---|---|---|
+| **Logistic Regression** | Binary cross-entropy (log loss) | Full-batch (L-BFGS) | Outputs calibrated probabilities. Best interpretability. |
+| **Ridge Classifier** | Squared hinge loss (L2 regularised) | Closed-form analytic | Converts to regression internally. No probability output. |
+| **SGD Classifier** | Configurable: log_loss / hinge / … | Stochastic GD | Best for large datasets. Highly configurable. Less stable. |
+
+---
+
+## Batch GD vs Stochastic GD
+
+**Batch Gradient Descent:**
+- Computes gradient over ALL training samples before each weight update
+- Smooth, stable convergence path
+- Memory-intensive — loads the full dataset each step
+- `LogisticRegression(solver='lbfgs')` uses this
+
+**Stochastic Gradient Descent (SGD):**
+- Computes gradient on ONE sample (or mini-batch) at a time
+- Noisy path — can escape local minima
+- Memory efficient — processes one sample at a time
+- `SGDClassifier` uses this
+
+**When does it matter?** For 7,000 rows — not much. For 7 million rows — SGD is the only practical option.
+
+---
+
+## Evaluation Metrics for Imbalanced Data
+
+| Metric | What it measures | Use when |
+|---|---|---|
+| **Accuracy** | Proportion of correct predictions | ❌ Avoid — misleading on imbalanced data |
+| **Precision** | Of predicted churners, how many actually churned? | Cost of false alarms is high |
+| **Recall** | Of actual churners, how many did we catch? | Cost of missing a churner is high |
+| **F1** | Harmonic mean of precision and recall | Need a single balanced score |
+| **ROC-AUC** | Ranking quality across all thresholds | Overall discriminative power |
+| **PR-AUC** | Precision-Recall curve area | ✅ Preferred for imbalanced data |
+| **Log Loss** | Penalises overconfident wrong predictions | Need calibrated probabilities |
+
+---
+
+## 3.1 Train Your Classifiers
+
+### Task:
+Train each of the three classifiers. Record training time for each.
+
+### Questions:
+- What loss function does each model optimise?
+- Which model trains fastest? Does that surprise you?
+
+### Hint:
+- `LogisticRegression(max_iter=1000, random_state=42)`
+- `RidgeClassifier()`
+- `SGDClassifier(loss='log_loss', max_iter=1000, random_state=42)`
+- Use `time.time()` before and after `.fit()` to measure training time
+
+### Reference:
+- https://scikit-learn.org/stable/modules/linear_model.html
+
+
+
+
+========================================================================
+CELL 21 | TYPE: markdown
+========================================================================
+<span id="papermill-error-cell" style="color:red; font-family:Helvetica Neue, Helvetica, Arial, sans-serif; font-size:2em;">Execution using papermill encountered an exception here and stopped:</span>
+
+
+
+========================================================================
+CELL 22 | TYPE: code
+========================================================================
+from sklearn.linear_model import LogisticRegression, RidgeClassifier, SGDClassifier
+import time
+
+# Train three classifiers and record training time
+lr = LogisticRegression(max_iter=1000, random_state=42)
+start = time.time()
+lr.fit(X_train_scaled, y_train)
+lr_time = time.time() - start
+
+ridge = RidgeClassifier(random_state=42)
+start = time.time()
+ridge.fit(X_train_scaled, y_train)
+ridge_time = time.time() - start
+
+sgd = SGDClassifier(loss='log_loss', max_iter=1000, random_state=42)
+start = time.time()
+sgd.fit(X_train_scaled, y_train)
+sgd_time = time.time() - start
+
+print(f'Logistic Regression training time: {lr_time:.5f} seconds')
+print(f'Ridge Classifier training time: {ridge_time:.5f} seconds')
+print(f'SGD Classifier training time: {sgd_time:.5f} seconds')
+
+
+
+========================================================================
+CELL 23 | TYPE: code
+========================================================================
+# your code here
+
+
+
+========================================================================
+CELL 24 | TYPE: code
+========================================================================
+# your code here
+
+
+
+========================================================================
+CELL 25 | TYPE: markdown
+========================================================================
+---
+
+## 3.2 Build a Comparison Table
+
+### Task:
+For each model compute: Accuracy, Precision, Recall, F1, ROC-AUC, PR-AUC, Log Loss.  
+Display as a pandas DataFrame sorted by PR-AUC.
+
+### Questions:
+- Which metric tells you the most about model usefulness for this business problem?
+- Does accuracy rank models the same way PR-AUC does? If not, why?
+- Which model would you eliminate first and why?
+
+### Hint:
+- `RidgeClassifier` has no `predict_proba()` — use `.decision_function()` for AUC scores
+- `average_precision_score(y_val, scores)` computes PR-AUC
+- `log_loss` requires probabilities — note N/A for RidgeClassifier
+
+### Why This Matters:
+A comparison table is the minimum evidence required to justify a model choice. Without it you are guessing.
+
+
+
+
+========================================================================
+CELL 26 | TYPE: code
+========================================================================
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score, roc_auc_score, average_precision_score, log_loss
+
+# Predictions and probability scores
+y_pred_lr = lr.predict(X_val_scaled)
+y_prob_lr = lr.predict_proba(X_val_scaled)[:, 1]
+
+y_pred_ridge = ridge.predict(X_val_scaled)
+y_score_ridge = ridge.decision_function(X_val_scaled)
+
+y_pred_sgd = sgd.predict(X_val_scaled)
+y_prob_sgd = sgd.predict_proba(X_val_scaled)[:, 1]
+
+# Metrics calculations
+metrics = {
+    'Logistic Regression': [
+        accuracy_score(y_val, y_pred_lr),
+        precision_score(y_val, y_pred_lr),
+        recall_score(y_val, y_pred_lr),
+        f1_score(y_val, y_pred_lr),
+        roc_auc_score(y_val, y_prob_lr),
+        average_precision_score(y_val, y_prob_lr),
+        log_loss(y_val, y_prob_lr)
+    ],
+    'Ridge Classifier': [
+        accuracy_score(y_val, y_pred_ridge),
+        precision_score(y_val, y_pred_ridge),
+        recall_score(y_val, y_pred_ridge),
+        f1_score(y_val, y_pred_ridge),
+        roc_auc_score(y_val, y_score_ridge),
+        average_precision_score(y_val, y_score_ridge),
+        np.nan
+    ],
+    'SGD Classifier': [
+        accuracy_score(y_val, y_pred_sgd),
+        precision_score(y_val, y_pred_sgd),
+        recall_score(y_val, y_pred_sgd),
+        f1_score(y_val, y_pred_sgd),
+        roc_auc_score(y_val, y_prob_sgd),
+        average_precision_score(y_val, y_prob_sgd),
+        log_loss(y_val, y_prob_sgd)
+    ]
+}
+
+metrics_df = pd.DataFrame(metrics, index=['Accuracy', 'Precision', 'Recall', 'F1', 'ROC-AUC', 'PR-AUC', 'Log Loss']).T
+metrics_df.sort_values(by='PR-AUC', ascending=False)
+
+
+
+========================================================================
+CELL 27 | TYPE: code
+========================================================================
+# your code here
+
+
+
+========================================================================
+CELL 28 | TYPE: markdown
+========================================================================
+---
+
+## 3.3 ROC and Precision-Recall Curves
+
+### Task:
+Plot ROC curves and Precision-Recall curves for your models.
+
+### Questions:
+- At what threshold does your model maximise F1?
+- Why does the PR curve tell you more than the ROC curve for this problem?
+- What does a model that lies close to the diagonal in the ROC curve tell you?
+
+### Hint:
+- `roc_curve(y_val, proba)` returns fpr, tpr, thresholds
+- `precision_recall_curve(y_val, proba)` returns precision, recall, thresholds
+- Plot both side by side: `fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(12, 5))`
+- Add baseline to ROC: `ax1.plot([0,1],[0,1],'k--')`
+
+### Reference:
+- StatQuest ROC: https://www.youtube.com/watch?v=4jRBRDbJemM
+- StatQuest PR: https://www.youtube.com/watch?v=Kdsp6soqA7o
+
+
+
+
+========================================================================
+CELL 29 | TYPE: code
+========================================================================
+from sklearn.metrics import roc_curve, precision_recall_curve
+
+# Calculate curves
+fpr_lr, tpr_lr, _ = roc_curve(y_val, y_prob_lr)
+fpr_ridge, tpr_ridge, _ = roc_curve(y_val, y_score_ridge)
+fpr_sgd, tpr_sgd, _ = roc_curve(y_val, y_prob_sgd)
+
+prec_lr, rec_lr, _ = precision_recall_curve(y_val, y_prob_lr)
+prec_ridge, rec_ridge, _ = precision_recall_curve(y_val, y_score_ridge)
+prec_sgd, rec_sgd, _ = precision_recall_curve(y_val, y_prob_sgd)
+
+# Plot ROC and PR side-by-side
+fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(16, 6))
+
+ax1.plot(fpr_lr, tpr_lr, label=f'Logistic Regression (AUC = {metrics_df.loc["Logistic Regression", "ROC-AUC"]:.3f})')
+ax1.plot(fpr_ridge, tpr_ridge, label=f'Ridge Classifier (AUC = {metrics_df.loc["Ridge Classifier", "ROC-AUC"]:.3f})')
+ax1.plot(fpr_sgd, tpr_sgd, label=f'SGD Classifier (AUC = {metrics_df.loc["SGD Classifier", "ROC-AUC"]:.3f})')
+ax1.plot([0, 1], [0, 1], 'k--', label='Baseline (AUC = 0.500)')
+ax1.set_xlabel('False Positive Rate')
+ax1.set_ylabel('True Positive Rate')
+ax1.set_title('ROC Curves')
+ax1.legend()
+ax1.grid(True)
+
+baseline_pr = y_val.sum() / len(y_val)
+ax2.plot(rec_lr, prec_lr, label=f'Logistic Regression (AUC = {metrics_df.loc["Logistic Regression", "PR-AUC"]:.3f})')
+ax2.plot(rec_ridge, prec_ridge, label=f'Ridge Classifier (AUC = {metrics_df.loc["Ridge Classifier", "PR-AUC"]:.3f})')
+ax2.plot(rec_sgd, prec_sgd, label=f'SGD Classifier (AUC = {metrics_df.loc["SGD Classifier", "PR-AUC"]:.3f})')
+ax2.axhline(baseline_pr, color='k', linestyle='--', label=f'Baseline (AUC = {baseline_pr:.3f})')
+ax2.set_xlabel('Recall')
+ax2.set_ylabel('Precision')
+ax2.set_title('Precision-Recall Curves')
+ax2.legend()
+ax2.grid(True)
+
+plt.tight_layout()
+plt.show()
+
+
+
+========================================================================
+CELL 30 | TYPE: code
+========================================================================
+# your code here
+
+
+
+========================================================================
+CELL 31 | TYPE: markdown
+========================================================================
+---
+
+## The Threshold Decision — 200 Calls/Week
+
+The default classification threshold is **0.5** — designed for balanced datasets. It is not optimal here.
+
+**Business constraint:** The retention team can call only **200 customers per week**.
+
+**Strategy:**
+1. Sort all customers by predicted churn probability (descending)
+2. Take the top 200
+3. The threshold = the probability score of the 200th customer
+
+This maximises precision at the top-200. The business impact is directly measurable.
+
+---
+
+## 3.4 Threshold Tuning
+
+### Task:
+Find the optimal threshold for the budget constraint: top 200 by churn probability.  
+Compare precision, recall, and F1 at this threshold vs the default 0.5.
+
+### Questions:
+- How do you identify the top 200 highest-risk customers?
+- What precision do you achieve at that threshold?
+- How does this compare to the default threshold of 0.5?
+
+### Hint:
+- Sort customers by predicted probability descending
+- The threshold = `proba[sorted_indices[199]]` (the 200th highest score)
+- `(proba >= threshold).astype(int)` gives binary predictions at that threshold
+
+### Consequences:
+- Default threshold 0.5 may flag 400+ customers — the team can only call 200
+- A lower threshold catches more churners (higher recall) but more false alarms (lower precision)
+
+
+
+
+========================================================================
+CELL 32 | TYPE: code
+========================================================================
+# Determine threshold for the top 9.5% highest probability risk (proportional to 200 calls budget)
+# Size of validation set = 1056 rows. Top 9.5% risk ≈ top 100 customers.
+budget_percentile = 100 - 9.5
+threshold = np.percentile(y_prob_lr, budget_percentile)
+print(f'Optimal decision threshold for top 9.5% segment: {threshold:.3f}')
+
+# Apply threshold to generate new predictions
+y_pred_thresh = (y_prob_lr >= threshold).astype(int)
+
+print('Default Threshold (0.500) Metrics:')
+print(f'Precision: {precision_score(y_val, y_pred_lr):.4f}, Recall: {recall_score(y_val, y_pred_lr):.4f}, F1: {f1_score(y_val, y_pred_lr):.4f}')
+
+print(f'\nBudget-Optimized Threshold ({threshold:.3f}) Metrics:')
+print(f'Precision: {precision_score(y_val, y_pred_thresh):.4f}, Recall: {recall_score(y_val, y_pred_thresh):.4f}, F1: {f1_score(y_val, y_pred_thresh):.4f}')
+print(f'Number of targeted high-risk accounts: {y_pred_thresh.sum()}')
+
+
+
+========================================================================
+CELL 33 | TYPE: code
+========================================================================
+# your code here
+
+
+
+========================================================================
+CELL 34 | TYPE: markdown
+========================================================================
+---
+
+## 3.5 Coefficient Inspection
+
+### Task:
+Plot the top 10 features by absolute coefficient value for your best classifier.
+
+### Questions:
+- Which features drive churn the most?
+- Do the signs of the coefficients make business sense?
+- Are there any coefficients that surprise you? Investigate why.
+
+### Hint:
+- `model.coef_[0]` gives the coefficient array for binary classifiers
+- `pd.Series(model.coef_[0], index=feature_names).abs().nlargest(10)` gets top 10
+- Use a horizontal `sns.barplot` for readability
+
+### Why This Matters:
+A positive coefficient for `Contract_Month-to-month` means month-to-month customers have higher log-odds of churn. If a coefficient makes no business sense, investigate the feature or the data.
+
+
+
+
+========================================================================
+CELL 35 | TYPE: code
+========================================================================
+# Inspect and plot top coefficients for the best model (Logistic Regression)
+coefs = pd.Series(lr.coef_[0], index=X_train.columns)
+top_coefs = coefs.reindex(coefs.abs().sort_values(ascending=False).index).head(15)
+
+plt.figure(figsize=(10, 8))
+sns.barplot(x=top_coefs.values, y=top_coefs.index, palette='viridis')
+plt.axvline(0, color='black', linestyle='--')
+plt.title('Top 15 Logistic Regression Coefficients Impact')
+plt.xlabel('Coefficient Value (Log-Odds Impact)')
+plt.ylabel('Feature')
+plt.show()
+
+
+
+========================================================================
+CELL 36 | TYPE: code
+========================================================================
+# your code here
+
+
+
+========================================================================
+CELL 37 | TYPE: markdown
+========================================================================
+---
+
+## 3.6 Batch GD vs SGD
+
+### Task:
+Compare `LogisticRegression` vs `SGDClassifier(loss='log_loss')`.  
+Record training time, final AUC, and check whether they converge to the same solution.
+
+### Questions:
+- Do they produce the same predictions? Same coefficients?
+- Which is faster?
+- Under what conditions would you prefer SGD?
+
+### Hint:
+- `np.allclose(lr.coef_, sgd.coef_, atol=0.15)` checks approximate coefficient agreement
+- SGD uses random gradient estimates — results vary across runs. Use `random_state=42`
+
+### Reference:
+- 3Blue1Brown Gradient Descent: https://www.youtube.com/watch?v=IHZwWFHWa-w
+
+
+
+
+========================================================================
+CELL 38 | TYPE: code
+========================================================================
+# Check convergence and approximate similarity between LR and SGD coefficients
+similarity_check = np.allclose(lr.coef_, sgd.coef_, atol=0.20)
+print('Do full-batch LR and SGD coefficients agree within 0.20 tolerance?', similarity_check)
+
+coef_diff = np.abs(lr.coef_[0] - sgd.coef_[0])
+print(f'Max absolute difference between coefficients: {coef_diff.max():.4f}')
+print(f'Mean absolute difference between coefficients: {coef_diff.mean():.4f}')
+
+
+
+========================================================================
+CELL 39 | TYPE: code
+========================================================================
+# your code here
+
+
+
+========================================================================
+CELL 40 | TYPE: markdown
+========================================================================
+---
+
+## 💬 Discussion
+
+> **Which model do you deploy? Why not the others?**  
+> **Does SGD converge to the same solution as full-batch LR? Why might it not?**
+
+---
+
+# Block 4 — Regression Experiment: How Long Will They Stay? What Are They Worth?
+
+---
+
+## Regression Targets — Three Options
+
+| Option | Target | Formula | What it enables |
+|---|---|---|---|
+| **A** | Survival time | `tenure` | How many months until churn |
+| **B** | Churn probability score | `predict_proba()` from classifier | Continuous risk score |
+| **C** | Customer Lifetime Value | `CLV = MonthlyCharges × predicted tenure` | Revenue-weighted prioritisation |
+
+**What CLV enables that binary prediction cannot:** You can rank customers by *value at risk*, not just *probability of churn*.
+
+---
+
+## The Linear Regression Family
+
+| Model | Penalty | Coefficients | Use when |
+|---|---|---|---|
+| **LinearRegression** | None | Unconstrained | Baseline — full interpretability |
+| **Ridge (L2)** | λ Σβ² | Shrink toward 0, never exactly 0 | Correlated features, stable estimates |
+| **Lasso (L1)** | λ Σ\|β\| | Some become exactly 0 → sparse | Feature selection, interpretability |
+| **Elastic Net** | λ₁ Σ\|β\| + λ₂ Σβ² | Sparse + stable | Correlated features + need sparsity |
+
+---
+
+## Regression Metrics
+
+| Metric | Formula | Punishes | Interpret as |
+|---|---|---|---|
+| **MAE** | (1/n) Σ\|y − ŷ\| | All errors equally | Average error in original units |
+| **RMSE** | √[(1/n) Σ(y − ŷ)²] | Large errors heavily | Sensitive to outliers |
+| **R²** | 1 − SS_res/SS_tot | Nothing directly | % of variance explained by model |
+
+**R² = 0.55 means:** the model explains 55% of the variance in tenure. The remaining 45% is unexplained.
+
+---
+
+## 4.1 Derive Regression Targets
+
+### Task:
+Derive at least one regression target. Plot its distribution.
+
+### Questions:
+- What distribution does your regression target follow?
+- What does CLV tell the business that binary churn prediction cannot?
+- What assumptions are you making when you use `tenure` as a survival time proxy?
+
+### Hint:
+- Plot the distribution of your target before fitting any model
+- A right-skewed target may benefit from a log transform before regression
+
+
+
+
+========================================================================
+CELL 41 | TYPE: code
+========================================================================
+# your code here
+
+
+
+========================================================================
+CELL 42 | TYPE: code
+========================================================================
+# your code here
+
+
+
+========================================================================
+CELL 43 | TYPE: markdown
+========================================================================
+---
+
+## 4.2 Train Your Regressors
+
+### Task:
+Train at least two of: `LinearRegression`, `Ridge`, `Lasso`, `ElasticNet`.  
+Build a comparison table with MAE, RMSE, and R².
+
+### Questions:
+- Which model performs best? By how much?
+- What does R² = 0.55 actually mean in this context?
+- Is RMSE or MAE more appropriate here? Why?
+
+### Hint:
+- `mean_squared_error(y_val, y_pred, squared=False)` computes RMSE
+- R² of 0.55 means the model explains 55% of the variance in tenure
+- RMSE penalises large errors more heavily — relevant if extreme-tenure customers matter
+
+### Reference:
+- ISLR Ch. 3: https://www.statlearning.com
+
+
+
+
+========================================================================
+CELL 44 | TYPE: code
+========================================================================
+from sklearn.linear_model import LinearRegression, Ridge, Lasso, ElasticNet
+from sklearn.metrics import mean_absolute_error, mean_squared_error, r2_score
+
+# Train models
+reg_models = {
+    'Linear Regression': LinearRegression(),
+    'Ridge Regression': Ridge(alpha=1.0),
+    'Lasso Regression': Lasso(alpha=0.1),
+    'Elastic Net': ElasticNet(alpha=0.1, l1_ratio=0.5)
+}
+
+reg_metrics = {}
+for name, model in reg_models.items():
+    model.fit(X_train_reg_scaled, y_train_reg)
+    y_pred = model.predict(X_val_reg_scaled)
+    reg_metrics[name] = [
+        mean_absolute_error(y_val_reg, y_pred),
+        mean_squared_error(y_val_reg, y_pred, squared=False),
+        r2_score(y_val_reg, y_pred)
+    ]
+
+reg_metrics_df = pd.DataFrame(reg_metrics, index=['MAE', 'RMSE', 'R2']).T
+reg_metrics_df
+
+
+
+========================================================================
+CELL 45 | TYPE: code
+========================================================================
+# your code here
+
+
+
+========================================================================
+CELL 46 | TYPE: code
+========================================================================
+# your code here
+
+
+
+========================================================================
+CELL 47 | TYPE: markdown
+========================================================================
+---
+
+## 4.3 Residual Plots
+
+### Task:
+Plot residuals (predicted − actual) against predicted values for your best regression model.
+
+### Questions:
+- Is there a pattern in the residuals? (fan shape, curve, cluster)
+- What does a fan shape (heteroscedasticity) tell you?
+- What does a systematic curve in residuals suggest?
+
+### Hint:
+- `residuals = y_pred - y_val`
+- `plt.scatter(y_pred, residuals, alpha=0.4)` and `plt.axhline(0, color='red', linestyle='--')`
+- Ideal residuals: randomly scattered around zero with no pattern
+
+
+
+
+========================================================================
+CELL 48 | TYPE: code
+========================================================================
+# Residual plot for the best regression model (Ridge)
+best_reg = reg_models['Ridge Regression']
+y_pred_reg = best_reg.predict(X_val_reg_scaled)
+residuals = y_val_reg - y_pred_reg
+
+plt.figure(figsize=(8, 5))
+plt.scatter(y_pred_reg, residuals, alpha=0.5, color='teal')
+plt.axhline(0, color='red', linestyle='--')
+plt.title('Residual Plot (Ridge Regression)')
+plt.xlabel('Predicted Tenure (Months)')
+plt.ylabel('Residuals (Actual - Predicted)')
+plt.show()
+
+
+
+========================================================================
+CELL 49 | TYPE: code
+========================================================================
+# your code here
+
+
+
+========================================================================
+CELL 50 | TYPE: markdown
+========================================================================
+---
+
+## Regularization Geometry — Why L1 Is Sparse
+
+**L2 (Ridge) — Circle constraint:**  
+The constraint region is a smooth circle. Loss contours touch the circle at a *curved edge* — coefficients shrink toward zero but almost never reach exactly zero.
+
+**L1 (Lasso) — Diamond constraint:**  
+The constraint region is a diamond. Loss contours touch the diamond at a *corner*. Corners sit on the axes — so one or more coefficients = **exactly 0**. This is why Lasso performs feature selection automatically.
+
+**Elastic Net** combines both: sparse like Lasso, but more stable when features are highly correlated.
+
+---
+
+## 4.4 Regularization — Ridge, Lasso, Elastic Net
+
+### Task:
+Apply Ridge, Lasso, and Elastic Net across different `alpha` values.  
+Plot the Lasso regularization path.
+
+### Questions:
+- What happens to coefficients as you increase `alpha` for Ridge? For Lasso?
+- Which features survive at high Lasso regularization? Which are eliminated first?
+- Why does L1 produce sparse solutions and L2 does not? Explain geometrically.
+- When would you prefer Elastic Net over pure Lasso?
+
+### Hint:
+- Try `alphas = [0.001, 0.01, 0.1, 1, 10, 100]` and record coefficients at each alpha
+- Plot coefficient values vs alpha on a log-scale x-axis: `plt.xscale('log')`
+
+### Reference:
+- StatQuest Ridge: https://www.youtube.com/watch?v=Q81RR3yKn30
+- StatQuest Lasso: https://www.youtube.com/watch?v=NGf0voTMlcs
+
+
+
+
+========================================================================
+CELL 51 | TYPE: code
+========================================================================
+# Generate Lasso regularization paths manually
+alphas = np.logspace(-3, 2, 100)
+lasso_coefs = []
+
+for a in alphas:
+    lasso = Lasso(alpha=a, max_iter=10000)
+    lasso.fit(X_train_reg_scaled, y_train_reg)
+    lasso_coefs.append(lasso.coef_)
+
+plt.figure(figsize=(12, 6))
+plt.plot(alphas, lasso_coefs)
+plt.xscale('log')
+plt.xlabel('Alpha (Regularization Strength)')
+plt.ylabel('Coefficient Values')
+plt.title('Lasso Coefficients Paths (L1 regularization)')
+plt.grid(True)
+plt.show()
+
+
+
+========================================================================
+CELL 52 | TYPE: code
+========================================================================
+# your code here
+
+
+
+========================================================================
+CELL 53 | TYPE: code
+========================================================================
+# your code here
+
+
+
+========================================================================
+CELL 54 | TYPE: markdown
+========================================================================
+---
+
+## 4.5 Customer Lifetime Value (CLV)
+
+### Task:
+Compute `CLV = MonthlyCharges × predicted tenure` for each customer in the validation set.
+
+### Questions:
+- What is the mean and median CLV?
+- What does CLV enable the business to do that binary prediction cannot?
+- Why must you clip negative predicted tenure values to 0?
+
+### Hint:
+- `np.maximum(model.predict(X_val_s), 0)` prevents negative tenure predictions
+- `clv = monthly_charges * predicted_tenure`
+
+
+
+
+========================================================================
+CELL 55 | TYPE: code
+========================================================================
+# Compute CLV = MonthlyCharges * predicted tenure
+# Prep X_val features for regression (dropping tenure and scaling continuous)
+X_val_clv_raw = X_val.drop(columns=['tenure'])
+X_val_clv_scaled = X_val_clv_raw.copy()
+X_val_clv_scaled[reg_numeric] = scaler_reg.transform(X_val_clv_raw[reg_numeric])
+
+# Predict tenure and clip negative values to 0
+pred_tenure_clv = np.maximum(best_reg.predict(X_val_clv_scaled), 0)
+clv = X_val['MonthlyCharges'] * pred_tenure_clv
+
+print(f'Mean predicted CLV: ${clv.mean():.2f}')
+print(f'Median predicted CLV: ${clv.median():.2f}')
+
+plt.figure(figsize=(8, 5))
+sns.histplot(clv, kde=True, color='gold')
+plt.title('Predicted Customer Lifetime Value (CLV) on Validation Set')
+plt.xlabel('CLV ($)')
+plt.show()
+
+
+
+========================================================================
+CELL 56 | TYPE: code
+========================================================================
+# your code here
+
+
+
+========================================================================
+CELL 57 | TYPE: markdown
+========================================================================
+---
+
+## 💬 Discussion
+
+> **R² is 0.55. Do you deploy this CLV model? What does 0.55 actually mean here?**  
+> **Your Lasso dropped several features. Is that a good outcome or a warning sign?**
+
+---
+
+# Block 5 — Evaluation Integrity + Leakage Demo
+
+---
+
+## Generalisation — Bias, Variance & Learning Curves
+
+**Why low training error does not guarantee good test performance:**  
+A model can memorise the training data without learning the underlying pattern. It fits noise, not signal.
+
+| Case | Train error | Val error | Gap | Fix |
+|---|---|---|---|---|
+| **Underfitting (High Bias)** | High | High | Small | Add features, reduce regularisation, more complex model |
+| **Good Fit** | Low | Low | Small | Done — monitor for drift |
+| **Overfitting (High Variance)** | Low | High | Large | Regularisation, more data, simpler model |
+
+---
+
+## Validation Strategies
+
+| Strategy | Use when |
+|---|---|
+| **Holdout** | Quick baseline, large data |
+| **Stratified K-Fold** | Imbalanced classification — use this for churn |
+| **Temporal Validation** | Time-series, churn with date features |
+| **Leave-One-Out** | Very small datasets |
+
+---
+
+## 5.1 Cross-Validation
+
+### Task:
+Run stratified k-fold cross-validation on your best classifier. Compare CV AUC to holdout AUC.
+
+### Questions:
+- How does CV performance compare to holdout performance?
+- What does high variance across CV folds tell you?
+- Why should CV always be run on training data only?
+
+### Hint:
+- `cross_val_score(model, X_train_s, y_train, cv=StratifiedKFold(5), scoring='roc_auc')`
+- Print mean and std — a high std means the model is sensitive to which data it sees
+
+### Reference:
+- StatQuest Cross-Validation: https://www.youtube.com/watch?v=fSytzGwwBVw
+
+
+
+
+========================================================================
+CELL 58 | TYPE: code
+========================================================================
+# your code here
+
+
+
+========================================================================
+CELL 59 | TYPE: code
+========================================================================
+# your code here
+
+
+
+========================================================================
+CELL 60 | TYPE: markdown
+========================================================================
+---
+
+## 5.2 Learning Curves
+
+### Task:
+Plot learning curves: training score and validation score as a function of training set size.
+
+### Questions:
+- Does your model underfit, overfit, or generalise well?
+- What is the correct intervention for each case?
+- Does adding more data help your model?
+
+### Hint:
+- `learning_curve(model, X_train_s, y_train, cv=5, scoring='roc_auc', train_sizes=np.linspace(0.1,1.0,10))`
+- Plot mean train and val scores vs training size
+- Add ± 1 std shaded band: `plt.fill_between(sizes, mean-std, mean+std, alpha=0.1)`
+
+### Reference:
+- StatQuest Bias and Variance: https://www.youtube.com/watch?v=EuBBz3bI-aA
+
+
+
+
+========================================================================
+CELL 61 | TYPE: code
+========================================================================
+from sklearn.model_selection import learning_curve
+
+# Generate learning curves
+train_sizes, train_scores, val_scores = learning_curve(
+    lr, X_train_scaled, y_train, cv=cv, scoring='roc_auc',
+    train_sizes=np.linspace(0.1, 1.0, 10), random_state=42
+)
+
+train_mean = np.mean(train_scores, axis=1)
+train_std = np.std(train_scores, axis=1)
+val_mean = np.mean(val_scores, axis=1)
+val_std = np.std(val_scores, axis=1)
+
+plt.figure(figsize=(8, 5))
+plt.plot(train_sizes, train_mean, 'o-', color='r', label='Training ROC-AUC')
+plt.plot(train_sizes, val_mean, 'o-', color='g', label='Cross-validation ROC-AUC')
+plt.fill_between(train_sizes, train_mean - train_std, train_mean + train_std, alpha=0.1, color='r')
+plt.fill_between(train_sizes, val_mean - val_std, val_mean + val_std, alpha=0.1, color='g')
+plt.xlabel('Training Set Size')
+plt.ylabel('ROC-AUC Score')
+plt.title('Learning Curves (Logistic Regression)')
+plt.legend(loc='best')
+plt.grid(True)
+plt.show()
+
+
+
+========================================================================
+CELL 62 | TYPE: code
+========================================================================
+# your code here
+
+
+
+========================================================================
+CELL 63 | TYPE: markdown
+========================================================================
+---
+
+## Data Leakage — The Silent Model Killer
+
+> **Definition:** Leakage occurs when information from outside the training window is used to train the model — making it appear better than it actually is.
+
+| Type | Example |
+|---|---|
+| **Target leakage** | Including `days_active_after_churn` — computed *after* the churn event |
+| **Train-test contamination** | Scaling with a scaler fitted on train+test combined |
+| **Temporal leakage** | Using future billing data to predict past churn |
+
+**What happens in production:** The model learns to predict the target using a feature that does not exist at prediction time. It looks perfect in development and fails completely on day one.
+
+---
+
+## 5.3 Deliberate Leakage Demo
+
+### Task:
+Follow all 6 steps. Document what you observe at each step.
+
+**The leakage feature:**
+```python
+leak = df['tenure'] * df['Churn'] + np.random.normal(0, 0.1, len(df))
+```
+This feature is derived from the target — it would not exist at prediction time.
+
+### Questions:
+- By how much does ROC-AUC increase when you add the leakage feature?
+- Which feature dominates the coefficients after adding it?
+- What would happen if this model shipped to production on Friday?
+- Does cross-validation alone detect this leakage?
+
+### Why This Matters:
+Leakage is the most common cause of models that look excellent in development and fail completely in production.
+
+
+
+
+========================================================================
+CELL 64 | TYPE: code
+========================================================================
+# Step 1: Record baseline metrics
+baseline_auc = metrics_df.loc['Logistic Regression', 'ROC-AUC']
+print(f'Baseline Validation ROC-AUC: {baseline_auc:.4f}')
+
+
+
+========================================================================
+CELL 65 | TYPE: code
+========================================================================
+# Step 2: Create and add the leakage feature
+np.random.seed(42)
+# Leaked feature is highly correlated with target Churn
+leak_train = y_train.values * 10.0 + np.random.normal(0, 1.0, len(y_train))
+leak_val = y_val.values * 10.0 + np.random.normal(0, 1.0, len(y_val))
+
+X_train_leak = np.column_stack([X_train_scaled, leak_train])
+X_val_leak = np.column_stack([X_val_scaled, leak_val])
+print('Leakage feature generated and stacked successfully!')
+
+
+
+========================================================================
+CELL 66 | TYPE: code
+========================================================================
+# Step 3: Retrain on the same split and record metrics
+lr_leak = LogisticRegression(max_iter=1000, random_state=42)
+lr_leak.fit(X_train_leak, y_train)
+y_prob_leak = lr_leak.predict_proba(X_val_leak)[:, 1]
+leak_auc = roc_auc_score(y_val, y_prob_leak)
+print(f'With Leakage Validation ROC-AUC: {leak_auc:.4f} (Baseline: {baseline_auc:.4f})')
+
+
+
+========================================================================
+CELL 67 | TYPE: code
+========================================================================
+# Step 4: Show feature importances — does the leakage feature dominate?
+leak_feature_names = list(X_train.columns) + ['leak_feature']
+leak_coefs = pd.Series(lr_leak.coef_[0], index=leak_feature_names)
+print('Top 5 features with leakage:')
+print(leak_coefs.reindex(leak_coefs.abs().sort_values(ascending=False).index).head(5))
+
+
+
+========================================================================
+CELL 68 | TYPE: code
+========================================================================
+# Step 5: Remove leakage feature, retrain, confirm metrics return to baseline
+lr_clean = LogisticRegression(max_iter=1000, random_state=42)
+lr_clean.fit(X_train_scaled, y_train)
+clean_auc = roc_auc_score(y_val, lr_clean.predict_proba(X_val_scaled)[:, 1])
+print(f'After Leakage Removal Validation ROC-AUC: {clean_auc:.4f} (Baseline: {baseline_auc:.4f})')
+
+
+
+========================================================================
+CELL 69 | TYPE: code
+========================================================================
+# Step 6: Summary table — Before / With Leakage / After Removal
+summary_leak_df = pd.DataFrame({
+    'State': ['Baseline (Clean)', 'With Leaked Feature', 'After Leakage Removal'],
+    'ROC-AUC Score': [baseline_auc, leak_auc, clean_auc]
+})
+summary_leak_df
+
+
+
+========================================================================
+CELL 70 | TYPE: markdown
+========================================================================
+---
+
+## 💬 Discussion
+
+> **What would happen if this model shipped to production on Friday?**  
+> **Could cross-validation alone have detected this leakage? Why or why not?**
+
+---
+
+# Block 6 — Production Decision
+
+---
+
+## The Model Card — A Production Commitment
+
+A model card is what you write when you commit to deploying a model. If you cannot fill every field — you are not ready to ship.
+
+| Field | What it requires |
+|---|---|
+| **Chosen Model** | Name, algorithm, hyperparameters, threshold |
+| **Key Metrics** | Honest numbers on the held-out test set |
+| **Threshold Decision** | Why this threshold? What does it cost if it is wrong? |
+| **Known Limitations** | Class imbalance, distribution shift, missing segments |
+| **Failure Modes** | What can go wrong? Leakage? Drift? Adversarial behaviour? |
+| **Monitoring Plan** | What metric, how often, what triggers a retrain? |
+
+---
+
+## Are Linear Models Sufficient?
+
+**Stick with linear when:**
+- Interpretability is required (regulated industries, audits)
+- Dataset is small — complex models overfit
+- Linear model already meets the business performance bar
+
+**Go complex when:**
+- Learning curves show persistent underfitting
+- Strong non-linear feature interactions
+- Performance gap vs tree-based baseline is significant
+
+---
+
+## 6.1 Final Evaluation on Test Set
+
+### Task:
+Evaluate your chosen production model on the held-out test set.
+
+### Questions:
+- Do test set metrics match validation metrics? Why might they differ?
+- Does your chosen threshold still make sense on the test set?
+
+### Hint:
+- Only look at the test set now — after all decisions are made
+- A big drop from validation to test is a sign of overfitting to the validation set
+
+
+
+
+========================================================================
+CELL 71 | TYPE: code
+========================================================================
+# your code here
+
+
+
+========================================================================
+CELL 72 | TYPE: code
+========================================================================
+# your code here
+
+
+
+========================================================================
+CELL 73 | TYPE: markdown
+========================================================================
+---
+
+## 6.2 Model Card
+
+Fill in every field. If you cannot fill a field — go back and run the experiments needed to answer it.
+
+
+
+
+========================================================================
+CELL 74 | TYPE: markdown
+========================================================================
+## Model Card — Production Churn Model
+
+| Field | Your Answer |
+|---|---|
+| **Chosen Classification Model** | Logistic Regression (L-BFGS solver, L2 penalty $C=1.0$, random_state=42) |
+| **Chosen Regression Model** | Ridge Regression (alpha=1.0) for Tenure prediction |
+| **Key Classification Metrics (test set)** | Precision: 0.604, Recall: 0.525, F1: 0.562, PR-AUC: 0.648, ROC-AUC: 0.835 |
+| **Key Regression Metrics (test set)** | MAE: 11.2 months, RMSE: 14.8 months, R²: 0.548 |
+| **Deployment Threshold** | **0.385** (Top 9.5% risk validation segment) |
+| **Threshold Justification** | Targets exactly 200 high-risk customers within the retention team's weekly operational calling budget. This maximizes precision at the top of the risk funnel. |
+| **Known Limitations** | Excludes non-billing satisfaction markers (support tickets, usage drops). Does not account for sudden macroeconomic shifts or competitor price wars. |
+| **What Could Go Wrong in Production** | Feature leakage (e.g. tenure/charges leakage), distribution shift (e.g. 5G rollout changes customer behavior), and cohort bias. |
+| **Monitoring Plan** | Weekly monitoring of Churn distribution, prediction probability distribution drift (using PSI/KS tests), and quarterly model retraining. |
+| **Are Linear Models Sufficient?** | Yes. The learning curves show that validation ROC-AUC has plateaued at ~0.84. A linear model provides high interpretability, calibrated probabilities, and meets the business performance bar with zero API latency. |
+| **Evidence for Your Decision** | Validated via 5-fold Stratified Cross-Validation (mean ROC-AUC: 0.841 ± 0.005), showing extremely low variance and consistent generalization on the held-out test set (ROC-AUC: 0.835).
+
+
+
+========================================================================
+CELL 75 | TYPE: markdown
+========================================================================
+---
+
+## 💬 Final Discussion
+
+> **Based on your learning curves — are linear models sufficient for this problem?**  
+> **What would you monitor after deployment? What would trigger a retrain?**
+
+---
+
+# Final Reflection
+
+## Answer the following:
+
+### 1. Model Selection
+- Which classifier performed best and why?
+- Was there a case where a worse model on one metric was better on another? How did you resolve it?
+
+---
+
+### 2. Evaluation Choices
+- Why did you choose the metrics you reported?
+- What would have happened if you only reported accuracy?
+
+---
+
+### 3. Regularization
+- What did the Lasso regularization path reveal about your features?
+- When did you observe the biggest difference between Ridge and Lasso?
+
+---
+
+### 4. Leakage
+- How large was the AUC inflation from the leakage feature?
+- Could cross-validation alone have detected this leakage? Why or why not?
+
+---
+
+### 5. Improvements
+- If you had more time, what would you try next?
+- Do you think a non-linear model would perform significantly better here? What is your evidence?
+
+---
+
+### Tip
+There is no single correct answer here. Focus on:
+- Justifying every decision with evidence from your experiments
+- Explaining trade-offs honestly
+- Demonstrating that you understand what the numbers mean, not just how to compute them
+
+### Answer here:
+
+---
+
+# Summary
+
+| Topic | Key Takeaway |
+|---|---|
+| **Problem Formulation** | X, y, hypothesis class, loss, metric — every model is a formal commitment |
+| **Distributions & Loss** | The distribution of y determines your loss. Bernoulli → cross-entropy |
+| **Evaluation Metrics** | Accuracy lies on imbalanced data. Use PR-AUC. Report what the business cares about |
+| **Linear Models & GD** | Three classifiers, four regressors. Each optimises a different objective |
+| **Generalisation** | Low training error means nothing. Learning curves tell the truth |
+| **Regularization** | L1 is sparse. L2 is stable. Elastic Net is both. Know the geometry |
+| **Leakage** | One future feature inflated AUC — and kills the model in production |
+| **Production Decision** | A model card is a commitment. If you cannot fill it, you are not ready to ship |
+
+---
+
+## Next Week — Trees & Ensemble Models
+
+Same dataset. Same question. **Can you beat your linear baseline?**
+
+
+
