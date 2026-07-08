@@ -1,5 +1,5 @@
 # Fusemachines AI Fellowship 2026 — Extracted Data
-*Source: AARADHYA_MASTER_v137.md · Extracted July 3, 2026*
+*Source: AARADHYA_MASTER_v137.md · Updated July 8, 2026*
 
 ---
 
@@ -13,7 +13,7 @@
 | Start | May 4, 2026 (Wk1 Monday) |
 | End | Oct 18, 2026 (Sunday) |
 | Cadence | Mon–Sun weekly cycle, flips every Monday 00:00 NPT |
-| Current status (as of last log, June 27, 2026) | **Wk 8/24, ongoing** |
+| Current status (as of current date, July 8, 2026) | **Wk 10/24, ongoing** |
 | Week formula | `floor((today − May 4 2026) / 7) + 1`, capped at 24 |
 | Facilitator | **Season** |
 | WK8 lecture presenter | Susan Ghimire |
@@ -101,6 +101,20 @@
 Full notes archived separately: `PATCH_fuseWk8_forecasting_lecture_20260628_v2.md`
 Topics (slides 22–69): time series ordering & lag (NLP positional analogy) · trend/seasonality/noise components (additive vs multiplicative) · exponential smoothing family (Naïve→Holt-Winters, ETS notation) · AR models (lag construction) · MA models (past errors, q) · ACF/PACF (p/q/s selection rules) · stationarity (ADF/KPSS, differencing order d) · SARIMA/auto_arima/SARIMAX (7 params, AIC, exogenous constraints) · Monte Carlo uncertainty propagation · evaluation (ME, Forecast Ratio, horizon uncertainty cone).
 
+### Week 9 — NEU Steel Defect CNN Classifier + Hardening *(Built, syntax-validated; submission due July 9, 2026)*
+- **Stack:** Python · PyTorch · torchvision · scikit-learn · Optuna · Matplotlib · NumPy · Pillow
+- **Repo:** `AaradhyaDT/fuseAiF_wk9_neu_defect_cnn`
+- **Notebook:** `W9_NEU_Defect_CNN_Assignment.ipynb`
+- **Dataset:** NEU-DET surface defect classification; 6 classes (`crazing`, `inclusion`, `patches`, `pitted_surface`, `rolled-in_scale`, `scratches`), 1,440 train / 360 validation images, 200×200 RGB inputs.
+- **Normalization:** train-set mean `[0.5049536228179932, 0.5049536228179932, 0.5049536228179932]`; std `[0.10445467382669449, 0.10445467382669449, 0.10445467382669449]`.
+- **Part 0:** 2-layer `nn.Module` on flattened 120,000-dim inputs; total parameters `30,721,798`.
+- **Q4 optimizer comparison:** final validation accuracy `SGD = 0.206`, `SGD + Momentum(0.9) = 0.167`, `Adam = 0.292`.
+- **Q5 regularization ablation:** final validation loss `BatchNorm1d = 4.5459`, `Dropout(0.3) = 1.7918`; final validation accuracy `BatchNorm1d = 0.35`, `Dropout(0.3) = 0.167`.
+- **Part A CNN:** final train/val accuracy `0.986 / 0.847` after 15 epochs; `best_model.pt` saved under `assignment/`.
+- **Part B hardening:** augmentation-only + BatchNorm2d run finished at final validation accuracy `0.544`.
+- **Part C tuning:** 2×2 grid best `lr = 0.01`, `batch_size = 16`, `val_acc = 0.6361111111111111`; Optuna best `lr = 0.00029380279387035364`, `batch_size = 16`, `val_acc = 0.6333333333333333`.
+- **Execution note:** CPU-only run path is practical but slow; notebook documents the full-scale CPU estimate and keeps Optuna at a reduced budget for tractability.
+
 ---
 
 ## 3. CV-Ready Summary (verbatim block, as maintained)
@@ -115,6 +129,7 @@ Topics (slides 22–69): time series ordering & lag (NLP positional analogy) · 
 - Probabilistic models: Bayesian estimation (MLE/MAP/full Bayes), Dirichlet-multinomial inference, Gaussian process regression, probabilistic graphical models, and Bayesian logistic regression via PyMC/ArviZ/pgmpy.
 - Customer segmentation: K-Means, Hierarchical (Ward/Complete/Average/Single dendrograms), and DBSCAN on UCI Online Retail II (~500K transactions); RFM + category-ratio feature engineering; Silhouette/Davies-Bouldin/Calinski-Harabasz validation; business narrative with executive summary.
 - Forecasting: Benchmarked 9 classical-to-modern forecasters (SARIMA, Holt-Winters, Prophet, LightGBM, LSTM, XGBoost) on monthly S&P 500 data; built a 4-model ensemble beating all single models (MASE 2.44), confirmed via Diebold-Mariano significance test (p = 0.0092).
+- Computer vision: Built a PyTorch CNN for NEU steel defect classification with dataset-specific normalization, 15-epoch Part A training, augmentation/BatchNorm/Dropout hardening, and Optuna-based hyperparameter tuning; best grid validation accuracy reached 0.6361 and the final CNN checkpoint was saved as `best_model.pt`.
 
 *Note: CV label still reads "(Active) | 2026 – Present" — accurate while Wk < 24/Oct 18, 2026; update to a closed date range once the fellowship formally ends.*
 
@@ -131,6 +146,7 @@ Topics (slides 22–69): time series ordering & lag (NLP positional analogy) · 
 | 11 | Wk7 — Clustering | 8.0 | Complete — portfolio live (v113) |
 | 12 | Wk8 — Forecasting | 8.1 | Complete — portfolio **pending** |
 | 14 | Fellowship Prep Toolkit | 6.5 | Complete |
+| — | Wk9 — NEU Steel Defect CNN | — | Complete; score not yet posted in the master table |
 
 ---
 
@@ -196,6 +212,7 @@ git status && git diff --stat --cached
 ## 7. Open Items / Pending Actions (fellowship-specific)
 
 - **Portfolio trigger — Week 8 Forecasting:** not yet added to `projects.html`. Pending.
+- **Week 9 NEU Defect CNN:** notebook completed and `best_model.pt` saved under `assignment/`; submission due July 9, 2026.
 - **Instructor feedback (APIRouter refactor):** not yet retroactively applied to any repo.
 - **Nexus repo Factor 3/11 compliance:** `.env.example` needs check; `print()` statements need replacing with `logging` — flagged before next commit (Nexus, not a fellowship repo itself, but governed by the same checklist).
 - **Project selection (post-Wk8):** upcoming — no domain/topic chosen yet as of last log.
