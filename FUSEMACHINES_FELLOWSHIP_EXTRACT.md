@@ -4,7 +4,7 @@
 
 This extract also applies to the workspace repository FuseAIF2026, which functions as the organization-level archive for the fellowship work. Each assignment is typically maintained in a separate private repository, while this repo stores the weekly notes, extracted summaries, references, and organizational materials that tie the work together.
 
-Full archive repository: https://github.com/Aaradhya-Dev-Tamrakar/FuseAIF2026
+Full archive repository: <https://github.com/Aaradhya-Dev-Tamrakar/FuseAIF2026>
 
 ---
 
