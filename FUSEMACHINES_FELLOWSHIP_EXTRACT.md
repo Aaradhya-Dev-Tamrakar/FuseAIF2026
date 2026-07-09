@@ -1,19 +1,20 @@
 # Fusemachines AI Fellowship 2026 — Extracted Data
-*Source: AARADHYA_MASTER_v137.md · Updated July 8, 2026*
+
+***Source: AARADHYA_MASTER_v137.md · Updated July 9, 2026***
 
 ---
 
 ## 1. Program Facts
 
 | Field | Value |
-|---|---|
+| --- | --- | --- |
 | Program | Fusemachines AI Fellowship 2026 |
 | Role | Fuse AI Fellow |
 | Duration | 24 weeks (6 months) |
 | Start | May 4, 2026 (Wk1 Monday) |
 | End | Oct 18, 2026 (Sunday) |
 | Cadence | Mon–Sun weekly cycle, flips every Monday 00:00 NPT |
-| Current status (as of current date, July 8, 2026) | **Wk 10/24, ongoing** |
+| Current status (as of current date, July 9, 2026) | **Wk 10/24, ongoing** |
 | Week formula | `floor((today − May 4 2026) / 7) + 1`, capped at 24 |
 | Facilitator | **Season** |
 | WK8 lecture presenter | Susan Ghimire |
@@ -27,12 +28,14 @@
 ## 2. Week-by-Week Deliverables
 
 ### Week 2 — Customer REST API *(no standalone project entry; CV bullet only)*
+
 - Containerized customer REST API: FastAPI + PostgreSQL + Docker, 4-layer architecture, asyncio concurrency.
 - **Instructor feedback (week unconfirmed, likely Wk 2/3/4):** monolithic single-file API structure flagged — declutter into subfolders, use separate `APIRouter` per domain (e.g. `routers/auth.py`, `routers/query.py`, `routers/results.py`) instead of flat root.
   - **Apply-forward rule:** all new FastAPI projects (fellowship or Nexus) must use `APIRouter` per domain from day one. No monolithic `main.py`. Minimum structure: `app/routers/`, `app/models/`, `app/db/`, `app/core/`.
   - Status: ⏳ not yet retroactively applied.
 
 ### Week 3 — Text-to-SQL Agentic Pipeline *(Completed — Rating 8.7/10)*
+
 - **Stack:** Python · FastAPI · Streamlit · PostgreSQL · Docker · OpenAI API · Prompt Chaining
 - Production-grade Text-to-SQL pipeline + state-based FastAPI SQL Agent over `classicmodels` PostgreSQL DB.
 - Modular workflow: Planner → Generator → Validator → Executor → Summarizer, self-correction up to 3 retries.
@@ -42,6 +45,7 @@
 - Repo: `AaradhyaDT/fuseAiF_wk3_text2sql`
 
 ### Week 4 — Telco Customer Churn & CLV ML Pipeline *(Completed — Rating 8.5/10)*
+
 - **Stack:** Python · Scikit-learn · Pandas · NumPy · Matplotlib · Seaborn · Papermill
 - End-to-end classification + regression pipeline for churn and CLV.
 - Stratified 70/15/15 split; Logistic Regression / Ridge / SGD classifiers benchmarked.
@@ -52,6 +56,7 @@
 - Repo: `AaradhyaDT/FUSE_AIF_2026_M1` (under `WK4/`)
 
 ### Week 5 — Telco Churn Tree-Based Ensemble Pipeline *(Completed — Rating 9.0/10, highest fellowship score)*
+
 - **Stack:** Python · Scikit-learn · XGBoost · imbalanced-learn · SHAP · Joblib · Matplotlib
 - Dataset: Telco Customer Churn, 7,043 rows, ~27% positive rate.
 - Random Forest + XGBoost vs. naïve baseline; AUROC/Precision/Recall/F1 (accuracy trap exposed).
@@ -64,9 +69,11 @@
 - Repo: `AaradhyaDT/fuseAiF_wk5_telco_churn_ensembles`
 
 ### Fellowship Prep Toolkit *(Completed, Rating 6.5/10 — supplementary, not a numbered week)*
+
 - 50-question mock exam widget + 7-tab interactive HTML cheatsheet (linear algebra, calculus, probability, Python/CS, ML).
 
 ### Week 6 — Probabilistic Models Assignment *(Completed — Rating 8.2/10)*
+
 - **Stack:** Python · PyMC · ArviZ · pgmpy · scikit-learn · Pandas · Matplotlib · Seaborn
 - Repo structure: `W6_Probabilistic_Models_Assignment.ipynb`, `W6_TaskPlan.md`, `TASK_PROGRESS.md`, `W6_Probabilistic_Models_Resource_Guide.pdf`.
 - Deliverables: Bayesian estimation (MLE/MAP/full Bayes), sequential updating, Dirichlet-multinomial inference, multivariate Gaussian conditioning, probabilistic graphical models, Gaussian process regression, PyMC Bayesian logistic regression.
@@ -74,6 +81,7 @@
 - Portfolio entry: live on `aaradhyadtmr.github.io`.
 
 ### Week 7 — Clustering / Customer Segmentation Assignment *(Completed June 12, 2026 — Rating 8.0/10)*
+
 - **Stack:** Python · scikit-learn · scipy · Pandas · NumPy · Matplotlib · Seaborn · NearestNeighbors
 - **Dataset:** UCI Online Retail II (~500,000 transactions, `Year 2010-2011` sheet)
 - **Repo:** `AaradhyaDT/fuseAiF_wk7_customer_segmentation`
@@ -84,6 +92,7 @@
 - Portfolio: live in `projects.html` (v113).
 
 ### Week 8 — Forecasting Assignment *(Completed June 27, 2026 — Rating 8.1/10)*
+
 - **Stack:** Python · statsmodels (SARIMA/SARIMAX, Holt-Winters) · Prophet · LightGBM · TensorFlow/Keras (LSTM) · XGBoost · scikit-learn · Pandas · NumPy · Matplotlib
 - **Dataset:** Monthly S&P 500 Index, 1990–2024 (420 months), nominally via `yfinance`
 - **Repo:** `AaradhyaDT/fuseAiF_wk8_sp500_forecasting`
@@ -102,6 +111,7 @@ Full notes archived separately: `PATCH_fuseWk8_forecasting_lecture_20260628_v2.m
 Topics (slides 22–69): time series ordering & lag (NLP positional analogy) · trend/seasonality/noise components (additive vs multiplicative) · exponential smoothing family (Naïve→Holt-Winters, ETS notation) · AR models (lag construction) · MA models (past errors, q) · ACF/PACF (p/q/s selection rules) · stationarity (ADF/KPSS, differencing order d) · SARIMA/auto_arima/SARIMAX (7 params, AIC, exogenous constraints) · Monte Carlo uncertainty propagation · evaluation (ME, Forecast Ratio, horizon uncertainty cone).
 
 ### Week 9 — NEU Steel Defect CNN Classifier + Hardening *(Built, syntax-validated; submission due July 9, 2026)*
+
 - **Stack:** Python · PyTorch · torchvision · scikit-learn · Optuna · Matplotlib · NumPy · Pillow
 - **Repo:** `AaradhyaDT/fuseAiF_wk9_neu_defect_cnn`
 - **Notebook:** `W9_NEU_Defect_CNN_Assignment.ipynb`
@@ -114,6 +124,7 @@ Topics (slides 22–69): time series ordering & lag (NLP positional analogy) · 
 - **Part B hardening:** augmentation-only + BatchNorm2d run finished at final validation accuracy `0.544`.
 - **Part C tuning:** 2×2 grid best `lr = 0.01`, `batch_size = 16`, `val_acc = 0.6361111111111111`; Optuna best `lr = 0.00029380279387035364`, `batch_size = 16`, `val_acc = 0.6333333333333333`.
 - **Execution note:** CPU-only run path is practical but slow; notebook documents the full-scale CPU estimate and keeps Optuna at a reduced budget for tractability.
+- **Colab/Kaggle runtime path added (verified this session, July 9):** notebook now includes a Kaggle-download cell (installs `kaggle`, uploads `kaggle.json`, downloads+unzips NEU-DET, auto-detects the extracted layout, and copies it into `data/NEU-DET/{train,validation}/images/`) plus a `DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")` fix, replacing the earlier hardcoded-CPU line — both confirmed present in the uploaded `.ipynb`. Closes out the two items flagged pending in the prior Kaggle-setup session export. **Submission-status not confirmed this session** — due date (July 9, 2026) has arrived; needs a status update once actually submitted/graded.
 
 ---
 
@@ -121,6 +132,7 @@ Topics (slides 22–69): time series ordering & lag (NLP positional analogy) · 
 
 **Fuse AI Fellow — Fusemachines AI Fellowship 2026 (Active) | 2026 – Present**
 *Fusemachines*
+
 - Admission: Passed entrance examination (March 2026) covering linear algebra, calculus, probability, Python, and ML.
 - REST API: Built a containerized customer REST API: FastAPI + PostgreSQL + Docker (4-layer architecture, asyncio concurrency).
 - Text-to-SQL agent: Developed a five-stage agentic pipeline (Planner → Generator → Validator → Executor → Summarizer) achieving 100% execution success and 100% accuracy on a 50-question benchmark.
@@ -138,7 +150,7 @@ Topics (slides 22–69): time series ordering & lag (NLP positional analogy) · 
 ## 4. Project Ranking (fellowship entries only, from master v7 table)
 
 | Rank | Item | Score | Status |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | 2 | Wk5 — Telco Tree-Based Ensemble | 9.0 | Complete |
 | 3 | Wk3 — Text-to-SQL Pipeline | 8.7 | Complete |
 | 4 | Wk4 — Telco Churn & CLV Pipeline | 8.5 | Complete |
@@ -153,10 +165,11 @@ Topics (slides 22–69): time series ordering & lag (NLP positional analogy) · 
 ## 5. Dev Standards Gate — Applies to All Fellowship Repos
 
 ### 12-Factor Pre-Commit Checklist (§16 in master)
+
 Run before every final `git commit` on any `fuseAiF_*` repo (also applies to Nexus).
 
 | # | Factor | Check |
-|---|---|---|
+| --- | --- | --- | --- |
 | 1 | Codebase | One repo/project, no stray local branches, `git status` clean except staged. |
 | 2 | Dependencies | `requirements.txt`/`pyproject.toml` pinned and current; verify via clean-venv install. |
 | 3 | Config | No hardcoded secrets/keys/paths; `.env` gitignored, `.env.example` committed. |
@@ -171,6 +184,7 @@ Run before every final `git commit` on any `fuseAiF_*` repo (also applies to Nex
 | 12 | Admin processes | Migrations/seed/fix scripts standalone under `scripts/`, documented, never in app startup. |
 
 **Quick pre-commit sequence:**
+
 ```bash
 git diff --cached | grep -iE "(api_key|password|secret|token)" && echo "⚠ SECRET DETECTED" || echo "✅ No secrets"
 git diff --cached --name-only | grep "\.env$" && echo "⚠ .env STAGED — remove it" || echo "✅ .env clean"
@@ -180,16 +194,18 @@ git status && git diff --stat --cached
 ```
 
 **Per-repo compliance status:**
+
 | Repo | Factor 2 (deps) | Factor 3 (config) | Factor 11 (logs) | Notes |
-|---|---|---|---|---|
+| --- | --- | --- | --- | --- | --- | --- |
 | `fuseAiF_wk3_text2sql` | ✅ | ✅ | ✅ | Docker + .env pattern established |
 | `fuseAiF_wk5_telco_churn_ensembles` | ✅ | N/A | ✅ | No secrets; notebook-based |
 | `fuseAiF_wk7_customer_segmentation` | ✅ | N/A | ✅ | `.xlsx` gitignored |
 | Future fellowship repos | — | — | — | Start from this checklist |
 
 ### Instructor Feedback Log
+
 | Week | Feedback | Status |
-|---|---|---|
+| --- | --- | --- | --- |
 | Wk 2/3/4 (unconfirmed exact week) | Declutter into subfolders; separate `APIRouter` per domain instead of monolithic single-file API. | ⏳ Not yet retroactively applied — apply to next API-based project. |
 
 ---
@@ -199,6 +215,7 @@ git status && git diff --stat --cached
 **Activates on any of:** repo/filename matching `fuseAiF_*`; mention of "fellowship"/"Fusemachines"/"fuse week"/a week number in that context; a `PATCH_fuse*.md` upload; secondary triggers (CV update, portfolio HTML update, LinkedIn update).
 
 **Order of operations when triggered:**
+
 1. Compute current Fuse week: `floor((today − May 4 2026) / 7) + 1`, capped at 24.
 2. Identify which week's repo the session concerns (filename/message).
 3. Check for an uploaded `PATCH_*.md` — if present, treat as primary source of truth for that week; run patch-merge mode (read patch meta → apply facts to Projects/Fellowship history → flag conflicts → produce changelog entry).
@@ -212,7 +229,7 @@ git status && git diff --stat --cached
 ## 7. Open Items / Pending Actions (fellowship-specific)
 
 - **Portfolio trigger — Week 8 Forecasting:** not yet added to `projects.html`. Pending.
-- **Week 9 NEU Defect CNN:** notebook completed and `best_model.pt` saved under `assignment/`; submission due July 9, 2026.
+- **Week 9 NEU Defect CNN:** notebook completed, `best_model.pt` saved under `assignment/`, and Colab/Kaggle runtime path (Kaggle-download cell + CUDA auto-detect) verified present as of July 9, 2026. **Due today (July 9, 2026) — submission not yet confirmed.**
 - **Instructor feedback (APIRouter refactor):** not yet retroactively applied to any repo.
 - **Nexus repo Factor 3/11 compliance:** `.env.example` needs check; `print()` statements need replacing with `logging` — flagged before next commit (Nexus, not a fellowship repo itself, but governed by the same checklist).
 - **Project selection (post-Wk8):** upcoming — no domain/topic chosen yet as of last log.

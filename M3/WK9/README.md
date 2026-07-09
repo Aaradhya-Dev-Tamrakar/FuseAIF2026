@@ -2,16 +2,27 @@
 
 Fusemachines AI Fellowship 2026 · Week 9 Neural Network Assignment
 
+This repository contains the Week 9 deliverable for the Fusemachines AI Fellowship 2026. The work focuses on building and hardening a PyTorch CNN for NEU surface-defect classification, following the assignment’s Part 0/A/B/C structure and the fellowship’s Week 9 submission workflow.
+
 **Notebook:** `W9_NEU_Defect_CNN_Assignment.ipynb`
-**Status:** Built, syntax-validated, all code paths smoke-tested on reduced-scale runs. The notebook is complete as a deliverable; the remaining optional step is a full-scale rerun if you want benchmark numbers instead of the practical CPU-budget settings used here.
+**Status:** Built, syntax-validated, and executed on a T4 GPU runtime in Google Colab. The notebook is complete as a deliverable; the remaining optional step is a local rerun if you want to reproduce the same workflow outside Colab.
 **Due:** 9 Jul 2026, 20:45 NPT
+
+## Project context
+
+- **Fellowship context:** Week 9 of a 24-week Fusemachines AI Fellowship program.
+- **Task focus:** classify steel surface defects from the NEU-DET dataset into 6 classes: `crazing`, `inclusion`, `patches`, `pitted_surface`, `rolled-in_scale`, and `scratches`.
+- **Stack:** PyTorch, torchvision, scikit-learn, Optuna, Matplotlib, NumPy, and Pillow.
+- **Notebook coverage:** Part 0 foundations, Part A CNN training, Part B hardening, and Part C tuning.
+- **Key artifacts:** saved model checkpoint in `assignment/best_model.pt`, generated plots in `plots/`, and supporting notes in `docs/`.
+- **Runtime support:** the notebook includes a Colab/Kaggle-friendly dataset download path and CUDA auto-detection, so it can run in a GPU-backed notebook environment without manual path rewrites.
 
 ## Contents
 
 - **Part 0** (Qs 1–5): NN foundations on flattened NEU images — 2-layer `nn.Module`, ReLU vs Sigmoid, CE vs MSE justification, SGD/Momentum/Adam + GPU memory estimate, BatchNorm1d vs Dropout ablation.
 - **Part A** (Qs 1–6): CNN defect classifier — `ImageFolder` pipeline, dataset-computed normalization, Conv→ReLU→MaxPool ×2 architecture, 15-epoch training loop, curve analysis, per-class F1 + misclassified crazing/patches inspection.
 - **Part B** (Qs 7–11): Hardening — train-only augmentation, BatchNorm2d, Dropout(0.4), cumulative comparison plot, written reflection.
-- **Part C** (Qs 12–15): Tuning — 2×2 grid search, results table, StepLR scheduler, Optuna Bayesian search (12 trials).
+- **Part C** (Qs 12–15): Tuning — 2×2 grid search, results table, StepLR scheduler, Optuna Bayesian search (4 trials).
 
 ## Setup
 
@@ -21,25 +32,32 @@ Python 3.12.10 is the current local environment version used for this WK9 setup.
 pip install torch torchvision optuna scikit-learn matplotlib numpy pillow --break-system-packages --no-cache-dir
 ```
 
-Download the NEU-DET dataset from [Kaggle: NEU Surface Defect Database](https://www.kaggle.com/datasets/kaustubhdikshit/neu-surface-defect-database?authuser=0), then unzip `archive.zip` into `data/NEU-DET/` before running — expects `data/NEU-DET/{train,validation}/images/<class>/`.
+Download the NEU-DET dataset from [Kaggle: NEU Surface Defect Database](https://www.kaggle.com/datasets/kaustubhdikshit/neu-surface-defect-database?authuser=0), then unzip `archive.zip` into `data/NEU-DET/` before running — expected layout is `data/NEU-DET/{train,validation}/images/<class>/`.
 
-This notebook auto-detects CUDA only via `torch.cuda.is_available()`, so Intel Arc will not be used automatically by this setup. If you want GPU acceleration on Intel Arc, you will need a compatible accelerator backend; otherwise, run on CPU and no code changes are required.
+This notebook auto-detects CUDA via `torch.cuda.is_available()`, so it will use GPU when available. The reference execution was done on a Colab T4 GPU runtime, and the notebook is written to work without code changes on either GPU or CPU environments.
 
 ## Execution note
 
-**CPU-only full-scale run time: ~172 minutes** (Part 0: ~29min for 140 total epochs across Qs 2/4/5; Part A/B/C CNN training: ~143min for 246 total epochs, dominated by the 96-epoch-equivalent Optuna search in Q15). The notebook was finalized with reduced-budget tuning settings in Q14/Q15 so it stays practical on CPU; if you want the original full-budget benchmark, rerun those cells on a GPU (e.g. Colab). Every cell's logic has been independently smoke-tested at reduced epoch counts/data subsets to confirm correctness before delivery; the only expected differences at full scale are the actual accuracy numbers and total wall time, not runtime errors.
+**Reference runtime:** executed on a Google Colab T4 GPU runtime. The notebook was finalized with reduced-budget tuning settings in Q14/Q15 so it remains practical on GPU-backed Colab runs while still producing the full assignment workflow. If you want the original full-budget benchmark, rerun those cells on a stronger or longer-running GPU environment.
 
-If speed is needed and no GPU is available, the fastest lever is cutting Q15's Optuna `N_TRIALS` (currently 12) and/or its per-trial `epochs` (currently 8) — that cell alone accounts for roughly 56% of total projected runtime.
+For local runs, the main speed lever remains Q12's grid search — reduce `EPOCHS_C` (currently 15) for the 2×2 sweep, or shrink the grid itself — since it is the single largest contributor to the Part A/B/C training budget. Q15's Optuna search (`N_TRIALS=4`, `epochs=4` per trial) is already at a minimal budget and is no longer a major runtime lever.
+
+The notebook also includes the Kaggle/Colab download workflow that was verified during the fellowship session: it installs `kaggle`, uploads `kaggle.json`, downloads and unzips the NEU-DET archive, and places the extracted images into the expected dataset folders under `data/NEU-DET/`.
+
+For quick orientation, start with the notebook, then use the task plan and status notes in [docs/W9_TaskPlan.md](docs/W9_TaskPlan.md) and [docs/Final_task.md](docs/Final_task.md) for context.
 
 ## Repo structure
 
-```
+```text
 fuseAiF_wk9_neu_defect_cnn/
-├── data/NEU-DET/                          # dataset (gitignored)
+├── data/NEU-DET/                          # extracted dataset (gitignored)
 ├── W9_NEU_Defect_CNN_Assignment.ipynb     # main deliverable
-├── plots/                                 # populated on execution
-├── assignment/                            # best_model.pt saved on execution
-├── docs/W9_TaskPlan.md                    # planning doc
+├── assignment/                            # saved artifacts such as best_model.pt
+├── plots/                                 # exported figures generated by the notebook
+├── docs/                                  # task plan, final notes, and reference materials
+│   ├── W9_TaskPlan.md
+│   ├── Final_task.md
+│   └── resources/                         # class materials and reference PDFs
 ├── misc/                                  # scratch, not graded
 ├── README.md
 ├── LICENSE
