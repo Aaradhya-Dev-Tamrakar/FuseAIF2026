@@ -2,6 +2,10 @@
 
 ***Source: AARADHYA_MASTER_v137.md · Updated July 9, 2026***
 
+This extract also applies to the workspace repository FuseAIF2026, which functions as the organization-level archive for the fellowship work. Each assignment is typically maintained in a separate private repository, while this repo stores the weekly notes, extracted summaries, references, and organizational materials that tie the work together.
+
+Full archive repository: https://github.com/Aaradhya-Dev-Tamrakar/FuseAIF2026
+
 ---
 
 ## 1. Program Facts
@@ -26,6 +30,12 @@
 ---
 
 ## 2. Week-by-Week Deliverables
+
+### Repository Context — FuseAIF2026
+
+- This repository is not the primary coding home for each fellowship assignment; it is the organizational archive and reference hub.
+- The separate private repos hold the main implementation work, notebooks, and submission artifacts for each week.
+- FuseAIF2026 keeps the extracted notes, summaries, assignment index, and supporting documentation for the broader fellowship journey.
 
 ### Week 2 — Customer REST API *(no standalone project entry; CV bullet only)*
 
@@ -227,6 +237,14 @@ git status && git diff --stat --cached
 ---
 
 ## 7. Open Items / Pending Actions (fellowship-specific)
+
+- **Repository role clarification:** this workspace should be treated as the organization archive for the fellowship work, with private assignment repos as the execution repositories.
+- **Portfolio trigger — Week 8 Forecasting:** not yet added to `projects.html`. Pending.
+- **Week 9 NEU Defect CNN:** notebook completed, `best_model.pt` saved under `assignment/`, and Colab/Kaggle runtime path (Kaggle-download cell + CUDA auto-detect) verified present as of July 9, 2026. **Due today (July 9, 2026) — submission not yet confirmed.**
+- **Instructor feedback (APIRouter refactor):** not yet retroactively applied to any repo.
+- **Nexus repo Factor 3/11 compliance:** `.env.example` needs check; `print()` statements need replacing with `logging` — flagged before next commit (Nexus, not a fellowship repo itself, but governed by the same checklist).
+- **Project selection (post-Wk8):** upcoming — no domain/topic chosen yet as of last log.
+- **CV status label:** still reads "(Active) | 2026 – Present" — will need a closed date range after Oct 18, 2026.
 
 - **Portfolio trigger — Week 8 Forecasting:** not yet added to `projects.html`. Pending.
 - **Week 9 NEU Defect CNN:** notebook completed, `best_model.pt` saved under `assignment/`, and Colab/Kaggle runtime path (Kaggle-download cell + CUDA auto-detect) verified present as of July 9, 2026. **Due today (July 9, 2026) — submission not yet confirmed.**
