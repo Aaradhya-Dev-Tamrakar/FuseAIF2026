@@ -7,7 +7,7 @@ This repository is currently tracking the weekly deliverables from the program, 
 ## Fellowship Snapshot
 
 - Program: Fusemachines AI Fellowship 2026
-- Current status: Week 10/24, ongoing as of July 9, 2026
+- Current status: Week 10/24, completed as of July 10, 2026
 - Core focus areas: data wrangling, SQL, APIs, agentic text-to-SQL systems, classical machine learning, probabilistic modeling, clustering, forecasting, and deep learning
 - Detailed program notes: [FUSEMACHINES_FELLOWSHIP_EXTRACT.md](FUSEMACHINES_FELLOWSHIP_EXTRACT.md)
 
@@ -23,7 +23,8 @@ This repository acts as the organizational archive for the fellowship work. The 
 - `M2/WK6/` - archive notes and materials for the probabilistic modeling assignment.
 - `M2/WK7/` - archive notes and materials for the customer segmentation and clustering assignment.
 - `M2/WK8/` - archive notes and materials for the forecasting assignment.
-- `M3/WK9/` - archive notes and materials for the deep learning and computer vision assignment.
+- `M3/WK9/` - archive notes and materials for the steel defect classifier assignment.
+- `M3/WK10/` - archive notes and materials for the image processing assignment.
 
 ## Completed Weekly Projects
 
@@ -34,6 +35,7 @@ This repository acts as the organizational archive for the fellowship work. The 
 - Week 7: clustering and customer segmentation on online retail transaction data.
 - Week 8: forecasting benchmark on S&P 500 with classical and modern time-series models.
 - Week 9: CNN-based steel defect classifier with augmentation, regularization, and tuning experiments.
+- Week 10: image processing workflow with HSV segmentation, custom Canny edge detection, and Hough circle fruit detection.
 
 ## Weekly Readmes
 
@@ -47,6 +49,7 @@ Each week folder includes its own README with local project context, setup notes
 - [M2/WK7/README.md](M2/WK7/README.md)
 - [M2/WK8/README.md](M2/WK8/README.md)
 - [M3/WK9/README.md](M3/WK9/README.md)
+- [M3/WK10/README.md](M3/WK10/README.md)
 
 ## Top-Level Contents
 
