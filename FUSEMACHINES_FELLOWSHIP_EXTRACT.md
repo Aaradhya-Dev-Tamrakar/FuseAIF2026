@@ -6,8 +6,7 @@
 *v4 update (July 10, 2026, same session): New **§2.5 Raw Classroom Grade Table** added — a full-gradebook screenshot surfaced 11 quiz/assignment entries never previously logged in any extract version or the master profile, several sitting underneath the numbered weekly projects already tracked in §2. Confirmed as fact by Aaradhya. Includes two unresolved flags: whether "W4: Linear Model Assignment"/"Linear Model Quiz Assignment" are the same deliverable as the tracked Week 4 project or a separate sub-item (content doesn't obviously match), and two generically-named rows ("Quiz"/"Assignment," both due 31 May) not mapped to any tracked week. Everything else in this extraction remains as confirmed in v2/v3 and is left untouched.*
 *v5 update (July 11, 2026): Week 9's build-level metrics — flagged in v3/v4 as **user-reported, not independently verified** — checked directly against the executed notebook (`W9_NEU_Defect_CNN_Assignment.ipynb`, uploaded this session; 30/70 cells carry real execution output, confirming it's an actually-run notebook, not a task plan). **Four of five previously-logged figures were wrong, not just unconfirmed** — each traces to a real number in the notebook, just the wrong epoch/variant: Part A final train/val acc was logged as 0.986/0.847 (actual final, epoch 15: **0.988/0.789** — 0.986 was epoch 13's train_acc; 0.847 doesn't appear anywhere in the run); Part B was logged as a single "0.544" (actual: **three separate ablations** — aug-only 0.772, aug+BN 0.564, aug+BN+dropout(0.4) 0.592 final — 0.544 is the dropout variant's *epoch-8* reading, not its final one, and it's this last variant that was saved as `best_model.pt`); Part C grid search was logged as 0.6361 (actual: **0.6028**, config lr=0.01/batch_size=32); Part C Optuna was logged as 0.6333 (actual: **0.600**, lr≈0.0157/batch_size=42 — exact hyperparameters weren't previously on record at all). Only the from-scratch NN's 30,721,798-parameter count checked out exactly. §2 Week 9 entry rewritten below with corrected, source-verified figures; superseded numbers struck rather than silently dropped, per this tracker's own convention. New in this pass, not previously tracked: a StepLR scheduler ablation inside Part C (best grid config, without vs. with StepLR: 0.508 → 0.417 — scheduler hurt performance here). **CV was not updated this session** — stays as the July 11 version (system-facts-only Wk9 bullet, no figures), by direct instruction; this correction is tracker-only.*
 *v6 update (July 21, 2026): Weeks 10 and 11 added — logged directly from cloned repo content, no `PATCH_*.md` was uploaded (§6 standard-session-mode fallback). **`fuseAiF_wk10_image_processing`**: `W10_Image_Processing_Assignment_executed.ipynb`, 17/19 code cells carry execution output; every README figure (47.3% combined-mask coverage, 96.9% custom-vs-cv2.Canny pixel agreement, 6 Hough circles, Q14 bbox) confirmed against actual notebook output, including the connected-components touching-apple separation claim verified against Q14's source code directly, not just its printed output. **`fuseAiF_wk11_vision_transformers`**: `W11_CV_Assignment_Notebook.ipynb`, 20/20 code cells carry execution counts, 19/20 carry output; every README figure (Q3 val_acc 74.1%, Q14 VAE 1,119,811 params + recon/KL trajectory, Q17 patch-embed shape (4,65,256), Q18 CLIP zero-shot 92.0%) confirmed exactly. Zero discrepancies in either week — unlike Wk9, both READMEs were accurate on first verification pass.*
-*v7 update (July 21, 2026, same session): **Capstone topic superseded** — v3/v4's "Ward office project, team-based" is no longer current. Live portfolio (`projects.html`, P-018) confirms the actual capstone as **Vision Fairness & Bias Audit**: a diagnostic tool for deployed vision classifiers running a multi-demographic test matrix, flagging statistical disparities, and outputting a compliance report (detects bias, doesn't correct it); stack AIF360, Fairlearn, FairFace, UTKFace. Two-person team with **Tisha Manandhar** (github.com/tiixsha) — resolves v3/v4's "other members not yet confirmed." Progress tracked as 3 phases on-site: Feasibility & Scope (done) → Test Matrix & Detection Engine → Report & Compliance Output. In Progress, no repo README yet ("full README to follow in-repo," per site). Confirmed directly by Aaradhya as correct; Ward office was superseded, not concurrent. §7's domain-fit question is now resolved by this: capstone is squarely computer-vision, directly continuous with Wk10/Wk11's CV work (§8's "pick a topic where something clicked" directive is satisfied on its face — Aaradhya's two most recent, cleanly-verified weeks are both CV).*
-*v8 update (July 21, 2026, same session): **Week 6 fully reworked and re-verified, superseding v7's stale entry.** At session start, `fuseAiF_wk6_probabilistic_models` still matched v7's logged repo structure (`W6_TaskPlan.md`, `TASK_PROGRESS.md` present) and the notebook was **not yet executed** — zero populated `execution_count`s, confirming v7's "Completed" framing described the task-plan/repo state, not a run notebook, matching the exact same gap v5 found and fixed for Wk9. `telco_bayes_lr_v1.pkl`, logged in v7 as an existing artifact, **did not exist in the repo at session start** — it was generated in Colab mid-session and pushed after. Over the session: notebook fully executed (31/31 code cells, sequential `execution_count` 1–31, zero error outputs); repo restructured (dev-tooling scaffolding — `.agents/`, `graphify-out/`, most of `misc/`, `W6_TaskPlan.md`, a stale `requirements.txt` that was actually a Jupyter-kernel dump, never the notebook's real `pymc`/`arviz`/`pgmpy` deps — removed; `docs/` consolidated); `telco_bayes_lr_v1.pkl` (345MB / 362,171,342 bytes) added via Git LFS and confirmed as a genuine LFS pointer post-push, not a raw blob; `README.md` rewritten (prior version referenced four since-deleted files and never mentioned `Reflection.md`); `Reflection.md` written (384 words, grounded in two figures pulled directly from executed-cell output); 8 vestigial answer-template placeholder lines removed from the notebook (cells 10, 20, 28, 37, 41, 48, 51, 62 — real content already existed above every one; only leftover scaffolding text was stripped). Full detail in §2 below. **Separately, resolves a flag standing since v4**: §2.5's cut-off row ("Due 5 Jun, 22:00 • Assignments," no title, top of screenshot) is this Week 6 notebook Assignment — due date/points/facilitator (100 pts, Susan Ghimire) match exactly what the assignment page itself states. Submission channel independently confirmed the same way v3 confirmed Wk9: a Google Classroom screenshot (this session) shows "Your work: Handed in," GitHub link attached. **Important caveat, unlike Wk9's clean confirmation:** that screenshot was taken *before* this session's rework — the notebook behind the "Handed in" link was still the unexecuted skeleton at screenshot time. The GitHub-link submission mechanism means the same Classroom record now points at substantially different, since-completed content; Classroom itself was not re-checked after the rework, so "Handed in" is confirmed but the grade/score is not, mirroring Wk9's still-open "score not yet posted" gap.*
+*v7 update (July 21, 2026, same session): **Capstone topic superseded** — v3/v4's "Ward office project, team-based" is no longer current. Live portfolio (`projects.html`, P-018) confirms the actual capstone as **Vision Fairness & Bias Audit**: a diagnostic tool for deployed vision classifiers running a multi-demographic test matrix, flagging statistical disparities, and outputting a compliance report (detects bias, doesn't correct it); stack AIF360, Fairlearn, FairFace, UTKFace. Two-person team with **Tisha Manandhar** (github.com/tiixsha) — resolves v3/v4's "other members not yet confirmed." Progress tracked as 3 phases on-site: Feasibility & Scope (done) → Test Matrix & Detection Engine → Report & Compliance Output. In Progress, no repo README yet ("full README to follow in-repo," per site). Confirmed directly by Aaradhya as correct; Ward office was superseded, not concurrent. §7's domain-fit question is now resolved by this: capstone is squarely computer-vision, directly continuous with Wk10/Wk11's CV work (§8's "pick a topic where something clicked" directive is satisfied on its face — Aaradhya's two most recent, cleanly-verified weeks are both CV). Struck rather than deleted below, per this tracker's convention.*
 
 ---
 
@@ -25,7 +24,6 @@
 | Week formula | `floor((today − May 4 2026) / 7) + 1`, capped at 24 |
 | Facilitator | **Season** |
 | WK8 lecture presenter | Susan Ghimire |
-| WK6 assignment facilitator | Susan Ghimire (v8 — posted the Probabilistic Models notebook assignment itself, distinct from the WK8 lecture-presenter role above; both roles confirmed independently, not necessarily the same scope) |
 | Admission | Passed entrance exam (March 2026): linear algebra, calculus, probability, Python, ML |
 | Submission channel | Google Classroom (AI Fellowship 2026) |
 
@@ -81,21 +79,14 @@
 
 - 50-question mock exam widget + 7-tab interactive HTML cheatsheet (linear algebra, calculus, probability, Python/CS, ML).
 
-### Week 6 — Probabilistic Models & Bayesian Inference *(Rating 8.2/10 predates this session — see caveat below; notebook fully executed and repo restructured, source-verified July 21, 2026, v8)*
+### Week 6 — Probabilistic Models Assignment *(Completed — Rating 8.2/10 — source-verified July 21, 2026)*
 
-**⚠ Provenance note (v8):** the same execution/repo-state gap v5 found for Wk9 applied here — v7's "Completed" entry described a repo with `W6_TaskPlan.md`/`TASK_PROGRESS.md` still present and a notebook with zero populated `execution_count`s, i.e. task-plan/scaffolding state, not a run. `telco_bayes_lr_v1.pkl`, logged in v7 as an existing artifact, was not actually in the repo yet. Both gaps closed this session.
-
-- **Stack (confirmed):** Python · PyMC · ArviZ · pgmpy · scikit-learn · statsmodels · Pandas · NumPy · Matplotlib · Seaborn
-- **Repo (confirmed, restructured):** `AaradhyaDT/fuseAiF_wk6_probabilistic_models`, notebook `W6_Probabilistic_Models_Assignment.ipynb` — 64 cells, **31/31 code cells executed, sequential `execution_count` 1–31, zero error outputs.**
-- **Current repo structure:** `README.md` (rewritten this session — prior version referenced `W6_TaskPlan.md`/`TASK_PROGRESS.md`/`requirements.txt`, all since deleted, and never mentioned `Reflection.md`), `Reflection.md` (new), `W6_Probabilistic_Models_Assignment.ipynb`, `telco_bayes_lr_v1.pkl` (Git LFS), `docs/W6_Probabilistic_Models_Resource_Guide.pdf`, `docs/GIT_LFS_GUIDE.md`, plus `.gitattributes`/`.gitignore`/`LICENSE`/`CHANGELOG.md`. **Removed:** `.agents/`, `graphify-out/`, most of `misc/`, `W6_TaskPlan.md`, `requirements.txt` — the last of these was a stale Jupyter-kernel environment dump (`ipykernel`, `jedi`, `traitlets`...) that never actually matched the notebook's real dependencies (`pymc`/`arviz`/`pgmpy` never appeared in it); the notebook installs its own deps from its setup cell, so no `requirements.txt` is needed.
-- **Part 1 — MLE/MAP/full posterior (Beta(2,8) prior), confirmed:** Group A (M2M, large) n=3875, k=1655, rate 0.4271 → MLE 0.4271 / MAP 0.4265, pull 0.0006. **Group A_small (n=40)** k=15, rate 0.3750 → MLE 0.3750 / MAP 0.3333, **pull 0.0417 — ~70× larger than the large-group pulls**, directly demonstrating why the assignment's small-segment framing (a 40-customer contract tier) needs the full posterior, not a bare MLE. Group B (2yr, large) n=1695, k=48, rate 0.0283 → MLE 0.0283 / MAP 0.0288, pull 0.0005. Monte Carlo (10,000 samples, seed 42): **P(θ_A > θ_B) = 1.0000.**
-- **Part 6 — Bayesian logistic regression, PyMC/NUTS, confirmed:** features scaled before sampling; priors `Normal(0,2)` on β / `Normal(0,5)` on intercept, no `pm.Flat()`; **R̂ 1.000–1.001 across all 6 parameters, bulk-ESS 5,021–7,238** (both convergence thresholds cleared); trace plot rendered with populated axes. Q21 (Bayesian vs. frequentist): posterior mean **1.2932** (sd 0.1068), 94% HDI **[1.0845, 1.4920]**, vs. frequentist MLE **1.2927** — near-identical point estimates, but only the HDI supports a direct probability statement about this specific interval.
-- **Artifact:** `telco_bayes_lr_v1.pkl` — **345MB (362,171,342 bytes exact)**, PyMC `InferenceData` trace (4 chains × 2,000 draws), generated in Colab mid-session (did not exist in the repo at session start), pushed via **Git LFS** and confirmed post-push as a genuine 134-byte LFS pointer (`oid sha256:6b56735f...`), not a raw blob — would otherwise have hard-failed the push at GitHub's 100MB cap. A reload-integrity check (`pickle.load()` round-trip, chain/draw-count asserts) was added to the notebook's save cell and passes: 4 chains × 2,000 draws intact.
-- **Reflection.md (new):** 384 words. Grounded in the two figures above — Group A_small's outsized MAP/MLE pull as the concrete "MLE-only decision would have been wrong" case tied to the assignment's own VP small-segment framing, and the HDI-vs-frequentist-CI interpretation gap from Q21.
-- **Notebook hygiene:** 8 vestigial answer-template placeholder lines removed (cells 10, 20, 28, 37, 41, 48, 51, 62) — every one had real, substantive content already written above it; only leftover `> *Your answer:* Completed with...`-style scaffolding text and two bare empty prompts were stripped. Zero placeholder markers remain anywhere in the notebook post-cleanup.
-- **Submission (confirmed, with caveat):** Google Classroom shows **"Handed in,"** GitHub repo link attached, assignment posted by **Susan Ghimire**, 100 pts, due **5 Jun, 22:00**. Screenshot is from this session but **predates the rework above** — the notebook behind the link was still unexecuted at screenshot time. Classroom was not re-checked after the rework; grade/score not yet posted or confirmed. This also resolves a flag standing since §2.5/v4 — see below.
-- Deliverables covered (topic list, unchanged from v7, still accurate): Bayesian estimation (MLE/MAP/full Bayes), sequential updating, Dirichlet-multinomial inference, multivariate Gaussian conditioning, probabilistic graphical models (Bayesian Network + MRF), Gaussian process regression, PyMC Bayesian logistic regression.
-- Portfolio entry: live on `aaradhyadtmr.github.io` (not re-verified this session).
+- **Stack:** Python · PyMC · ArviZ · pgmpy · scikit-learn · Pandas · Matplotlib · Seaborn
+- Repo structure: `W6_Probabilistic_Models_Assignment.ipynb`, `W6_TaskPlan.md`, `TASK_PROGRESS.md`, `W6_Probabilistic_Models_Resource_Guide.pdf`.
+- Deliverables: Bayesian estimation (MLE/MAP/full Bayes), sequential updating, Dirichlet-multinomial inference, multivariate Gaussian conditioning, probabilistic graphical models, Gaussian process regression, PyMC Bayesian logistic regression.
+- Artifact: `telco_bayes_lr_v1.pkl` (Bayesian logistic regression trace).
+- **Verification note (v7):** an earlier pull from the `FuseAIF2026` monorepo archive showed only 8/31 code cells executed (`execution_count: null` from the sequential-updating step onward), with the repo's own `TASK_PROGRESS.md` stating execution was still pending — that copy was stale. The standalone submission repo `AaradhyaDT/fuseAiF_wk6_probabilistic_models` confirms 31/31 code cells fully executed, and the pickle-save cell's real output confirms `telco_bayes_lr_v1.pkl` genuinely exists (4 chains × 2000 draws, reload-verified). Site card (P-008) and this entry are both accurate; no changes needed to either.
+- Portfolio entry: live on `aaradhyadtmr.github.io`.
 
 ### Week 7 — Clustering / Customer Segmentation Assignment *(Completed June 12, 2026 — Rating 8.0/10)*
 
@@ -154,41 +145,170 @@ Topics (slides 22–69): time series ordering & lag (NLP positional analogy) · 
 - **Repo (confirmed):** `AaradhyaDT/fuseAiF_wk10_image_processing`, notebook `W10_Image_Processing_Assignment_executed.ipynb` — 17/19 code cells carry execution output.
 - **Dataset:** Fruits-360 via kagglehub, mapped to 6 required classes (red_apple, green_apple, banana, strawberry, orange, lime) + 3 instructor-provided images (morphology.png, chessboard.png, mixed_fruit_bowl.jpeg).
 - **Part A — Color Space & Fruit Segmentation (confirmed):** BGR/RGB channel-order explanation; per-fruit HSV `inRange()` masks; multi-class segmentation on the bowl image — combined mask covers **47.3%** of the image (only apple/banana/orange present in that bowl; strawberry/green_apple/lime absent from the scene, not a masking failure).
+- **Part B — Morphology & Denoising (confirmed):** erosion/dilation/opening/closing/gradient on `morphology.png` (thin cursive stroke — erosion nearly erases it, dilation thickens substantially, opening/closing near-inert since there are no small specks/holes to remove); Gaussian/median/bilateral filter comparison on injected noise (median best for salt-and-pepper, bilateral best edge-preservation on Gaussian noise).
+- **Part C — Edge Detection (confirmed):** Canny implemented from scratch (Sobel gradient → non-max suppression → double threshold → hysteresis); custom-vs-`cv2.Canny()` pixel agreement **96.9%**, remaining divergence attributed to `cv2.Canny()`'s internal Sobel aperture/L2gradient defaults and 8-connectivity hysteresis queues.
+- **Part D — Feature Detection (confirmed):** Harris corner detection with threshold sweep on `chessboard.png`; Hough circle transform on the bowl image, tuned for real (not synthetic-default) parameters — **6 circles detected**; full single-fruit pipeline (Q14) — HSV mask → morphological open/close → distance-transform + `connectedComponents` peak-separation for touching same-color fruit (verified against Q14's actual source: the raw HSV mask alone returns one blob spanning all 5 apples; distance-transform peaks + component labeling recovers individual fruit centers) → Canny on the isolated mask → bounding box. Output saved and confirmed: `q14_pipeline_red_apple_1.jpg`, bbox x=698 y=379 w=286 h=315.
+- **Known handling detail:** notebook normalizes the uploaded `mixed_fruit_bowl.jpeg` filename to `mixed_bowl.jpg` mid-run to resolve a dataset-naming mismatch — confirmed present in the executed run, not a bug.
+- **Not yet confirmed:** Classroom submission status/date, grading score. Repo/notebook content is source-verified; submission tracking is not.
 
-> **Note:** Wk10 Part B onward, Wk11 full entry, §2.5, §3, §4, §5, §6 unchanged from v7 — omitted here for length; carried forward as-is except the two edits below.
+### Week 11 — Computer Vision with Deep Learning / Vision Transformers *(Complete — repo-verified July 21, 2026; presenter Susan Ghimire per project guide, consistent with Wk8; submission/grading status not yet confirmed)*
+
+- **Stack (confirmed):** Python · PyTorch · torchvision · timm · onnxruntime · onnxscript · CLIP (`openai/CLIP`)
+- **Repo (confirmed):** `AaradhyaDT/fuseAiF_wk11_vision_transformers`, notebook `W11_CV_Assignment_Notebook.ipynb` — 20/20 code cells carry execution counts, 19/20 carry output (Run 4, per README; confirmed as a genuine executed run, not a task plan).
+- **Business scenario (from project guide):** Computer Vision Engineer at QuickVision AI, replacing a ~45%-accuracy HSV baseline across 500 warehouse cameras; deliverable spans 5 modules answering two questions — best model family for reliable classification, and how to onboard a new product type with zero labelled images.
+- **Module 1 — CNN Classification (Q1–Q5, confirmed):** ResNet-50 transfer learning, 20,490 trainable / 23,528,522 total params (0.087% trainable) — final val_acc **74.1%** (epoch 3 of 3; train 56.7%→73.0%→77.5%, val 69.7%→74.1%→74.1%). GradCAM implemented (Q4).
+- **Module 2 — Object Detection (Q6–Q9, confirmed):** IoU from scratch (matches expected 0.13/0.0/1.0 reference cases); NMS from scratch (kept indices [0,3], matches expected); Faster R-CNN — bus.jpg 5 detections, people.jpg 3 detections.
+- **Module 3 — Segmentation (Q10–Q13, confirmed):** DeepLabv3+ — bus.jpg → background/bus/car/person, people.jpg → background/person; pixel accuracy 1.0 (perfect synthetic mask) / 0.37 (random, ~expected 0.33); mIoU 1.0 (perfect) / matching random-baseline expectation.
+- **Module 4 — Generative / VAE (Q14–Q16, confirmed):** 1,119,811 params; 3-epoch trajectory — recon loss 170.7→123.2→87.5, KL 45.8→276.6→267.9. Latent-space interpolation visualized (Q15).
+- **Module 5 — ViT + Deployment (Q17–Q20, confirmed):** patch embedding output shape (4, 65, 256) matching expected, 64 patches = (32/4)²; CLIP zero-shot **92.0%** on 200-image test slice — real run, not the scaffold's fallback stub; ONNX export 94.2 MB, verified with onnxruntime; final comparison table + deployment memo.
+- **Notable result (confirmed, flagged in own README):** CLIP zero-shot (92.0%) outscored the fine-tuned ResNet-50 (74.1%) on this test slice — reverse of the typical zero-shot/supervised ordering. Memo's phased-deployment recommendation is driven by latency/explainability, not an assumed accuracy edge.
+- **Bugs found and fixed during execution (confirmed from README, consistent with a real debugging pass rather than a clean-first-try log):** Q4 GradCAM — `RuntimeError` on `.numpy()` from a grad-tracked tensor, fixed with `.detach()`; Q10 DeepLabv3+ — `TypeError` from a retained batch dimension in the argmax'd mask, fixed with `.squeeze(0)`; Q18 CLIP — silently fell to the scaffold's `acc_clip = 0.65` stub because `openai-clip` wasn't installed (masked `ImportError`), fixed by adding an install cell; corrected result is the real 92.0% above, not the stub value.
+- **Not yet confirmed:** Classroom submission status/date, grading score. Repo/notebook content is source-verified; submission tracking is not.
 
 ---
 
-## 2.5 Raw Classroom Grade Table — Flags
+## 2.5 Raw Classroom Grade Table *(new, added v4 — July 10, 2026, source: Google Classroom "Your work" screenshot, chronological/reverse order as shown)*
 
-**Flag resolved (v8):** the cut-off row noted below since v4 ("Rows above 'Probabilistic Models Quiz'... partially visible header text 'Due 5 Jun, 22:00 • Assignments' with no title") is **the Week 6 notebook Assignment itself** — due date, points (100), and facilitator (Susan Ghimire) all match the assignment page exactly (see §2, Week 6, "Submission" bullet). Score not visible in the original truncated screenshot; not resolved by this session's later Classroom screenshot either, since that one only showed the "Your work" submission panel, not the gradebook row. The row directly below it in the table ("Probabilistic Models Quiz | 5 Jun, 22:00 | Quiz | Handed in") remains a **separate** graded item — the quiz component, distinct from the notebook assignment.
+**Provenance:** This table reflects the Classroom gradebook directly — smaller-grained quizzes and problem sets, several of which sit *underneath* the larger numbered weekly projects already tracked in §2 above. None of these entries previously existed in any extract version or the master profile; they are wholly new as of this session, confirmed as fact by Aaradhya. Where a Classroom item name doesn't obviously map to a §2 project name (e.g. "W4: Linear Model Assignment" vs. the tracked "Week 4 — Telco Customer Churn & CLV ML Pipeline"), that's flagged rather than silently merged — these may be distinct graded sub-items within the same week rather than the same deliverable under a different name.
 
-**Remaining flags, unchanged from v4:**
+| Item | Due | Type | Score / Status |
+| --- | --- | --- | --- |
+| Wk1: Data Wrangling Problem | 4 May, 23:59 | Assignments | **100/100** |
+| Data Wrangling (Quiz) | 4 May | Quiz | Handed in |
+| Wk2 Problem Set: Software Development Concepts | 19 May | Assignments | **75/100** |
+| Agentic Software Development Quiz | 10 May | Quiz | Handed in |
+| Week3_Problem_Set_GenAI | 20 May | Assignments | **100/100** |
+| Gen AI Quiz Assignment | 18 May, 23:59 | Quiz | **31/34** |
+| Linear Model Quiz Assignment | 28 May | Quiz | **23/25** |
+| W4: Linear Model Assignment | 28 May | Assignments | **88/100** |
+| Quiz | 31 May, 09:44 | Quiz | Handed in — **done late** |
+| Assignment | 31 May, 09:44 | Assignments | Handed in |
+| Probabilistic Models Quiz | 5 Jun, 22:00 | Quiz | Handed in |
 
-- "W4: Linear Model Assignment" (88/100) and "Linear Model Quiz Assignment" (23/25), both due 28 May — same due date as the tracked §2 Week 4 project, but content doesn't obviously match; not confirmed as the same or a separate deliverable.
-- Two unlabeled rows ("Quiz" and "Assignment," both due 31 May, 09:44) — not mapped to any tracked week.
-- No score column exists for "Handed in"-only rows.
+**Flags, not resolved:**
 
-*(Full raw grade table unchanged from v7 — not reproduced here.)*
+- **"W4: Linear Model Assignment" (88/100) and "Linear Model Quiz Assignment" (23/25), both due 28 May** — same due date as the tracked §2 Week 4 project (Telco Churn & CLV Pipeline), but "Linear Model" doesn't match that project's content. Likely a separate, smaller Week 4 graded item (e.g. a foundational linear-regression exercise preceding the full churn/CLV pipeline) rather than the same deliverable — **not confirmed**, flagged for clarification rather than assumed.
+- **Two unlabeled rows ("Quiz" and "Assignment," both due 31 May, 09:44)** — generic Classroom names, no week/topic identifiable from the screenshot alone. "Quiz" marked **done late**. Not mapped to any tracked week.
+- **Rows above "Probabilistic Models Quiz" in the screenshot were cut off** (partially visible header text "Due 5 Jun, 22:00 • Assignments" with no title) — table starts from the first fully-visible row; anything above the Wk6 boundary in Classroom's list is not captured here.
+- **No score column exists for "Handed in"-only rows** — Classroom either hasn't graded them yet or they're pass/fail-style items; not assumed to be perfect scores.
 
 ---
 
-## 4. Project Ranking — Week 6 row updated
+## 3. CV-Ready Summary (verbatim block, as maintained)
+
+**Fuse AI Fellow — Fusemachines AI Fellowship 2026 (Active) | 2026 – Present**
+*Fusemachines*
+
+- Admission: Passed entrance examination (March 2026) covering linear algebra, calculus, probability, Python, and ML.
+- REST API: Built a containerized customer REST API: FastAPI + PostgreSQL + Docker (4-layer architecture, asyncio concurrency).
+- Text-to-SQL agent: Developed a five-stage agentic pipeline (Planner → Generator → Validator → Executor → Summarizer) achieving 100% execution success and 100% accuracy on a 50-question benchmark.
+- Churn & CLV modeling: End-to-end pipeline with Logistic Regression / Ridge / SGD classifiers; Stratified 5-fold CV ROC-AUC 0.841 ± 0.005; threshold-tuned for top-200 high-risk segment; Papermill automation.
+- Tree-based ensemble: Random Forest + XGBoost with ImbPipeline/SMOTE (zero leakage), SHAP explainability, GridSearch tuning, and Joblib serialization.
+- Probabilistic models: Bayesian estimation (MLE/MAP/full Bayes), Dirichlet-multinomial inference, Gaussian process regression, probabilistic graphical models, and Bayesian logistic regression via PyMC/ArviZ/pgmpy.
+- Customer segmentation: K-Means, Hierarchical (Ward/Complete/Average/Single dendrograms), and DBSCAN on UCI Online Retail II (~500K transactions); RFM + category-ratio feature engineering; Silhouette/Davies-Bouldin/Calinski-Harabasz validation; business narrative with executive summary.
+- Forecasting: Benchmarked 9 classical-to-modern forecasters (SARIMA, Holt-Winters, Prophet, LightGBM, LSTM, XGBoost) on monthly S&P 500 data; built a 4-model ensemble beating all single models (MASE 2.44), confirmed via Diebold-Mariano significance test (p = 0.0092).
+
+*Note: CV label still reads "(Active) | 2026 – Present" — accurate while Wk < 24/Oct 18, 2026; update to a closed date range once the fellowship formally ends.*
+
+---
+
+## 4. Project Ranking (fellowship entries only, from master v7 table)
 
 | Rank | Item | Score | Status |
 | --- | --- | --- | --- |
-| 5 | Wk6 — Probabilistic Models & Bayesian Inference | 8.2 | Rating predates this session; **notebook fully executed + repo restructured, source-verified July 21, 2026 (v8)**; Classroom "Handed in" confirmed but pre-rework, score not yet posted |
-
-*(All other rows unchanged from v7 — not reproduced here.)*
+| 2 | Wk5 — Telco Tree-Based Ensemble | 9.0 | Complete |
+| 3 | Wk3 — Text-to-SQL Pipeline | 8.7 | Complete |
+| 4 | Wk4 — Telco Churn & CLV Pipeline | 8.5 | Complete |
+| 5 | Wk6 — Probabilistic Models | 8.2 | Complete — portfolio live |
+| 11 | Wk7 — Clustering | 8.0 | Complete — portfolio live (v113) |
+| 12 | Wk8 — Forecasting | 8.1 | Complete — portfolio **pending** |
+| — | Wk9 — NEU Steel Defect CNN | — | Submitted July 9, 2026; build metrics source-verified (v5); Classroom score not yet posted |
+| — | Wk10 — Image Processing / FreshTrack CV | — | Repo-verified July 21, 2026 (v6); no rating assigned, no CV bullet drafted, submission/grading status not yet confirmed |
+| — | Wk11 — Vision Transformers | — | Repo-verified July 21, 2026 (v6); no rating assigned, no CV bullet drafted, submission/grading status not yet confirmed |
+| 14 | Fellowship Prep Toolkit | 6.5 | Complete |
 
 ---
 
-## 7. Open Items / Pending Actions — new item (v8)
+## 5. Dev Standards Gate — Applies to All Fellowship Repos
 
-- **Wk6 Classroom re-check (new, v8):** submission channel confirmed "Handed in" via screenshot, but that screenshot predates this session's rework (notebook was unexecuted at the time it was taken). Classroom has not been re-checked against the reworked repo/notebook. Score not yet posted.
+### 12-Factor Pre-Commit Checklist (§16 in master)
 
-*(All other open items — portfolio triggers for Wk8/10/11, APIRouter refactor, Nexus compliance, CV status label, Wk9/10/11 grading verification, capstone domain-fit — unchanged from v7, not reproduced here.)*
+Run before every final `git commit` on any `fuseAiF_*` repo (also applies to Nexus).
+
+| # | Factor | Check |
+| --- | --- | --- |
+| 1 | Codebase | One repo/project, no stray local branches, `git status` clean except staged. |
+| 2 | Dependencies | `requirements.txt`/`pyproject.toml` pinned and current; verify via clean-venv install. |
+| 3 | Config | No hardcoded secrets/keys/paths; `.env` gitignored, `.env.example` committed. |
+| 4 | Backing services | DB/API/storage paths via env vars, swappable without code change. |
+| 5 | Build/Release/Run | Dockerfile separates install from runtime; build artifacts gitignored. |
+| 6 | Processes | App stateless between requests; no unsafe module-level mutable state. |
+| 7 | Port binding | Port from env var, not hardcoded. |
+| 8 | Concurrency | No shared mutable state across `asyncio.gather`/Papermill parallel runs. |
+| 9 | Disposability | Fast cold start (<5s), graceful SIGTERM shutdown, no orphaned connections. |
+| 10 | Dev/prod parity | `docker-compose.yml` mirrors prod; Python version pinned. |
+| 11 | Logs | No stray `print()`; `logging` module, stdout, level via env var. |
+| 12 | Admin processes | Migrations/seed/fix scripts standalone under `scripts/`, documented, never in app startup. |
+
+**Quick pre-commit sequence:**
+
+```bash
+git diff --cached | grep -iE "(api_key|password|secret|token)" && echo "⚠ SECRET DETECTED" || echo "✅ No secrets"
+git diff --cached --name-only | grep "\.env$" && echo "⚠ .env STAGED — remove it" || echo "✅ .env clean"
+pip freeze > /tmp/current_reqs.txt && diff requirements.txt /tmp/current_reqs.txt | head -20
+pytest -q 2>/dev/null || echo "(no tests yet — add at least one smoke test)"
+git status && git diff --stat --cached
+```
+
+**Per-repo compliance status:**
+
+| Repo | Factor 2 (deps) | Factor 3 (config) | Factor 11 (logs) | Notes |
+| --- | --- | --- | --- | --- |
+| `fuseAiF_wk3_text2sql` | ✅ | ✅ | ✅ | Docker + .env pattern established |
+| `fuseAiF_wk5_telco_churn_ensembles` | ✅ | N/A | ✅ | No secrets; notebook-based |
+| `fuseAiF_wk7_customer_segmentation` | ✅ | N/A | ✅ | `.xlsx` gitignored |
+| Future fellowship repos | — | — | — | Start from this checklist |
+
+### Instructor Feedback Log
+
+| Week | Feedback | Status |
+| --- | --- | --- |
+| Wk 2/3/4 (unconfirmed exact week) | Declutter into subfolders; separate `APIRouter` per domain instead of monolithic single-file API. | ⏳ Not yet retroactively applied — apply to next API-based project. |
 
 ---
 
-**Note on this v8 extract:** to keep this update focused on what actually changed, §2 Wk10 (Part B onward)/Wk11, §3 (CV Summary), §5 (Dev Standards Gate), §6 (Session Protocol), and §8 (Known Constraint) are **carried forward verbatim from v7** and were not reproduced in full above — merge this file's Week 6/§2.5/§4/§7 edits into the v7 base rather than treating this as a standalone replacement.
+## 6. Fellowship Priority Trigger — Session Protocol (for future task planning)
+
+**Activates on any of:** repo/filename matching `fuseAiF_*`; mention of "fellowship"/"Fusemachines"/"fuse week"/a week number in that context; a `PATCH_fuse*.md` upload; secondary triggers (CV update, portfolio HTML update, LinkedIn update).
+
+**Order of operations when triggered:**
+
+1. Compute current Fuse week: `floor((today − May 4 2026) / 7) + 1`, capped at 24.
+2. Identify which week's repo the session concerns (filename/message).
+3. Check for an uploaded `PATCH_*.md` — if present, treat as primary source of truth for that week; run patch-merge mode (read patch meta → apply facts to Projects/Fellowship history → flag conflicts → produce changelog entry).
+4. If no patch file: standard session mode — offer to generate a patch summary at session end; apply the 12-Factor checklist gate before any `git commit` advice; track completion against the week's assignment scope.
+5. End-of-session: summarize any new repo/notebook/deliverable in patch-ready format (what was done/built/learned, mistakes, open items) for later `PATCH_*.md` generation.
+
+**Patch file naming:** `PATCH_fuseWkN_[topic]_YYYYMMDD.md` (e.g. `PATCH_fuseWk8_nlp_20260626.md`). Always include: source repo, period, generated-by, sections affected, what was done/built/learned, mistakes/corrections, open items, evidence pointers (commit hashes, notebook cells, key metrics).
+
+---
+
+## 7. Open Items / Pending Actions (fellowship-specific)
+
+- **Portfolio trigger — Week 8 Forecasting:** not yet added to `projects.html`. Pending.
+- **Portfolio trigger — Week 10/11:** not yet added to `projects.html`. Pending (new, v6).
+- **Instructor feedback (APIRouter refactor):** not yet retroactively applied to any repo.
+- **Nexus repo Factor 3/11 compliance:** `.env.example` needs check; `print()` statements need replacing with `logging` — flagged before next commit (Nexus, not a fellowship repo itself, but governed by the same checklist).
+- **Project selection (post-Wk8) — RESOLVED July 10, 2026, SUPERSEDED July 21, 2026 (v7):** ~~Capstone topic chosen: **Ward office project, team-based**~~. Confirmed capstone: **Vision Fairness & Bias Audit** — diagnostic tool for deployed vision classifiers, multi-demographic test matrix, statistical-disparity flags, compliance report (AIF360, Fairlearn, FairFace, UTKFace). Two-person team with **Tisha Manandhar** (github.com/tiixsha) — full roster now closed at 2. In Progress, phase 1 of 3 (Feasibility & Scope) done. **Domain-fit resolved by inspection:** capstone is CV, directly continuous with Wk10/Wk11 — satisfies §8's "pick a topic where something clicked" directive on its face.
+- **CV status label:** still reads "(Active) | 2026 – Present" — will need a closed date range after Oct 18, 2026.
+- **Wk9 grading/metric verification:** submission and all build-level accuracy/hyperparameter figures are source-verified (Classroom screenshot + executed notebook, v5). Still open: exact Classroom score, not yet posted.
+- **Wk10/Wk11 grading/submission verification (new, v6):** repo/notebook content source-verified directly from cloned repos. **Not verified:** Classroom submission status, due dates, "Handed in" confirmation, or grading score for either week — no Classroom screenshot was provided this session, unlike Wk9's v3/v4 verification path. Rating (x/10) also not assigned for either week — no rating was given by Aaradhya, unlike Wk3–Wk9's tracked pattern.
+- **Capstone domain-fit — RESOLVED v7:** see project-selection item above; no longer open.
+
+---
+
+## 8. Known Constraint Relevant to Future Fellowship Planning
+
+**Fellowship learning gap** (last updated June 27, 2026): Tasks are submitted on time, no online class skipped — but concepts are mostly skimmed rather than deeply internalized (fatigue, or material not clicking in a single pass). Work goes in; understanding doesn't always fully land. Risk: if the final/capstone project lands in a domain only skimmed, the gap becomes visible.
+
+**Directive carried in master profile:** pick a final project topic where something actually clicked during the weekly work, so the project forces the consolidation the weekly tasks didn't.
