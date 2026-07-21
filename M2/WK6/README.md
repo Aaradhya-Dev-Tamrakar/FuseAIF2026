@@ -1,58 +1,40 @@
 # fuseAiF_wk6_probabilistic_models
 
-## Overview
+Week 6 — Fusemachines AI Fellowship 2026. Probabilistic models and Bayesian inference, submitted via Google Classroom.
 
-This repository contains the Week 6 Fusemachines AI Fellowship assignment on probabilistic models and Bayesian inference.
+## Submission
 
-The primary deliverables are:
-
-- `W6_Probabilistic_Models_Assignment.ipynb` — Jupyter notebook for the assignment work
-- `W6_TaskPlan.md` — master task plan with questions, checks, and guidance
-- `TASK_PROGRESS.md` — task progress tracker for the week
-- `W6_Probabilistic_Models_Resource_Guide.pdf` — supporting resource guide
-- `telco_bayes_lr_v1.pkl` — saved PyMC trace artifact for Bayesian logistic regression
+| File | Contents |
+| --- | --- |
+| [`W6_Probabilistic_Models_Assignment.ipynb`](W6_Probabilistic_Models_Assignment.ipynb) | Fully executed notebook (31/31 code cells, sequential 1–31, no errors). Parts 1–6: MLE/MAP/full-posterior estimation, sequential Bayesian updating, multivariate Gaussians, Bayesian Network + MRF, Gaussian Process regression on Mauna Loa CO₂, and Bayesian logistic regression via PyMC/NUTS. |
+| [`telco_bayes_lr_v1.pkl`](telco_bayes_lr_v1.pkl) | Fitted PyMC `InferenceData` trace from Part 6 (4 chains × 2,000 draws, R̂ 1.000–1.001, bulk-ESS 5,021–7,238). Tracked with **Git LFS** — see below before cloning. |
+| [`Reflection.md`](Reflection.md) | One-page reflection: where the full Bayesian posterior would change a decision an MLE-only read would not. |
 
 ## Repository structure
 
-- `W6_Probabilistic_Models_Assignment.ipynb`: interactive notebook for executing the assignment
-- `W6_TaskPlan.md`: weekly plan, topic breakdown, self-checks, and sample code snippets
-- `TASK_PROGRESS.md`: progress tracker with checkbox items for each question and submission requirement
-- `requirements.txt`: Python dependencies for the notebook environment
-- `.gitignore`: ignored files and directories
-- `LICENSE`: repository license
-
-## Setup
-
-1. Create or activate a Python environment.
-2. Install requirements:
-
-```bash
-pip install -r requirements.txt
+```.
+├── README.md
+├── Reflection.md
+├── W6_Probabilistic_Models_Assignment.ipynb
+├── telco_bayes_lr_v1.pkl                        (LFS)
+├── docs/
+│   ├── W6_Probabilistic_Models_Resource_Guide.pdf   ← facilitator-provided assignment guide
+│   └── GIT_LFS_GUIDE.md                             ← LFS setup/troubleshooting reference
+├── .gitattributes                                (declares *.pkl → LFS)
+├── .gitignore
+├── LICENSE
+└── CHANGELOG.md
 ```
 
-1. Open `W6_Probabilistic_Models_Assignment.ipynb` in Jupyter or VS Code.
-2. Run the notebook sequentially, following the task plan in `W6_TaskPlan.md`.
+## Cloning this repo
 
-## How to use this repo
+`telco_bayes_lr_v1.pkl` is 345 MB and stored via Git LFS. Without LFS installed, `git clone` will pull a text pointer instead of the file:
 
-- Use `W6_TaskPlan.md` as the master checklist for each part of the assignment.
-- Mark progress in `TASK_PROGRESS.md` as you complete questions and reflections.
-- Save the executed notebook and generate the submission artifacts listed at the end of the task plan.
+```bash
+git lfs install
+git clone https://github.com/AaradhyaDT/fuseAiF_wk6_probabilistic_models.git
+```
 
-## Submission artifacts
+## Running the notebook
 
-- Fully executed notebook with outputs
-- `telco_bayes_lr_v1.pkl` saved from the Bayesian logistic regression model
-- One-page reflection PDF or Markdown document
-- Notebook was validated and updated for current `pgmpy`/`arviz` compatibility where needed
-
-## Current status
-
-- Notebook work is complete and task progress has been updated in `TASK_PROGRESS.md`
-- `telco_bayes_lr_v1.pkl` has been generated and saved in the repository
-- Recent repository changes have been synced to `origin/main`
-
-## Notes
-
-- `W6_TaskPlan.md` includes code examples, expected self-checks, and common gotchas.
-- Keep `TASK_PROGRESS.md` updated to track task completion.
+Dependencies (`pymc`, `arviz`, `pgmpy`, `scikit-learn`, `statsmodels`, `scipy`) install from the notebook's own setup cell — no separate `requirements.txt` needed. Open in Google Colab or Jupyter and run top to bottom.
