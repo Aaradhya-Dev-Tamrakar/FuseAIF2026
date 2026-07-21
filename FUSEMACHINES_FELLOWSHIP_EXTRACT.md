@@ -1,24 +1,26 @@
 # Fusemachines AI Fellowship 2026 — Extracted Data
 
-***Source: AARADHYA_MASTER_v137.md · Updated July 9, 2026***
-
-This extract also applies to the workspace repository FuseAIF2026, which functions as the organization-level archive for the fellowship work. Each assignment is typically maintained in a separate private repository, while this repo stores the weekly notes, extracted summaries, references, and organizational materials that tie the work together.
-
-Full archive repository: <https://github.com/Aaradhya-Dev-Tamrakar/FuseAIF2026>
+*Source: AARADHYA_MASTER_v137.md · Extracted July 3, 2026*
+*v2 currency-check (July 8, 2026, against v143): 2 date-dependent claims corrected.*
+*v3 update (July 10, 2026): Wk9 submission confirmed via Google Classroom screenshot ("Handed in," GitHub link attached, due date passed) — supersedes v143's "planning-stage, zero notebook cells built" snapshot, which predates completion. Runtime detail corrected same session: Colab T4 GPU, not Kaggle/CUDA as initially logged. Build-level metrics (accuracy figures, hyperparameters) remain user-reported, not verified against notebook/repo content itself. ~~Capstone project topic also resolved: **Ward office project, team-based** (not solo — supersedes the earlier onboarding-era solo recommendation), team includes an acquaintance of Aaradhya's, other members/full roster and technical domain-fit not yet confirmed.~~ — superseded, see v7: actual capstone is Vision Fairness & Bias Audit.*
+*v4 update (July 10, 2026, same session): New **§2.5 Raw Classroom Grade Table** added — a full-gradebook screenshot surfaced 11 quiz/assignment entries never previously logged in any extract version or the master profile, several sitting underneath the numbered weekly projects already tracked in §2. Confirmed as fact by Aaradhya. Includes two unresolved flags: whether "W4: Linear Model Assignment"/"Linear Model Quiz Assignment" are the same deliverable as the tracked Week 4 project or a separate sub-item (content doesn't obviously match), and two generically-named rows ("Quiz"/"Assignment," both due 31 May) not mapped to any tracked week. Everything else in this extraction remains as confirmed in v2/v3 and is left untouched.*
+*v5 update (July 11, 2026): Week 9's build-level metrics — flagged in v3/v4 as **user-reported, not independently verified** — checked directly against the executed notebook (`W9_NEU_Defect_CNN_Assignment.ipynb`, uploaded this session; 30/70 cells carry real execution output, confirming it's an actually-run notebook, not a task plan). **Four of five previously-logged figures were wrong, not just unconfirmed** — each traces to a real number in the notebook, just the wrong epoch/variant: Part A final train/val acc was logged as 0.986/0.847 (actual final, epoch 15: **0.988/0.789** — 0.986 was epoch 13's train_acc; 0.847 doesn't appear anywhere in the run); Part B was logged as a single "0.544" (actual: **three separate ablations** — aug-only 0.772, aug+BN 0.564, aug+BN+dropout(0.4) 0.592 final — 0.544 is the dropout variant's *epoch-8* reading, not its final one, and it's this last variant that was saved as `best_model.pt`); Part C grid search was logged as 0.6361 (actual: **0.6028**, config lr=0.01/batch_size=32); Part C Optuna was logged as 0.6333 (actual: **0.600**, lr≈0.0157/batch_size=42 — exact hyperparameters weren't previously on record at all). Only the from-scratch NN's 30,721,798-parameter count checked out exactly. §2 Week 9 entry rewritten below with corrected, source-verified figures; superseded numbers struck rather than silently dropped, per this tracker's own convention. New in this pass, not previously tracked: a StepLR scheduler ablation inside Part C (best grid config, without vs. with StepLR: 0.508 → 0.417 — scheduler hurt performance here). **CV was not updated this session** — stays as the July 11 version (system-facts-only Wk9 bullet, no figures), by direct instruction; this correction is tracker-only.*
+*v6 update (July 21, 2026): Weeks 10 and 11 added — logged directly from cloned repo content, no `PATCH_*.md` was uploaded (§6 standard-session-mode fallback). **`fuseAiF_wk10_image_processing`**: `W10_Image_Processing_Assignment_executed.ipynb`, 17/19 code cells carry execution output; every README figure (47.3% combined-mask coverage, 96.9% custom-vs-cv2.Canny pixel agreement, 6 Hough circles, Q14 bbox) confirmed against actual notebook output, including the connected-components touching-apple separation claim verified against Q14's source code directly, not just its printed output. **`fuseAiF_wk11_vision_transformers`**: `W11_CV_Assignment_Notebook.ipynb`, 20/20 code cells carry execution counts, 19/20 carry output; every README figure (Q3 val_acc 74.1%, Q14 VAE 1,119,811 params + recon/KL trajectory, Q17 patch-embed shape (4,65,256), Q18 CLIP zero-shot 92.0%) confirmed exactly. Zero discrepancies in either week — unlike Wk9, both READMEs were accurate on first verification pass.*
+*v7 update (July 21, 2026, same session): **Capstone topic superseded** — v3/v4's "Ward office project, team-based" is no longer current. Live portfolio (`projects.html`, P-018) confirms the actual capstone as **Vision Fairness & Bias Audit**: a diagnostic tool for deployed vision classifiers running a multi-demographic test matrix, flagging statistical disparities, and outputting a compliance report (detects bias, doesn't correct it); stack AIF360, Fairlearn, FairFace, UTKFace. Two-person team with **Tisha Manandhar** (github.com/tiixsha) — resolves v3/v4's "other members not yet confirmed." Progress tracked as 3 phases on-site: Feasibility & Scope (done) → Test Matrix & Detection Engine → Report & Compliance Output. In Progress, no repo README yet ("full README to follow in-repo," per site). Confirmed directly by Aaradhya as correct; Ward office was superseded, not concurrent. §7's domain-fit question is now resolved by this: capstone is squarely computer-vision, directly continuous with Wk10/Wk11's CV work (§8's "pick a topic where something clicked" directive is satisfied on its face — Aaradhya's two most recent, cleanly-verified weeks are both CV). Struck rather than deleted below, per this tracker's convention.*
 
 ---
 
 ## 1. Program Facts
 
 | Field | Value |
-| --- | --- | --- |
+| --- | --- |
 | Program | Fusemachines AI Fellowship 2026 |
 | Role | Fuse AI Fellow |
 | Duration | 24 weeks (6 months) |
 | Start | May 4, 2026 (Wk1 Monday) |
 | End | Oct 18, 2026 (Sunday) |
 | Cadence | Mon–Sun weekly cycle, flips every Monday 00:00 NPT |
-| Current status (as of current date, July 9, 2026) | **Wk 10/24, ongoing** |
+| Current status (as of July 21, 2026) | **Wk 12/24, ongoing.** Wk10 (Image Processing) and Wk11 (Vision Transformers) both complete and source-verified (v6) — see §2 entries below. Capstone confirmed: Vision Fairness & Bias Audit, w/ Tisha Manandhar (v7). |
 | Week formula | `floor((today − May 4 2026) / 7) + 1`, capped at 24 |
 | Facilitator | **Season** |
 | WK8 lecture presenter | Susan Ghimire |
@@ -31,18 +33,13 @@ Full archive repository: <https://github.com/Aaradhya-Dev-Tamrakar/FuseAIF2026>
 
 ## 2. Week-by-Week Deliverables
 
-### Repository Context — FuseAIF2026
-
-- This repository is not the primary coding home for each fellowship assignment; it is the organizational archive and reference hub.
-- The separate private repos hold the main implementation work, notebooks, and submission artifacts for each week.
-- FuseAIF2026 keeps the extracted notes, summaries, assignment index, and supporting documentation for the broader fellowship journey.
-
 ### Week 2 — Customer REST API *(no standalone project entry; CV bullet only)*
 
 - Containerized customer REST API: FastAPI + PostgreSQL + Docker, 4-layer architecture, asyncio concurrency.
 - **Instructor feedback (week unconfirmed, likely Wk 2/3/4):** monolithic single-file API structure flagged — declutter into subfolders, use separate `APIRouter` per domain (e.g. `routers/auth.py`, `routers/query.py`, `routers/results.py`) instead of flat root.
   - **Apply-forward rule:** all new FastAPI projects (fellowship or Nexus) must use `APIRouter` per domain from day one. No monolithic `main.py`. Minimum structure: `app/routers/`, `app/models/`, `app/db/`, `app/core/`.
   - Status: ⏳ not yet retroactively applied.
+- **Score (added v4, source: Classroom screenshot July 10, 2026):** "Wk2 Problem Set: Software Development Concepts" — **75/100**, due May 19. See §2.5 for full raw Classroom grade table.
 
 ### Week 3 — Text-to-SQL Agentic Pipeline *(Completed — Rating 8.7/10)*
 
@@ -120,21 +117,79 @@ Full archive repository: <https://github.com/Aaradhya-Dev-Tamrakar/FuseAIF2026>
 Full notes archived separately: `PATCH_fuseWk8_forecasting_lecture_20260628_v2.md`
 Topics (slides 22–69): time series ordering & lag (NLP positional analogy) · trend/seasonality/noise components (additive vs multiplicative) · exponential smoothing family (Naïve→Holt-Winters, ETS notation) · AR models (lag construction) · MA models (past errors, q) · ACF/PACF (p/q/s selection rules) · stationarity (ADF/KPSS, differencing order d) · SARIMA/auto_arima/SARIMAX (7 params, AIC, exogenous constraints) · Monte Carlo uncertainty propagation · evaluation (ME, Forecast Ratio, horizon uncertainty cone).
 
-### Week 9 — NEU Steel Defect CNN Classifier + Hardening *(Built, syntax-validated; submission due July 9, 2026)*
+### Week 9 — NEU Steel Defect CNN Classifier *(Submitted July 9, 2026, "Handed in" — confirmed via Google Classroom screenshot, July 10; build metrics source-verified against the executed notebook, July 11)*
 
-- **Stack:** Python · PyTorch · torchvision · scikit-learn · Optuna · Matplotlib · NumPy · Pillow
-- **Repo:** `AaradhyaDT/fuseAiF_wk9_neu_defect_cnn`
-- **Notebook:** `W9_NEU_Defect_CNN_Assignment.ipynb`
-- **Dataset:** NEU-DET surface defect classification; 6 classes (`crazing`, `inclusion`, `patches`, `pitted_surface`, `rolled-in_scale`, `scratches`), 1,440 train / 360 validation images, 200×200 RGB inputs.
-- **Normalization:** train-set mean `[0.5049536228179932, 0.5049536228179932, 0.5049536228179932]`; std `[0.10445467382669449, 0.10445467382669449, 0.10445467382669449]`.
-- **Part 0:** 2-layer `nn.Module` on flattened 120,000-dim inputs; total parameters `30,721,798`.
-- **Q4 optimizer comparison:** final validation accuracy `SGD = 0.206`, `SGD + Momentum(0.9) = 0.167`, `Adam = 0.292`.
-- **Q5 regularization ablation:** final validation loss `BatchNorm1d = 4.5459`, `Dropout(0.3) = 1.7918`; final validation accuracy `BatchNorm1d = 0.35`, `Dropout(0.3) = 0.167`.
-- **Part A CNN:** final train/val accuracy `0.986 / 0.847` after 15 epochs; `best_model.pt` saved under `assignment/`.
-- **Part B hardening:** augmentation-only + BatchNorm2d run finished at final validation accuracy `0.544`.
-- **Part C tuning:** 2×2 grid best `lr = 0.01`, `batch_size = 16`, `val_acc = 0.6361111111111111`; Optuna best `lr = 0.00029380279387035364`, `batch_size = 16`, `val_acc = 0.6333333333333333`.
-- **Execution note:** CPU-only run path is practical but slow; notebook documents the full-scale CPU estimate and keeps Optuna at a reduced budget for tractability.
-- **Colab/Kaggle runtime path added (verified this session, July 9):** notebook now includes a Kaggle-download cell (installs `kaggle`, uploads `kaggle.json`, downloads+unzips NEU-DET, auto-detects the extracted layout, and copies it into `data/NEU-DET/{train,validation}/images/`) plus a `DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")` fix, replacing the earlier hardcoded-CPU line — both confirmed present in the uploaded `.ipynb`. Closes out the two items flagged pending in the prior Kaggle-setup session export. **Submission-status not confirmed this session** — due date (July 9, 2026) has arrived; needs a status update once actually submitted/graded.
+**⚠ Provenance note:** as of v143 (written before submission), master profile status was "planning-stage, task plan complete, zero notebook cells built." Submission itself is **source-verified** — Google Classroom shows "Handed in" with GitHub link `AaradhyaDT/fuseAiF_wk9_neu_defect_cnn` attached, due date passed. Assignment context also verified from the same screenshot: instructor Rakshya Lama Moktan, posted July 1, 100 pts, due July 9 20:45 NPT, SmartForge Manufacturing defect-classification scenario, NEU Surface Defect Database (Kaggle-hosted dataset, 1,800 grayscale 200×200 images, 6 classes, 300/class), loaded via `torchvision.datasets.ImageFolder`. **Build-level metrics below are now source-verified** against `W9_NEU_Defect_CNN_Assignment.ipynb` directly (uploaded July 11) — 30 of 70 cells carry real execution output. ~~Previously flagged as user-reported/unverified~~ — superseded; see v5 changelog note above for what changed and why.
+
+- **Stack (confirmed):** Python · PyTorch · torchvision · scikit-learn · Optuna · Matplotlib · NumPy · Pillow
+- **Repo (confirmed):** `AaradhyaDT/fuseAiF_wk9_neu_defect_cnn`, notebook `W9_NEU_Defect_CNN_Assignment.ipynb`
+- **Dataset:** NEU-DET surface defect classification, 6 classes (crazing, inclusion, patches, pitted surface, rolled-in scale, scratches), 1,440 train / 360 val, 200×200 RGB.
+- **Part 0 — from-scratch 2-layer NN:** 30,721,798 params (Linear(120000→256)→ReLU→Linear(256→6)). Confirmed correct as originally logged.
+- **Part A — CNN classifier (confirmed, 15 epochs):** ~~final train/val accuracy 0.986/0.847~~ → **final train_acc 0.988 / val_acc 0.789** (epoch 15 exactly; 0.986 was epoch 13's train_acc, 0.847 does not appear anywhere in the run). Classification report on the 360-image validation set confirms 0.789 overall accuracy (macro F1 0.779); weakest class is `scratches` (recall 0.450), strongest is `inclusion` (F1 0.862).
+- **Part B — hardening (confirmed, 15 epochs each, three separate ablations, not one figure):**
+  - Augmentation only: final val_acc **0.772**
+  - - BatchNorm2d: final val_acc **0.564**
+  - - BatchNorm2d + Dropout(0.4): final val_acc **0.592** — ~~previously logged as 0.544~~ (that was this variant's epoch-8 reading, not its final one)
+  - `best_model.pt` saved from the **BN+Dropout(0.4) variant** (0.592) — not the highest-val-acc checkpoint in Part B (that's aug-only at 0.772); the notebook's own comment calls it "best-performing," which appears to mean "final hardened model," not top accuracy.
+- **Part C — hyperparameter tuning (confirmed):**
+  - Grid search (lr ∈ {0.001, 0.01} × batch_size ∈ {16, 32}, 15 epochs each): best config **lr=0.01, batch_size=32 → val_acc 0.6028** — ~~previously logged as 0.6361~~
+  - StepLR ablation on the best grid config *(not previously tracked)*: without StepLR val_acc 0.508, with StepLR val_acc 0.417 — scheduler hurt performance here.
+  - Optuna (best trial): **lr≈0.0157, batch_size=42 → val_acc 0.600** — ~~previously logged as 0.6333, hyperparameters not previously recorded~~
+- **Runtime (corrected July 10):** all cells run and finalized in **Google Colab, T4 GPU runtime** — not Kaggle/CUDA-auto-detect as an earlier session note stated; that detail is superseded.
+- **Confirmed independently:** submitted on time, July 9, 2026, "Handed in" status, GitHub link attached, all build-level metrics above verified against actual notebook output. **Still not confirmed:** exact Classroom score/grading (not yet posted).
+
+### Week 10 — Image Processing / FreshTrack CV Pipeline *(Source-verified July 21, 2026 — repo-verified, submission/grading status not yet confirmed)*
+
+- **Stack (confirmed):** Python · OpenCV · NumPy · Matplotlib · kagglehub
+- **Repo (confirmed):** `AaradhyaDT/fuseAiF_wk10_image_processing`, notebook `W10_Image_Processing_Assignment_executed.ipynb` — 17/19 code cells carry execution output.
+- **Dataset:** Fruits-360 via kagglehub, mapped to 6 required classes (red_apple, green_apple, banana, strawberry, orange, lime) + 3 instructor-provided images (morphology.png, chessboard.png, mixed_fruit_bowl.jpeg).
+- **Part A — Color Space & Fruit Segmentation (confirmed):** BGR/RGB channel-order explanation; per-fruit HSV `inRange()` masks; multi-class segmentation on the bowl image — combined mask covers **47.3%** of the image (only apple/banana/orange present in that bowl; strawberry/green_apple/lime absent from the scene, not a masking failure).
+- **Part B — Morphology & Denoising (confirmed):** erosion/dilation/opening/closing/gradient on `morphology.png` (thin cursive stroke — erosion nearly erases it, dilation thickens substantially, opening/closing near-inert since there are no small specks/holes to remove); Gaussian/median/bilateral filter comparison on injected noise (median best for salt-and-pepper, bilateral best edge-preservation on Gaussian noise).
+- **Part C — Edge Detection (confirmed):** Canny implemented from scratch (Sobel gradient → non-max suppression → double threshold → hysteresis); custom-vs-`cv2.Canny()` pixel agreement **96.9%**, remaining divergence attributed to `cv2.Canny()`'s internal Sobel aperture/L2gradient defaults and 8-connectivity hysteresis queues.
+- **Part D — Feature Detection (confirmed):** Harris corner detection with threshold sweep on `chessboard.png`; Hough circle transform on the bowl image, tuned for real (not synthetic-default) parameters — **6 circles detected**; full single-fruit pipeline (Q14) — HSV mask → morphological open/close → distance-transform + `connectedComponents` peak-separation for touching same-color fruit (verified against Q14's actual source: the raw HSV mask alone returns one blob spanning all 5 apples; distance-transform peaks + component labeling recovers individual fruit centers) → Canny on the isolated mask → bounding box. Output saved and confirmed: `q14_pipeline_red_apple_1.jpg`, bbox x=698 y=379 w=286 h=315.
+- **Known handling detail:** notebook normalizes the uploaded `mixed_fruit_bowl.jpeg` filename to `mixed_bowl.jpg` mid-run to resolve a dataset-naming mismatch — confirmed present in the executed run, not a bug.
+- **Not yet confirmed:** Classroom submission status/date, grading score. Repo/notebook content is source-verified; submission tracking is not.
+
+### Week 11 — Computer Vision with Deep Learning / Vision Transformers *(Complete — repo-verified July 21, 2026; presenter Susan Ghimire per project guide, consistent with Wk8; submission/grading status not yet confirmed)*
+
+- **Stack (confirmed):** Python · PyTorch · torchvision · timm · onnxruntime · onnxscript · CLIP (`openai/CLIP`)
+- **Repo (confirmed):** `AaradhyaDT/fuseAiF_wk11_vision_transformers`, notebook `W11_CV_Assignment_Notebook.ipynb` — 20/20 code cells carry execution counts, 19/20 carry output (Run 4, per README; confirmed as a genuine executed run, not a task plan).
+- **Business scenario (from project guide):** Computer Vision Engineer at QuickVision AI, replacing a ~45%-accuracy HSV baseline across 500 warehouse cameras; deliverable spans 5 modules answering two questions — best model family for reliable classification, and how to onboard a new product type with zero labelled images.
+- **Module 1 — CNN Classification (Q1–Q5, confirmed):** ResNet-50 transfer learning, 20,490 trainable / 23,528,522 total params (0.087% trainable) — final val_acc **74.1%** (epoch 3 of 3; train 56.7%→73.0%→77.5%, val 69.7%→74.1%→74.1%). GradCAM implemented (Q4).
+- **Module 2 — Object Detection (Q6–Q9, confirmed):** IoU from scratch (matches expected 0.13/0.0/1.0 reference cases); NMS from scratch (kept indices [0,3], matches expected); Faster R-CNN — bus.jpg 5 detections, people.jpg 3 detections.
+- **Module 3 — Segmentation (Q10–Q13, confirmed):** DeepLabv3+ — bus.jpg → background/bus/car/person, people.jpg → background/person; pixel accuracy 1.0 (perfect synthetic mask) / 0.37 (random, ~expected 0.33); mIoU 1.0 (perfect) / matching random-baseline expectation.
+- **Module 4 — Generative / VAE (Q14–Q16, confirmed):** 1,119,811 params; 3-epoch trajectory — recon loss 170.7→123.2→87.5, KL 45.8→276.6→267.9. Latent-space interpolation visualized (Q15).
+- **Module 5 — ViT + Deployment (Q17–Q20, confirmed):** patch embedding output shape (4, 65, 256) matching expected, 64 patches = (32/4)²; CLIP zero-shot **92.0%** on 200-image test slice — real run, not the scaffold's fallback stub; ONNX export 94.2 MB, verified with onnxruntime; final comparison table + deployment memo.
+- **Notable result (confirmed, flagged in own README):** CLIP zero-shot (92.0%) outscored the fine-tuned ResNet-50 (74.1%) on this test slice — reverse of the typical zero-shot/supervised ordering. Memo's phased-deployment recommendation is driven by latency/explainability, not an assumed accuracy edge.
+- **Bugs found and fixed during execution (confirmed from README, consistent with a real debugging pass rather than a clean-first-try log):** Q4 GradCAM — `RuntimeError` on `.numpy()` from a grad-tracked tensor, fixed with `.detach()`; Q10 DeepLabv3+ — `TypeError` from a retained batch dimension in the argmax'd mask, fixed with `.squeeze(0)`; Q18 CLIP — silently fell to the scaffold's `acc_clip = 0.65` stub because `openai-clip` wasn't installed (masked `ImportError`), fixed by adding an install cell; corrected result is the real 92.0% above, not the stub value.
+- **Not yet confirmed:** Classroom submission status/date, grading score. Repo/notebook content is source-verified; submission tracking is not.
+
+---
+
+## 2.5 Raw Classroom Grade Table *(new, added v4 — July 10, 2026, source: Google Classroom "Your work" screenshot, chronological/reverse order as shown)*
+
+**Provenance:** This table reflects the Classroom gradebook directly — smaller-grained quizzes and problem sets, several of which sit *underneath* the larger numbered weekly projects already tracked in §2 above. None of these entries previously existed in any extract version or the master profile; they are wholly new as of this session, confirmed as fact by Aaradhya. Where a Classroom item name doesn't obviously map to a §2 project name (e.g. "W4: Linear Model Assignment" vs. the tracked "Week 4 — Telco Customer Churn & CLV ML Pipeline"), that's flagged rather than silently merged — these may be distinct graded sub-items within the same week rather than the same deliverable under a different name.
+
+| Item | Due | Type | Score / Status |
+| --- | --- | --- | --- |
+| Wk1: Data Wrangling Problem | 4 May, 23:59 | Assignments | **100/100** |
+| Data Wrangling (Quiz) | 4 May | Quiz | Handed in |
+| Wk2 Problem Set: Software Development Concepts | 19 May | Assignments | **75/100** |
+| Agentic Software Development Quiz | 10 May | Quiz | Handed in |
+| Week3_Problem_Set_GenAI | 20 May | Assignments | **100/100** |
+| Gen AI Quiz Assignment | 18 May, 23:59 | Quiz | **31/34** |
+| Linear Model Quiz Assignment | 28 May | Quiz | **23/25** |
+| W4: Linear Model Assignment | 28 May | Assignments | **88/100** |
+| Quiz | 31 May, 09:44 | Quiz | Handed in — **done late** |
+| Assignment | 31 May, 09:44 | Assignments | Handed in |
+| Probabilistic Models Quiz | 5 Jun, 22:00 | Quiz | Handed in |
+
+**Flags, not resolved:**
+
+- **"W4: Linear Model Assignment" (88/100) and "Linear Model Quiz Assignment" (23/25), both due 28 May** — same due date as the tracked §2 Week 4 project (Telco Churn & CLV Pipeline), but "Linear Model" doesn't match that project's content. Likely a separate, smaller Week 4 graded item (e.g. a foundational linear-regression exercise preceding the full churn/CLV pipeline) rather than the same deliverable — **not confirmed**, flagged for clarification rather than assumed.
+- **Two unlabeled rows ("Quiz" and "Assignment," both due 31 May, 09:44)** — generic Classroom names, no week/topic identifiable from the screenshot alone. "Quiz" marked **done late**. Not mapped to any tracked week.
+- **Rows above "Probabilistic Models Quiz" in the screenshot were cut off** (partially visible header text "Due 5 Jun, 22:00 • Assignments" with no title) — table starts from the first fully-visible row; anything above the Wk6 boundary in Classroom's list is not captured here.
+- **No score column exists for "Handed in"-only rows** — Classroom either hasn't graded them yet or they're pass/fail-style items; not assumed to be perfect scores.
 
 ---
 
@@ -151,7 +206,6 @@ Topics (slides 22–69): time series ordering & lag (NLP positional analogy) · 
 - Probabilistic models: Bayesian estimation (MLE/MAP/full Bayes), Dirichlet-multinomial inference, Gaussian process regression, probabilistic graphical models, and Bayesian logistic regression via PyMC/ArviZ/pgmpy.
 - Customer segmentation: K-Means, Hierarchical (Ward/Complete/Average/Single dendrograms), and DBSCAN on UCI Online Retail II (~500K transactions); RFM + category-ratio feature engineering; Silhouette/Davies-Bouldin/Calinski-Harabasz validation; business narrative with executive summary.
 - Forecasting: Benchmarked 9 classical-to-modern forecasters (SARIMA, Holt-Winters, Prophet, LightGBM, LSTM, XGBoost) on monthly S&P 500 data; built a 4-model ensemble beating all single models (MASE 2.44), confirmed via Diebold-Mariano significance test (p = 0.0092).
-- Computer vision: Built a PyTorch CNN for NEU steel defect classification with dataset-specific normalization, 15-epoch Part A training, augmentation/BatchNorm/Dropout hardening, and Optuna-based hyperparameter tuning; best grid validation accuracy reached 0.6361 and the final CNN checkpoint was saved as `best_model.pt`.
 
 *Note: CV label still reads "(Active) | 2026 – Present" — accurate while Wk < 24/Oct 18, 2026; update to a closed date range once the fellowship formally ends.*
 
@@ -167,8 +221,10 @@ Topics (slides 22–69): time series ordering & lag (NLP positional analogy) · 
 | 5 | Wk6 — Probabilistic Models | 8.2 | Complete — portfolio live |
 | 11 | Wk7 — Clustering | 8.0 | Complete — portfolio live (v113) |
 | 12 | Wk8 — Forecasting | 8.1 | Complete — portfolio **pending** |
+| — | Wk9 — NEU Steel Defect CNN | — | Submitted July 9, 2026; build metrics source-verified (v5); Classroom score not yet posted |
+| — | Wk10 — Image Processing / FreshTrack CV | — | Repo-verified July 21, 2026 (v6); no rating assigned, no CV bullet drafted, submission/grading status not yet confirmed |
+| — | Wk11 — Vision Transformers | — | Repo-verified July 21, 2026 (v6); no rating assigned, no CV bullet drafted, submission/grading status not yet confirmed |
 | 14 | Fellowship Prep Toolkit | 6.5 | Complete |
-| — | Wk9 — NEU Steel Defect CNN | — | Complete; score not yet posted in the master table |
 
 ---
 
@@ -179,7 +235,7 @@ Topics (slides 22–69): time series ordering & lag (NLP positional analogy) · 
 Run before every final `git commit` on any `fuseAiF_*` repo (also applies to Nexus).
 
 | # | Factor | Check |
-| --- | --- | --- | --- |
+| --- | --- | --- |
 | 1 | Codebase | One repo/project, no stray local branches, `git status` clean except staged. |
 | 2 | Dependencies | `requirements.txt`/`pyproject.toml` pinned and current; verify via clean-venv install. |
 | 3 | Config | No hardcoded secrets/keys/paths; `.env` gitignored, `.env.example` committed. |
@@ -206,7 +262,7 @@ git status && git diff --stat --cached
 **Per-repo compliance status:**
 
 | Repo | Factor 2 (deps) | Factor 3 (config) | Factor 11 (logs) | Notes |
-| --- | --- | --- | --- | --- | --- | --- |
+| --- | --- | --- | --- | --- |
 | `fuseAiF_wk3_text2sql` | ✅ | ✅ | ✅ | Docker + .env pattern established |
 | `fuseAiF_wk5_telco_churn_ensembles` | ✅ | N/A | ✅ | No secrets; notebook-based |
 | `fuseAiF_wk7_customer_segmentation` | ✅ | N/A | ✅ | `.xlsx` gitignored |
@@ -215,7 +271,7 @@ git status && git diff --stat --cached
 ### Instructor Feedback Log
 
 | Week | Feedback | Status |
-| --- | --- | --- | --- |
+| --- | --- | --- |
 | Wk 2/3/4 (unconfirmed exact week) | Declutter into subfolders; separate `APIRouter` per domain instead of monolithic single-file API. | ⏳ Not yet retroactively applied — apply to next API-based project. |
 
 ---
@@ -238,20 +294,15 @@ git status && git diff --stat --cached
 
 ## 7. Open Items / Pending Actions (fellowship-specific)
 
-- **Repository role clarification:** this workspace should be treated as the organization archive for the fellowship work, with private assignment repos as the execution repositories.
 - **Portfolio trigger — Week 8 Forecasting:** not yet added to `projects.html`. Pending.
-- **Week 9 NEU Defect CNN:** notebook completed, `best_model.pt` saved under `assignment/`, and Colab/Kaggle runtime path (Kaggle-download cell + CUDA auto-detect) verified present as of July 9, 2026. **Due today (July 9, 2026) — submission not yet confirmed.**
+- **Portfolio trigger — Week 10/11:** not yet added to `projects.html`. Pending (new, v6).
 - **Instructor feedback (APIRouter refactor):** not yet retroactively applied to any repo.
 - **Nexus repo Factor 3/11 compliance:** `.env.example` needs check; `print()` statements need replacing with `logging` — flagged before next commit (Nexus, not a fellowship repo itself, but governed by the same checklist).
-- **Project selection (post-Wk8):** upcoming — no domain/topic chosen yet as of last log.
+- **Project selection (post-Wk8) — RESOLVED July 10, 2026, SUPERSEDED July 21, 2026 (v7):** ~~Capstone topic chosen: **Ward office project, team-based**~~. Confirmed capstone: **Vision Fairness & Bias Audit** — diagnostic tool for deployed vision classifiers, multi-demographic test matrix, statistical-disparity flags, compliance report (AIF360, Fairlearn, FairFace, UTKFace). Two-person team with **Tisha Manandhar** (github.com/tiixsha) — full roster now closed at 2. In Progress, phase 1 of 3 (Feasibility & Scope) done. **Domain-fit resolved by inspection:** capstone is CV, directly continuous with Wk10/Wk11 — satisfies §8's "pick a topic where something clicked" directive on its face.
 - **CV status label:** still reads "(Active) | 2026 – Present" — will need a closed date range after Oct 18, 2026.
-
-- **Portfolio trigger — Week 8 Forecasting:** not yet added to `projects.html`. Pending.
-- **Week 9 NEU Defect CNN:** notebook completed, `best_model.pt` saved under `assignment/`, and Colab/Kaggle runtime path (Kaggle-download cell + CUDA auto-detect) verified present as of July 9, 2026. **Due today (July 9, 2026) — submission not yet confirmed.**
-- **Instructor feedback (APIRouter refactor):** not yet retroactively applied to any repo.
-- **Nexus repo Factor 3/11 compliance:** `.env.example` needs check; `print()` statements need replacing with `logging` — flagged before next commit (Nexus, not a fellowship repo itself, but governed by the same checklist).
-- **Project selection (post-Wk8):** upcoming — no domain/topic chosen yet as of last log.
-- **CV status label:** still reads "(Active) | 2026 – Present" — will need a closed date range after Oct 18, 2026.
+- **Wk9 grading/metric verification:** submission and all build-level accuracy/hyperparameter figures are source-verified (Classroom screenshot + executed notebook, v5). Still open: exact Classroom score, not yet posted.
+- **Wk10/Wk11 grading/submission verification (new, v6):** repo/notebook content source-verified directly from cloned repos. **Not verified:** Classroom submission status, due dates, "Handed in" confirmation, or grading score for either week — no Classroom screenshot was provided this session, unlike Wk9's v3/v4 verification path. Rating (x/10) also not assigned for either week — no rating was given by Aaradhya, unlike Wk3–Wk9's tracked pattern.
+- **Capstone domain-fit — RESOLVED v7:** see project-selection item above; no longer open.
 
 ---
 

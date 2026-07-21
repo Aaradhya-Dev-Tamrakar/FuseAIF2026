@@ -7,7 +7,7 @@ Week 6 — Fusemachines AI Fellowship 2026. Probabilistic models and Bayesian in
 | File | Contents |
 | --- | --- |
 | [`W6_Probabilistic_Models_Assignment.ipynb`](W6_Probabilistic_Models_Assignment.ipynb) | Fully executed notebook (31/31 code cells, sequential 1–31, no errors). Parts 1–6: MLE/MAP/full-posterior estimation, sequential Bayesian updating, multivariate Gaussians, Bayesian Network + MRF, Gaussian Process regression on Mauna Loa CO₂, and Bayesian logistic regression via PyMC/NUTS. |
-| [`telco_bayes_lr_v1.pkl`](telco_bayes_lr_v1.pkl) | Fitted PyMC `InferenceData` trace from Part 6 (4 chains × 2,000 draws, R̂ 1.000–1.001, bulk-ESS 5,021–7,238). Tracked with **Git LFS** — see below before cloning. |
+| [`telco_bayes_lr_v1.pkl`](telco_bayes_lr_v1.pkl) | Fitted PyMC `InferenceData` trace from Part 6 (4 chains × 2,000 draws, R̂ 1.000–1.001, bulk-ESS 5,021–7,238). File size: ~345 MB. Tracked with **Git LFS** — see below before cloning. |
 | [`Reflection.md`](Reflection.md) | One-page reflection: where the full Bayesian posterior would change a decision an MLE-only read would not. |
 
 ## Repository structure
