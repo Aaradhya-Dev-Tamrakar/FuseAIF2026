@@ -2,7 +2,7 @@
 
 FuseAIF2026 is the organization-level repository used to store and organize the assignments completed during the Fusemachines AI Fellowship 2026. Each assignment is maintained as a separate private repository, and this workspace serves as the central archive, index, and reference point for the work produced throughout the fellowship.
 
-This repository is currently tracking the weekly deliverables from the program, which is in Week 10 of 24 and runs from May 2026 to October 2026.
+This repository is currently tracking the weekly deliverables from the program, which is in Week 11 of 24 and runs from May 2026 to October 2026.
 
 ## Fellowship Snapshot
 
@@ -25,17 +25,19 @@ This repository acts as the organizational archive for the fellowship work. The 
 - `M2/WK8/` - archive notes and materials for the forecasting assignment.
 - `M3/WK9/` - archive notes and materials for the steel defect classifier assignment.
 - `M3/WK10/` - archive notes and materials for the image processing assignment.
+- `M3/WK11/` - archive notes and materials for the vision-transformers and computer vision assignment.
 
 ## Completed Weekly Projects
 
 - Week 3: text-to-SQL agentic pipeline with 100% execution success and 100% benchmark accuracy.
 - Week 4: churn and CLV modeling with logistic regression, ridge regression, and evaluation workflows.
 - Week 5: tree-based ensemble churn pipeline with SHAP explainability and model serialization.
-- Week 6: probabilistic modeling work using PyMC, ArviZ, and pgmpy.
+- Week 6: probabilistic modeling work using PyMC, ArviZ, and pgmpy, including a large LFS-tracked Bayesian model artifact in `M2/WK6`.
 - Week 7: clustering and customer segmentation on online retail transaction data.
 - Week 8: forecasting benchmark on S&P 500 with classical and modern time-series models.
 - Week 9: CNN-based steel defect classifier with augmentation, regularization, and tuning experiments.
 - Week 10: image processing workflow with HSV segmentation, custom Canny edge detection, and Hough circle fruit detection.
+- Week 11: computer vision with vision transformers, CLIP zero-shot retrieval, ONNX export, and deployment analysis.
 
 ## Weekly Readmes
 
@@ -50,6 +52,7 @@ Each week folder includes its own README with local project context, setup notes
 - [M2/WK8/README.md](M2/WK8/README.md)
 - [M3/WK9/README.md](M3/WK9/README.md)
 - [M3/WK10/README.md](M3/WK10/README.md)
+- [M3/WK11/README.md](M3/WK11/README.md)
 
 ## Top-Level Contents
 

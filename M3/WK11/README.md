@@ -6,8 +6,7 @@ Business scenario: Computer Vision Engineer at QuickVision AI, replacing a ~45%-
 
 ## Structure
 
-```
-.
+```.
 ├── notebooks/
 │   └── W11_CV_Assignment_Notebook.ipynb   # main deliverable — 20 questions across 5 modules
 ├── docs/
@@ -42,7 +41,7 @@ Run `notebooks/W11_CV_Assignment_Notebook.ipynb` top-to-bottom. CIFAR-10 auto-do
 **Complete — all 20 questions executed clean, all SELF-CHECKs pass, zero errors (Run 4).**
 
 | Q | Result |
-|---|---|
+| --- | --- |
 | Q1 | Output sizes correct (32, 30, 32, 112, 56) |
 | Q3 | Val acc **74.1%** (epoch 3), 20,490 trainable params |
 | Q6/Q8 | IoU/NMS correct |
