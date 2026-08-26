@@ -31,23 +31,19 @@ The notebook uses:
 ## Workflow summary
 
 ### Part A — Color Space & Fruit Segmentation
-
 - Explores BGR vs RGB channel ordering
 - Builds per-fruit HSV masks with inRange()
 - Performs multi-class segmentation on the bowl image
 
 ### Part B — Morphology & Denoising
-
 - Applies erosion, dilation, opening, closing, and gradient operations to morphology.png
 - Adds and removes noise using Gaussian, median, and bilateral filters
 
 ### Part C — Edge Detection
-
 - Implements Canny edge detection from scratch using Sobel gradients, non-max suppression, double thresholding, and hysteresis
 - Compares the custom result with cv2.Canny()
 
 ### Part D — Feature Detection
-
 - Detects corners with Harris corner response
 - Uses Hough circles on the fruit bowl image
 - Builds a complete single-fruit detection pipeline using masking, morphology, contours, and bounding boxes
