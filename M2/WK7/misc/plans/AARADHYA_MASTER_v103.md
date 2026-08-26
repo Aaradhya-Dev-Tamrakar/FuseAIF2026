@@ -849,10 +849,10 @@ git status && git diff --stat --cached
 > **STATUS CORRECTION (v103, June 21, 2026):** The Netlify + Decap CMS migration described below was a **plan that was never executed**. Live, confirmed-current state as of this date: **GitHub Pages**, single-file `index.html`, vanilla JS, `DATA` object inline (no `/content/*.json`, no CMS, no Netlify). The animation/architecture notes below remain accurate for the codebase itself — only the hosting/CMS claims are stale. User is now also considering **GitHub Projects** for a multi-page site as an alternative direction. Treat any "Netlify" / "Decap CMS" / "`/admin/`" reference below as **not live**.
 
 - Single-file `index.html` — DATA-driven architecture for static sections (Hero, Skills, About, Contact)[cite: 9]
-- **Projects, Experience, Achievements** now served from `/content/*.json` — edited via Decap CMS UI, no code changes needed
-- **Hosting:** Netlify (migrated from GitHub Pages, June 10, 2026) — deploy on every CMS commit (~30s)
-- **CMS URL:** `yoursite.netlify.app/admin/` — Netlify Identity auth (invite-only)
-- **Repo additions:** `admin/config.yml` (schema), `admin/index.html` (CMS entry), `content/projects.json` (10 entries), `content/experience.json` (7 entries), `content/achievements.json` (8 entries), `netlify.toml`
+- **Projects, Experience, Achievements:** remain inline in `index.html`; the planned `/content/*.json` and Decap CMS migration was not executed
+- **Hosting:** GitHub Pages (current confirmed state as of June 21, 2026)
+- **CMS:** none is deployed; there is no live `/admin/` route or Netlify Identity configuration
+- **Repository additions:** no `admin/`, `content/`, or `netlify.toml` files are part of the current site
 - Dark luxury editorial aesthetic: Cormorant Garamond + DM Mono + Instrument Sans[cite: 9]
 - Lighthouse (Desktop): Performance 98, Accessibility 100, Best Practices 100, SEO 100[cite: 9]
 - GA4 live: Measurement ID G-P38642CDGB[cite: 9]

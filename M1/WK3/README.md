@@ -54,7 +54,7 @@ The core text-to-SQL engine has been engineered to support enterprise-grade robu
 ### Install dependencies
 
 ```bash
-cd "c:/Users/Aaradhya/Downloads/_Organized/Fuse AI Fellowship/FUSE AIF 2026/WK3/fuseAiF_wk3_text2sql"
+cd M1/WK3
 pip install -r requirements.txt
 ```
 
@@ -70,7 +70,7 @@ Required environment variables:
 - `DB_NAME`
 - `DB_USER`
 - `DB_PASSWORD`
-- `OPENAI_API_KEY` (or provider-specific API key if configured)
+- `GROQ_API_KEY`
 
 ### Database seed
 
