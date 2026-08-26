@@ -13,7 +13,7 @@ This file tracks the current completion status for the Week 7 Clustering Assignm
 ## Overall Status
 
 | Item | Status | Notes |
-|---|---|---|
+| --- | --- | --- |
 | Task plan created | ✅ | `Week7_Clustering_TaskPlan_v4.md` exists and lists the sections. |
 | Notebook created | ✅ | `Week_7_Clustering_Assignment.ipynb` exists. |
 | Notebook executed end-to-end | ✅ | Executed notebook output saved as `Week_7_Clustering_Assignment_executed.ipynb`. |
@@ -22,7 +22,7 @@ This file tracks the current completion status for the Week 7 Clustering Assignm
 ## Task Plan Overview
 
 | Section | Task | Status |
-|---|---|---|
+| --- | --- | --- |
 | S0 | Environment Setup | ✅ Completed |
 | S1 | Data Loading & First Look | ✅ Completed |
 | S2 | Data Cleaning | ✅ Completed |

@@ -130,14 +130,12 @@ The API app should be available at `http://localhost:8000` and the Streamlit UI 
 
 ### Health check
 
-```
-GET /health
+```GET /health
 ```
 
 ### SQL pipeline endpoint
 
-```
-POST /pipeline/sql
+```POST /pipeline/sql
 Content-Type: application/json
 
 { "question": "Count customers per country" }
@@ -145,8 +143,7 @@ Content-Type: application/json
 
 ### Agent endpoint
 
-```
-POST /agent/sql
+```POST /agent/sql
 Content-Type: application/json
 
 { "question": "How many shipped orders are from USA customers?" }
@@ -154,8 +151,7 @@ Content-Type: application/json
 
 ### Benchmark evaluation
 
-```
-GET /evaluate
+```GET /evaluate
 ```
 
 This endpoint runs the benchmark questions and returns aggregated performance metrics.
@@ -177,8 +173,7 @@ The JSON file includes per-question generated SQL, execution outcome, correctnes
 
 ## Project structure
 
-```
-.
+```.
 ├── Dockerfile
 ├── docker-compose.yml
 ├── README.md
