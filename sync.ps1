@@ -71,6 +71,26 @@ function Get-AutoCommitMessage {
     return "${prefix}: update ${summary}"
 }
 
+function Update-ReadmeSyncStatus {
+    $readmePath = Join-Path (Get-Location) 'README.md'
+    if (-not (Test-Path $readmePath)) {
+        return
+    }
+
+    $content = Get-Content $readmePath -Raw
+    $date = Get-Date -Format 'yyyy-MM-dd'
+    $replacement = "<!-- sync-status:start -->`r`n**Last synchronized:** $date`r`n<!-- sync-status:end -->"
+    $pattern = '(?s)<!-- sync-status:start -->.*?<!-- sync-status:end -->'
+
+    if ($content -match $pattern) {
+        $content = [regex]::Replace($content, $pattern, $replacement, 1)
+    } else {
+        $content = "# FuseAIF2026`r`n`r`n$replacement`r`n`r`n" + $content.TrimStart("`r", "`n")
+    }
+
+    Set-Content -Path $readmePath -Value $content -NoNewline
+}
+
 Write-Host "[Git Sync] Pulling latest changes from origin main..." -ForegroundColor Cyan
 git pull --autostash origin main
 
@@ -78,6 +98,8 @@ if ($PullOnly) {
     Write-Host "[Git Sync] Pull complete (PullOnly flag set)." -ForegroundColor Green
     exit 0
 }
+
+Update-ReadmeSyncStatus
 
 if (-not $Message) {
     $Message = Get-AutoCommitMessage
