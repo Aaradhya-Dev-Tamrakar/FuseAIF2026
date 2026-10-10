@@ -1,0 +1,13 @@
+.git/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.env
+data/qdrant/
+models/
+tests/
+docs/
+README.md
+Dockerfile.vllm
+docker-compose.yml

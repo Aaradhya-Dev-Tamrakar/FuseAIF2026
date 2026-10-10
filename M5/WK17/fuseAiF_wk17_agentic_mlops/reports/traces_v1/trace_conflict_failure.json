@@ -1,0 +1,41 @@
+{
+  "query": "What is the current pricing for the Pro tier?",
+  "query_id": "GR-001",
+  "outcome": "SOFT_FAILURE",
+  "termination_reason": "answered_with_stale_data",
+  "iterations": 3,
+  "steps": [
+    {
+      "step": 1,
+      "tool": "search_knowledge_base",
+      "args": {
+        "query": "Pro tier pricing"
+      },
+      "result": "Found provider_pricing.md: Pro tier $39/month/seat",
+      "reasoning": "User asks about Pro tier pricing. Searching knowledge base."
+    },
+    {
+      "step": 2,
+      "tool": "read_document",
+      "args": {
+        "doc_id": "provider_pricing.md"
+      },
+      "result": "Pro: $39/month per seat. Standard: $19/month. Free: $0.",
+      "reasoning": "Retrieved pricing document. The Pro tier is $39/month."
+    },
+    {
+      "step": 3,
+      "tool": "final_answer",
+      "args": {
+        "answer": "The Pro tier is priced at $39/month per seat.",
+        "citations": [
+          "provider_pricing.md"
+        ],
+        "confidence": "high"
+      },
+      "result": "Answer submitted",
+      "reasoning": "Found clear pricing information. Submitting answer."
+    }
+  ],
+  "root_cause": "Agent did not check release_notes.md which supersedes the pricing to $49/month in v2.4."
+}

@@ -1,0 +1,46 @@
+[project]
+name = "fuseaif-wk17-telco-churn-mlops"
+version = "0.1.0"
+description = "End-to-End Production MLOps Pipeline for Telco Customer Churn (Fuse AI Fellowship 2026 Week 17 Track A)"
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = [
+    "evidently>=0.4.30",
+    "fastapi>=0.112.0",
+    "httpx>=0.27.0",
+    "lightgbm>=4.4.0",
+    "matplotlib>=3.9.0",
+    "mlflow>=2.15.0",
+    "numpy>=1.26.0",
+    "pandas>=2.2.0",
+    "pyarrow>=15.0.0",
+    "pydantic>=2.8.0",
+    "scikit-learn>=1.5.0",
+    "seaborn>=0.13.0",
+    "uvicorn>=0.30.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0.0",
+    "ruff>=0.5.0",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]
+ignore = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["."]

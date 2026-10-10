@@ -1,0 +1,241 @@
+{
+  "version": "v1",
+  "total_cases": 10,
+  "passed": 5,
+  "failed": 5,
+  "pct_tests_passed": 0.5,
+  "promotion_eligible": false,
+  "cases": [
+    {
+      "query_id": "GR-001",
+      "query": "What is the current pricing for the Pro tier?",
+      "difficulty": "conflict_resolution",
+      "correctness": {
+        "check": "reference_correctness",
+        "passed": false,
+        "key_facts_checked": 3,
+        "reasoning": "FAIL: Candidate misses key factual assertions from reference."
+      },
+      "grounding": {
+        "check": "grounding_integrity",
+        "passed": false,
+        "cited_docs": [
+          "provider_pricing.md"
+        ],
+        "required_docs": [
+          "provider_pricing.md",
+          "release_notes.md"
+        ],
+        "reasoning": "FAIL: Missing required citations: {'release_notes.md'}"
+      },
+      "overall_passed": false
+    },
+    {
+      "query_id": "GR-002",
+      "query": "How many concurrent connections does the system support?",
+      "difficulty": "single_hop",
+      "correctness": {
+        "check": "reference_correctness",
+        "passed": true,
+        "key_facts_checked": 2,
+        "reasoning": "PASS: Candidate preserves key factual assertions from reference."
+      },
+      "grounding": {
+        "check": "grounding_integrity",
+        "passed": true,
+        "cited_docs": [
+          "architecture.md"
+        ],
+        "required_docs": [
+          "architecture.md"
+        ],
+        "reasoning": "PASS: All citations valid and required sources present."
+      },
+      "overall_passed": true
+    },
+    {
+      "query_id": "GR-003",
+      "query": "What authentication methods are supported and which is recommended?",
+      "difficulty": "single_hop",
+      "correctness": {
+        "check": "reference_correctness",
+        "passed": true,
+        "key_facts_checked": 4,
+        "reasoning": "PASS: Candidate preserves key factual assertions from reference."
+      },
+      "grounding": {
+        "check": "grounding_integrity",
+        "passed": true,
+        "cited_docs": [
+          "security_guidelines.md"
+        ],
+        "required_docs": [
+          "security_guidelines.md"
+        ],
+        "reasoning": "PASS: All citations valid and required sources present."
+      },
+      "overall_passed": true
+    },
+    {
+      "query_id": "GR-004",
+      "query": "Calculate the monthly cost for a team of 12 developers on the Pro plan.",
+      "difficulty": "conflict_plus_computation",
+      "correctness": {
+        "check": "reference_correctness",
+        "passed": false,
+        "key_facts_checked": 7,
+        "reasoning": "FAIL: Candidate misses key factual assertions from reference."
+      },
+      "grounding": {
+        "check": "grounding_integrity",
+        "passed": false,
+        "cited_docs": [
+          "provider_pricing.md"
+        ],
+        "required_docs": [
+          "provider_pricing.md",
+          "release_notes.md"
+        ],
+        "reasoning": "FAIL: Missing required citations: {'release_notes.md'}"
+      },
+      "overall_passed": false
+    },
+    {
+      "query_id": "GR-005",
+      "query": "What is the recommended deployment configuration for high availability?",
+      "difficulty": "multi_hop",
+      "correctness": {
+        "check": "reference_correctness",
+        "passed": true,
+        "key_facts_checked": 3,
+        "reasoning": "PASS: Candidate preserves key factual assertions from reference."
+      },
+      "grounding": {
+        "check": "grounding_integrity",
+        "passed": true,
+        "cited_docs": [
+          "architecture.md"
+        ],
+        "required_docs": [
+          "architecture.md"
+        ],
+        "reasoning": "PASS: All citations valid and required sources present."
+      },
+      "overall_passed": true
+    },
+    {
+      "query_id": "GR-006",
+      "query": "What changed between version 2.3 and 2.4?",
+      "difficulty": "single_hop",
+      "correctness": {
+        "check": "reference_correctness",
+        "passed": false,
+        "key_facts_checked": 5,
+        "reasoning": "FAIL: Candidate misses key factual assertions from reference."
+      },
+      "grounding": {
+        "check": "grounding_integrity",
+        "passed": false,
+        "cited_docs": [],
+        "required_docs": [
+          "release_notes.md"
+        ],
+        "reasoning": "FAIL: Missing required citations: {'release_notes.md'}"
+      },
+      "overall_passed": false
+    },
+    {
+      "query_id": "GR-007",
+      "query": "Is the XML API endpoint still supported?",
+      "difficulty": "conflict_resolution",
+      "correctness": {
+        "check": "reference_correctness",
+        "passed": false,
+        "key_facts_checked": 3,
+        "reasoning": "FAIL: Candidate misses key factual assertions from reference."
+      },
+      "grounding": {
+        "check": "grounding_integrity",
+        "passed": false,
+        "cited_docs": [
+          "architecture.md"
+        ],
+        "required_docs": [
+          "release_notes.md"
+        ],
+        "reasoning": "FAIL: Missing required citations: {'release_notes.md'}"
+      },
+      "overall_passed": false
+    },
+    {
+      "query_id": "GR-008",
+      "query": "What are the rate limits for the API?",
+      "difficulty": "single_hop",
+      "correctness": {
+        "check": "reference_correctness",
+        "passed": true,
+        "key_facts_checked": 3,
+        "reasoning": "PASS: Candidate preserves key factual assertions from reference."
+      },
+      "grounding": {
+        "check": "grounding_integrity",
+        "passed": true,
+        "cited_docs": [
+          "provider_pricing.md"
+        ],
+        "required_docs": [
+          "provider_pricing.md"
+        ],
+        "reasoning": "PASS: All citations valid and required sources present."
+      },
+      "overall_passed": true
+    },
+    {
+      "query_id": "GR-009",
+      "query": "How should I handle database migrations when upgrading from v2.3 to v2.4?",
+      "difficulty": "multi_hop",
+      "correctness": {
+        "check": "reference_correctness",
+        "passed": false,
+        "key_facts_checked": 3,
+        "reasoning": "FAIL: Candidate misses key factual assertions from reference."
+      },
+      "grounding": {
+        "check": "grounding_integrity",
+        "passed": false,
+        "cited_docs": [
+          "release_notes.md"
+        ],
+        "required_docs": [
+          "architecture.md",
+          "release_notes.md"
+        ],
+        "reasoning": "FAIL: Missing required citations: {'architecture.md'}"
+      },
+      "overall_passed": false
+    },
+    {
+      "query_id": "GR-010",
+      "query": "What monitoring and observability tools are integrated?",
+      "difficulty": "single_hop",
+      "correctness": {
+        "check": "reference_correctness",
+        "passed": true,
+        "key_facts_checked": 4,
+        "reasoning": "PASS: Candidate preserves key factual assertions from reference."
+      },
+      "grounding": {
+        "check": "grounding_integrity",
+        "passed": true,
+        "cited_docs": [
+          "architecture.md"
+        ],
+        "required_docs": [
+          "architecture.md"
+        ],
+        "reasoning": "PASS: All citations valid and required sources present."
+      },
+      "overall_passed": true
+    }
+  ]
+}

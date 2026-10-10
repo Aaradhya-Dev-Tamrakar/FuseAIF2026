@@ -3,7 +3,7 @@
 Central archive for Aaradhya Dev Tamrakar's Fusemachines AI Fellowship 2026 coursework, project notes, notebooks, datasets, reports, and capstone work.
 
 <!-- sync-status:start -->
-**Last synchronized:** 2026-08-26
+**Last synchronized:** 2026-10-10
 <!-- sync-status:end -->
 
 This is a workspace-level repository. The numbered folders preserve weekly fellowship work; some weeks contain complete local artifacts and others contain archive notes that point to a separate project repository.

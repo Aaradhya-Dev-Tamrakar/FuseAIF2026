@@ -1,0 +1,82 @@
+[
+  {
+    "query_id": "GR-001",
+    "query": "What is the current pricing for the Pro tier?",
+    "category": "factual_lookup",
+    "reference_answer": "The Pro tier is priced at $49/month per seat according to the latest release notes (v2.4). This supersedes the older $39/month figure from the original pricing document.",
+    "required_citations": ["release_notes.md", "provider_pricing.md"],
+    "difficulty": "conflict_resolution"
+  },
+  {
+    "query_id": "GR-002",
+    "query": "How many concurrent connections does the system support?",
+    "category": "factual_lookup",
+    "reference_answer": "The system supports 500 concurrent connections per node as documented in the architecture specification. With the recommended 3-node cluster, this provides 1,500 total concurrent connections.",
+    "required_citations": ["architecture.md"],
+    "difficulty": "single_hop"
+  },
+  {
+    "query_id": "GR-003",
+    "query": "What authentication methods are supported and which is recommended?",
+    "category": "multi_hop",
+    "reference_answer": "The system supports three authentication methods: API keys, OAuth 2.0, and SAML SSO. OAuth 2.0 is the recommended method for production deployments as stated in the security guidelines. API keys are suitable for development and testing only.",
+    "required_citations": ["security_guidelines.md"],
+    "difficulty": "single_hop"
+  },
+  {
+    "query_id": "GR-004",
+    "query": "Calculate the monthly cost for a team of 12 developers on the Pro plan.",
+    "category": "computation",
+    "reference_answer": "At $49/month per seat (Pro tier, v2.4 pricing), a team of 12 developers would cost $49 x 12 = $588/month. Note: the original pricing document listed $39/seat, but this was superseded by the v2.4 release notes.",
+    "required_citations": ["release_notes.md", "provider_pricing.md"],
+    "difficulty": "conflict_plus_computation"
+  },
+  {
+    "query_id": "GR-005",
+    "query": "What is the recommended deployment configuration for high availability?",
+    "category": "multi_hop",
+    "reference_answer": "For high availability, the recommended configuration is a 3-node cluster with automatic failover enabled, running behind a load balancer with health checks at 30-second intervals. Each node should have at least 8 CPU cores and 32 GB RAM.",
+    "required_citations": ["architecture.md"],
+    "difficulty": "multi_hop"
+  },
+  {
+    "query_id": "GR-006",
+    "query": "What changed between version 2.3 and 2.4?",
+    "category": "factual_lookup",
+    "reference_answer": "Version 2.4 introduced several changes: updated Pro tier pricing from $39 to $49/month per seat, added WebSocket support for real-time notifications, deprecated the legacy XML API endpoint, and improved connection pooling performance by 23%.",
+    "required_citations": ["release_notes.md"],
+    "difficulty": "single_hop"
+  },
+  {
+    "query_id": "GR-007",
+    "query": "Is the XML API endpoint still supported?",
+    "category": "deprecation_check",
+    "reference_answer": "No, the XML API endpoint was deprecated in version 2.4 according to the release notes. The recommended migration path is to use the REST JSON API or the new GraphQL endpoint introduced in v2.3. Existing XML integrations will continue to function until v3.0 but are not recommended for new development.",
+    "required_citations": ["release_notes.md"],
+    "difficulty": "conflict_resolution"
+  },
+  {
+    "query_id": "GR-008",
+    "query": "What are the rate limits for the API?",
+    "category": "factual_lookup",
+    "reference_answer": "API rate limits vary by tier: Free tier allows 100 requests/minute, Standard tier allows 1,000 requests/minute, and Pro tier allows 10,000 requests/minute. Rate limit headers (X-RateLimit-Remaining, X-RateLimit-Reset) are included in all API responses.",
+    "required_citations": ["provider_pricing.md"],
+    "difficulty": "single_hop"
+  },
+  {
+    "query_id": "GR-009",
+    "query": "How should I handle database migrations when upgrading from v2.3 to v2.4?",
+    "category": "multi_hop",
+    "reference_answer": "When upgrading from v2.3 to v2.4, run the provided migration script (migrate_v23_to_v24.sql) before starting the new version. Back up the database first. The migration adds new columns for WebSocket session tracking and updates the pricing table schema. Downtime of approximately 5-10 minutes is expected for databases under 10 GB.",
+    "required_citations": ["release_notes.md", "architecture.md"],
+    "difficulty": "multi_hop"
+  },
+  {
+    "query_id": "GR-010",
+    "query": "What monitoring and observability tools are integrated?",
+    "category": "factual_lookup",
+    "reference_answer": "The system integrates with Prometheus for metrics collection, Grafana for dashboarding, and supports OpenTelemetry for distributed tracing. Health check endpoints (/health and /ready) are exposed on port 8080. Alert rules for CPU, memory, and error rate thresholds are pre-configured in the provided Grafana dashboard templates.",
+    "required_citations": ["architecture.md"],
+    "difficulty": "single_hop"
+  }
+]

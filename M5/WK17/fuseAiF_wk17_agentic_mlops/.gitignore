@@ -1,0 +1,20 @@
+# Environment & caches
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+.env
+
+# Data & Models
+data/qdrant/
+models/
+
+# MLflow
+mlruns/
+mlflow.db
+
+# OS
+.DS_Store
+Thumbs.db

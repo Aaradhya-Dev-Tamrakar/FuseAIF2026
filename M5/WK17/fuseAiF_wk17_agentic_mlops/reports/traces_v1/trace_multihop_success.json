@@ -1,0 +1,41 @@
+{
+  "query": "How many concurrent connections does the system support?",
+  "query_id": "GR-002",
+  "outcome": "SUCCESS",
+  "termination_reason": "evidence_sufficient",
+  "iterations": 3,
+  "steps": [
+    {
+      "step": 1,
+      "tool": "search_knowledge_base",
+      "args": {
+        "query": "concurrent connections"
+      },
+      "result": "Found architecture.md: 500 connections per node",
+      "reasoning": "Searching for connection limits."
+    },
+    {
+      "step": 2,
+      "tool": "read_document",
+      "args": {
+        "doc_id": "architecture.md"
+      },
+      "result": "500 concurrent connections per node. Recommended 3-node cluster = 1500 total.",
+      "reasoning": "Reading full architecture doc for details."
+    },
+    {
+      "step": 3,
+      "tool": "final_answer",
+      "args": {
+        "answer": "The system supports 500 concurrent connections per node (1,500 with recommended 3-node cluster).",
+        "citations": [
+          "architecture.md"
+        ],
+        "confidence": "high"
+      },
+      "result": "Answer submitted",
+      "reasoning": "Clear answer from architecture document."
+    }
+  ],
+  "root_cause": null
+}
