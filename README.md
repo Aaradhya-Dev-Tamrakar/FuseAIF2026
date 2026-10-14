@@ -76,6 +76,21 @@ When a week has no standalone README, start with the notebook, assignment docume
 
 ## Notebook Index
 
+### Gemini NotebookLM collection
+
+- **Week 2:** AIF 2026 - Week 2: Database & API Architecture
+- **Week 3:** AIF 2026 - Week 3: Agentic Text-to-SQL System
+- **Weeks 4-5:** AIF 2026 - Weeks 4-5: Supervised Tabular ML (Linear & Tree Ensembles)
+- **Weeks 6 & 8:** AIF 2026 - Weeks 6 & 8: Probabilistic ML & Time Series Forecasting
+- **Week 7:** AIF 2026 - Week 7: Clustering & Market Segmentation
+- **Weeks 9-11:** AIF 2026 - Weeks 9-11: Deep Learning & Computer Vision
+- **Weeks 12-14:** AIF 2026 - Weeks 12-14: NLP, Sequence Learning & Transformers
+- **Weeks 15-16:** AIF 2026 - Weeks 15-16: Applied AI, RAG & Multi-Agent Systems
+- **Week 17:** AIF 2026 - Week 17: AI Systems & MLOps
+- **Week 25:** AIF 2026 - Week 25: Responsible & Trustworthy AI
+
+### Repository Jupyter notebooks
+
 All Jupyter notebooks currently in the archive are listed below. The executed copies are linked separately where the archive keeps both a source notebook and an executed notebook.
 
 ### Module 1
