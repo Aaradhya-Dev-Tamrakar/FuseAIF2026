@@ -78,16 +78,16 @@ When a week has no standalone README, start with the notebook, assignment docume
 
 ### Gemini NotebookLM collection
 
-- **Week 2:** AIF 2026 - Week 2: Database & API Architecture
-- **Week 3:** AIF 2026 - Week 3: Agentic Text-to-SQL System
-- **Weeks 4-5:** AIF 2026 - Weeks 4-5: Supervised Tabular ML (Linear & Tree Ensembles)
-- **Weeks 6 & 8:** AIF 2026 - Weeks 6 & 8: Probabilistic ML & Time Series Forecasting
-- **Week 7:** AIF 2026 - Week 7: Clustering & Market Segmentation
-- **Weeks 9-11:** AIF 2026 - Weeks 9-11: Deep Learning & Computer Vision
-- **Weeks 12-14:** AIF 2026 - Weeks 12-14: NLP, Sequence Learning & Transformers
-- **Weeks 15-16:** AIF 2026 - Weeks 15-16: Applied AI, RAG & Multi-Agent Systems
-- **Week 17:** AIF 2026 - Week 17: AI Systems & MLOps
-- **Week 25:** AIF 2026 - Week 25: Responsible & Trustworthy AI
+- **Week 2:** [AIF 2026 - Week 2: Database & API Architecture](https://notebooklm.google.com/notebook/e5bdc1b4-a017-49c0-8c6a-f890f3f64b7f)
+- **Week 3:** [AIF 2026 - Week 3: Agentic Text-to-SQL System](https://notebooklm.google.com/notebook/270b157a-3864-4d54-b372-4e4969688545)
+- **Weeks 4-5:** [AIF 2026 - Weeks 4-5: Supervised Tabular ML (Linear & Tree Ensembles)](https://notebooklm.google.com/notebook/41209057-a697-4ccc-afdc-a3b949b5d046)
+- **Weeks 6 & 8:** [AIF 2026 - Weeks 6 & 8: Probabilistic ML & Time Series Forecasting](https://notebooklm.google.com/notebook/69078013-99a8-4ac0-babb-85bd4c7e0719)
+- **Week 7:** [AIF 2026 - Week 7: Clustering & Market Segmentation](https://notebooklm.google.com/notebook/97b0378d-f283-46cf-b1ba-b85a32e2da25)
+- **Weeks 9-11:** [AIF 2026 - Weeks 9-11: Deep Learning & Computer Vision](https://notebooklm.google.com/notebook/aeac3de5-39c9-4cf9-8a49-a21ccd73ca3b)
+- **Weeks 12-14:** [AIF 2026 - Weeks 12-14: NLP, Sequence Learning & Transformers](https://notebooklm.google.com/notebook/ac9591f2-fc7b-4bf7-ba4d-ba7bd29c911c)
+- **Weeks 15-16:** [AIF 2026 - Weeks 15-16: Applied AI, RAG & Multi-Agent Systems](https://notebooklm.google.com/notebook/e370d78e-3453-498d-9509-1d4b5bfc0446)
+- **Week 17:** [AIF 2026 - Week 17: AI Systems & MLOps](https://notebooklm.google.com/notebook/ffdaa426-4497-44aa-92fb-ed57ccfc789e)
+- **Week 25:** [AIF 2026 - Week 25: Responsible & Trustworthy AI](https://notebooklm.google.com/notebook/12a41b10-84d6-46a7-99c4-fbf933af3794)
 
 ### Repository Jupyter notebooks
 
