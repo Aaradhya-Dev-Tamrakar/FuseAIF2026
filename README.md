@@ -3,7 +3,7 @@
 This repository archives weekly coursework, notebooks, datasets, and project work from the Fusemachines AI Fellowship 2026.
 
 <!-- sync-status:start -->
-**Last synchronized:** 2026-10-14
+**Last synchronized:** 2026-10-18
 <!-- sync-status:end -->
 
 ## Archive
@@ -16,7 +16,7 @@ Course materials are grouped by module and week. Some weeks contain full local p
 | M2 | 5–8 | Statistical learning, clustering, and forecasting |
 | M3 | 9–12 | Deep learning, computer vision, and NLP foundations |
 | M4 | 13–16 | Sequence learning, transformers, and applied AI |
-| M5 | 17 | Agentic systems and MLOps |
+| M5 | 17–18 | Agentic systems, production MLOps, and trustworthy AI guardrails |
 
 ## Start here
 
