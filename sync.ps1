@@ -122,8 +122,13 @@ if ($Message) {
         git pull --rebase --autostash origin main
         git push origin main
     }
-} else {
-    Write-Host "[Git Sync] No local changes detected to commit." -ForegroundColor Gray
+    $unpushed = git log '@{u}..HEAD' --oneline 2>$null
+    if ($unpushed) {
+        Write-Host "[Git Sync] Pushing pending local commits to origin main..." -ForegroundColor Cyan
+        git push origin main
+    } else {
+        Write-Host "[Git Sync] No local changes detected to commit." -ForegroundColor Gray
+    }
 }
 
 Write-Host "[Git Sync] Workspace is clean and fully synchronized!" -ForegroundColor Green
