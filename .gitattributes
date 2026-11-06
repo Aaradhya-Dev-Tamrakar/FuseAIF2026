@@ -2,3 +2,7 @@
 *.h5 filter=lfs diff=lfs merge=lfs -text
 *.pt filter=lfs diff=lfs merge=lfs -text
 *.onnx filter=lfs diff=lfs merge=lfs -text
+
+# Legacy models are ordinary Git blobs; preserve bytes without LFS conversion.
+M2/WK8/assignment/sp500_sarima_v1.pkl -filter -diff -merge -text
+M3/WK9/assignment/best_model.pt -filter -diff -merge -text

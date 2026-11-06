@@ -76,3 +76,5 @@ See [LICENSE](LICENSE).
 ## Exam preparation discussion
 
 - [DataCamp chapter map and final exam preparation chat](docs/chat_history/2026-11-06-datacamp-final-exam.md)
+
+- [Final exam practice materials](docs/exam_prep/README.md)

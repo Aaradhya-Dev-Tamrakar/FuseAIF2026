@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fusemachines AI Fellowship 2026: 10-Question Practice Set (Test Hub)</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --border: #334155;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --accent: #38bdf8;
+      --badge-m1: #10b981;
+      --badge-m2: #3b82f6;
+      --badge-m3: #8b5cf6;
+      --badge-m4: #ec4899;
+      --badge-m5: #f59e0b;
+    }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      margin: 0;
+      padding: 40px 20px;
+      line-height: 1.6;
+    }
+    .container {
+      max-width: 860px;
+      margin: 0 auto;
+    }
+    header {
+      margin-bottom: 32px;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 24px;
+    }
+    h1 {
+      font-size: 26px;
+      margin: 0 0 8px 0;
+      color: #fff;
+    }
+    .meta {
+      color: var(--text-muted);
+      font-size: 14px;
+    }
+    .question-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 24px;
+      margin-bottom: 24px;
+      transition: border-color 0.2s;
+    }
+    .question-card:hover {
+      border-color: #475569;
+    }
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding: 3px 8px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+    }
+    .badge-m1 { background: rgba(16, 185, 129, 0.15); color: var(--badge-m1); border: 1px solid rgba(16, 185, 129, 0.3); }
+    .badge-m2 { background: rgba(59, 130, 246, 0.15); color: var(--badge-m2); border: 1px solid rgba(59, 130, 246, 0.3); }
+    .badge-m3 { background: rgba(139, 92, 246, 0.15); color: var(--badge-m3); border: 1px solid rgba(139, 92, 246, 0.3); }
+    .badge-m4 { background: rgba(236, 72, 153, 0.15); color: var(--badge-m4); border: 1px solid rgba(236, 72, 153, 0.3); }
+    .badge-m5 { background: rgba(245, 158, 11, 0.15); color: var(--badge-m5); border: 1px solid rgba(245, 158, 11, 0.3); }
+    .q-number {
+      font-size: 13px;
+      color: var(--text-muted);
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+    .q-text {
+      font-size: 16px;
+      font-weight: 600;
+      margin-bottom: 16px;
+      color: #fff;
+    }
+    .options-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .option-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 12px 16px;
+      background: rgba(15, 23, 42, 0.5);
+      border: 1px solid rgba(51, 65, 85, 0.7);
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+    .option-item:hover {
+      background: rgba(56, 189, 248, 0.08);
+      border-color: var(--accent);
+    }
+    .opt-letter {
+      font-weight: 700;
+      color: var(--accent);
+      min-width: 24px;
+    }
+    .hint {
+      margin-top: 14px;
+      font-size: 12px;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Fusemachines AI Fellowship 2026: 10-Question Practice Set</h1>
+      <div class="meta">
+        <span>Syllabus: Modules 1–5 (Weeks 1–18 + Week 25)</span> &bull;
+        <span>Grounded with Stanford CME295, Colah, Shree Nayar, ISLR & NIST AI RMF</span>
+      </div>
+    </header>
+
+    <!-- Question 1 -->
+    <div class="question-card" id="q1">
+      <div class="badge badge-m2">Module 2: Statistical ML &bull; Week 4</div>
+      <div class="q-number">Question 1 of 10</div>
+      <div class="q-text">In an imbalanced churn prediction dataset where 95% of customers do not churn and 5% do churn, which evaluation metric provides the most honest assessment of model performance, and why?</div>
+      <div class="options-grid">
+        <div class="option-item">
+          <span class="opt-letter">A)</span>
+          <span>Accuracy, because a model predicting majority class achieves 95% accuracy which proves reliable convergence.</span>
+        </div>
+        <div class="option-item">
+          <span class="opt-letter">B)</span>
+          <span>ROC-AUC, because the False Positive Rate denominator is completely unaffected by the massive True Negative volume.</span>
+        </div>
+        <div class="option-item">
+          <span class="opt-letter">C)</span>
+          <span>PR-AUC (Precision-Recall AUC), because it isolates minority positive class precision and recall without being artificially inflated by true negatives.</span>
+        </div>
+        <div class="option-item">
+          <span class="opt-letter">D)</span>
+          <span>Mean Squared Error (MSE), because squaring residuals heavily penalizes missed churners.</span>
+        </div>
+      </div>
+      <div class="hint">Practice independently before checking course references. Do not use assistance during the proctored examination.</div>
+    </div>
+
+    <!-- Question 2 -->
+    <div class="question-card" id="q2">
+      <div class="badge badge-m3">Module 3: Deep Learning &bull; Week 9</div>
+      <div class="q-number">Question 2 of 10</div>
+      <div class="q-text">Why does a deep Convolutional Neural Network benefit from Batch Normalization (BatchNorm2d) placed after Conv2d layers, and what critical behavioral difference occurs between train and eval modes?</div>
+      <div class="options-grid">
+        <div class="option-item">
+          <span class="opt-letter">A)</span>
+          <span>In train mode it flips kernel weights by 180 degrees; in eval mode it performs standard 2D cross-correlation without flipping.</span>
+        </div>
+        <div class="option-item">
+          <span class="opt-letter">B)</span>
+          <span>In train mode it normalizes across mini-batch activations and updates running mean/variance; in eval mode it freezes those statistics to apply a deterministic linear transform.</span>
+        </div>
+        <div class="option-item">
+          <span class="opt-letter">C)</span>
+          <span>In train mode it zeroes 50% of the neurons; in eval mode it scales activations by 1/(1-p).</span>
+        </div>
+        <div class="option-item">
+          <span class="opt-letter">D)</span>
+          <span>In train mode it uses an analytical closed-form OLS solution; in eval mode it applies stochastic gradient descent.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Question 3 -->
+    <div class="question-card" id="q3">
+      <div class="badge badge-m3">Module 3: Classical Computer Vision &bull; Week 10</div>
+      <div class="q-number">Question 3 of 10</div>
+      <div class="q-text">In Shree Nayar's First Principles of Computer Vision, which sequential stage of the Canny edge detector is responsible for thinning thick edge gradients into crisp 1-pixel wide ridges along the gradient direction?</div>
+      <div class="options-grid">
+        <div class="option-item">
+          <span class="opt-letter">A)</span>
+          <span>5x5 Gaussian blur filtering</span>
+        </div>
+        <div class="option-item">
+          <span class="opt-letter">B)</span>
+          <span>Sobel gradient magnitude and orientation calculation</span>
+        </div>
+        <div class="option-item">
+          <span class="opt-letter">C)</span>
+          <span>Non-Maximum Suppression (NMS)</span>
+        </div>
+        <div class="option-item">
+          <span class="opt-letter">D)</span>
+          <span>Hysteresis edge tracking across high and low thresholds</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Question 4 -->
+    <div class="question-card" id="q4">
+      <div class="badge badge-m4">Module 4: Transformers &bull; Week 14</div>
+      <div class="q-number">Question 4 of 10</div>
+      <div class="q-text">In Scaled Dot-Product Attention (Attention(Q, K, V) = softmax(QK^T / sqrt(d_k))V), why is the dot product QK^T explicitly divided by the square root of the head dimension sqrt(d_k)?</div>
+      <div class="options-grid">
+        <div class="option-item">
+          <span class="opt-letter">A)</span>
+          <span>To make the attention matrix strictly lower-triangular for causal autoregressive decoding.</span>
+        </div>
+        <div class="option-item">
+          <span class="opt-letter">B)</span>
+          <span>To prevent large dot product magnitudes in high dimensions from pushing the softmax function into regions with vanishing gradients.</span>
+        </div>
+        <div class="option-item">
+          <span class="opt-letter">C)</span>
+          <span>To eliminate the need for Rotary Position Embeddings (RoPE).</span>
+        </div>
+        <div class="option-item">
+          <span class="opt-letter">D)</span>
+          <span>To compress the KV-cache by grouping heads into Multi-Query Attention (MQA).</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Question 5 -->
+    <div class="question-card" id="q5">
+      <div class="badge badge-m5">Module 5: MLOps &bull; Week 17</div>
+      <div class="q-number">Question 5 of 10</div>
+      <div class="q-text">When monitoring production models with Evidently AI, which statistical calibration of the Population Stability Index (PSI) indicates moderate drift where an engineering investigation is warranted before triggering retraining?</div>
+      <div class="options-grid">
+        <div class="option-item">
+          <span class="opt-letter">A)</span>
+          <span>PSI &lt; 0.01</span>
+        </div>
+        <div class="option-item">
+          <span class="opt-letter">B)</span>
+          <span>0.1 &le; PSI &lt; 0.25</span>
+        </div>
+        <div class="option-item">
+          <span class="opt-letter">C)</span>
+          <span>PSI &ge; 0.50</span>
+        </div>
+        <div class="option-item">
+          <span class="opt-letter">D)</span>
+          <span>PSI = 0.00 exactly</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Question 6 -->
+    <div class="question-card" id="q6">
+      <div class="badge badge-m5">Module 5: Trustworthy AI &bull; Week 18</div>
+      <div class="q-number">Question 6 of 10</div>
+      <div class="q-text">Under the European Union Artificial Intelligence Act (EU AI Act), AI systems utilized for automated employment recruitment, credit scoring, and biometric identification fall under which regulatory risk tier?</div>
+      <div class="options-grid">
+        <div class="option-item">
+          <span class="opt-letter">A)</span>
+          <span>Unacceptable Risk (Banned unconditionally)</span>
+        </div>
+        <div class="option-item">
+          <span class="opt-letter">B)</span>
+          <span>High Risk (Annex III: Permitted subject to conformity assessments and risk management)</span>
+        </div>
+        <div class="option-item">
+          <span class="opt-letter">C)</span>
+          <span>Limited Risk (Transparency notice only)</span>
+        </div>
+        <div class="option-item">
+          <span class="opt-letter">D)</span>
+          <span>Minimal / No Risk</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Question 7 -->
+    <div class="question-card" id="q7">
+      <div class="badge badge-m1">Module 1: Systems &bull; Week 3</div>
+      <div class="q-number">Question 7 of 10</div>
+      <div class="q-text">When designing a production Agentic Text-to-SQL system, what is the most robust security defense to ensure that LLM-generated SQL queries cannot modify or delete database records?</div>
+      <div class="options-grid">
+        <div class="option-item">
+          <span class="opt-letter">A)</span>
+          <span>Filtering candidate queries with basic regex string matching for the word 'DROP'.</span>
+        </div>
+        <div class="option-item">
+          <span class="opt-letter">B)</span>
+          <span>Parsing candidate queries with an Abstract Syntax Tree (AST) engine to verify the root is strictly a Select node, combined with read-only database credentials.</span>
+        </div>
+        <div class="option-item">
+          <span class="opt-letter">C)</span>
+          <span>Relying exclusively on the system prompt to instruct the LLM never to write destructive statements.</span>
+        </div>
+        <div class="option-item">
+          <span class="opt-letter">D)</span>
+          <span>Encrypting database credentials using AES-256 before prompt injection.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Question 8 -->
+    <div class="question-card" id="q8">
+      <div class="badge badge-m4">Module 4: Applied AI &bull; Week 15 / W25</div>
+      <div class="q-number">Question 8 of 10</div>
+      <div class="q-text">In production Retrieval-Augmented Generation (RAG), why is Reciprocal Rank Fusion (RRF with constant k=60) preferred over simple score addition when combining dense vector search with sparse BM25 results?</div>
+      <div class="options-grid">
+        <div class="option-item">
+          <span class="opt-letter">A)</span>
+          <span>Because dense cosine similarity scores and sparse BM25 scores have different scales and distributions, whereas RRF merges positions without requiring score calibration.</span>
+        </div>
+        <div class="option-item">
+          <span class="opt-letter">B)</span>
+          <span>Because RRF computes dot-product self-attention across all tokens in linear O(N) time.</span>
+        </div>
+        <div class="option-item">
+          <span class="opt-letter">C)</span>
+          <span>Because RRF completely eliminates the need for cross-encoder reranking.</span>
+        </div>
+        <div class="option-item">
+          <span class="opt-letter">D)</span>
+          <span>Because RRF enforces demographic parity across protected demographic cohorts.</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Question 9 -->
+    <div class="question-card" id="q9">
+      <div class="badge badge-m2">Module 2: Time Series &bull; Week 8</div>
+      <div class="q-number">Question 9 of 10</div>
+      <div class="q-text">When evaluating ARIMA residual diagnostics, which statistical test is executed across multiple lags (including seasonal lags) to confirm whether residuals represent uncorrelated white noise?</div>
+      <div class="options-grid">
+        <div class="option-item">
+          <span class="opt-letter">A)</span>
+          <span>Augmented Dickey-Fuller (ADF) test</span>
+        </div>
+        <div class="option-item">
+          <span class="opt-letter">B)</span>
+          <span>Kwiatkowski-Phillips-Schmidt-Shin (KPSS) test</span>
+        </div>
+        <div class="option-item">
+          <span class="opt-letter">C)</span>
+          <span>Ljung-Box Q-test (residuals pass if p &gt; 0.05)</span>
+        </div>
+        <div class="option-item">
+          <span class="opt-letter">D)</span>
+          <span>Kolmogorov-Smirnov test</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Question 10 -->
+    <div class="question-card" id="q10">
+      <div class="badge badge-m5">Module 5: Agentic Systems &bull; Week 16</div>
+      <div class="q-number">Question 10 of 10</div>
+      <div class="q-text">According to Anthropic's 'Building Effective Agents', which multi-agent architectural failure mode occurs when two autonomous agents endlessly critique and reverse each other's outputs without reaching convergence?</div>
+      <div class="options-grid">
+        <div class="option-item">
+          <span class="opt-letter">A)</span>
+          <span>Context Starvation</span>
+        </div>
+        <div class="option-item">
+          <span class="opt-letter">B)</span>
+          <span>Oscillation (flip-flopping states without satisfying stopping criteria)</span>
+        </div>
+        <div class="option-item">
+          <span class="opt-letter">C)</span>
+          <span>Deadlock</span>
+        </div>
+        <div class="option-item">
+          <span class="opt-letter">D)</span>
+          <span>Echo Chamber</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
