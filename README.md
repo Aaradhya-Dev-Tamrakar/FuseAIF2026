@@ -72,3 +72,7 @@ For repository maintenance, use [sync.ps1](sync.ps1):
 ## License
 
 See [LICENSE](LICENSE).
+
+## Exam preparation discussion
+
+- [DataCamp chapter map and final exam preparation chat](docs/chat_history/2026-11-06-datacamp-final-exam.md)
