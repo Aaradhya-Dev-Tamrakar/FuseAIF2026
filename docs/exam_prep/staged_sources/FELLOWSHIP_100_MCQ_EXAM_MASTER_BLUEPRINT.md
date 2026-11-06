@@ -1,5 +1,7 @@
 # Fusemachines AI Fellowship 2026: Final Examination Study Blueprint
 
+Reference supplement: [Classroom gap coverage](../CLASSROOM_GAP_COVERAGE.md) maps missing topics to inspected instructor-posted materials and records unresolved details.
+
 This document represents the unofficial synthesized revision notes, not independently verified against instructor answers across all five core modules of the Fusemachines AI Fellowship 2026 (Weeks 1 through 18 and Week 25). It bridges both direct session teachings and external mandatory reading links (Stanford CME295, Colah, Shree Nayar, ISLR, Christoph Molnar, NIST AI RMF, EU AI Act, and OWASP).
 
 ---
